@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import datetime
 
 app = Flask(__name__)
@@ -25,7 +25,12 @@ liste_eleves = [
 
 @app.route("/eleves")
 def eleves():
-    return render_template("eleves.html", eleves=liste_eleves)
+    classe = request.args.get('c')
+    if classe:
+        eleves_selectionnes = [eleve for eleve in liste_eleves if eleve ['classe'] == classe]    
+    else:
+        eleves_selectionnes = []
+    return render_template("eleves.html", eleves=eleves_selectionnes)
 
 if __name__ =='__main__':
     app.run(debug=True)
