@@ -1,7 +1,7 @@
 from FitBit_connexion_GUI import *
 import tkinter as tk
 from fen_center import *
-from data import *
+from old_data import *
 
 class SimpleApp:
     def __init__(self, root):
