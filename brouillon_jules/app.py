@@ -15,6 +15,11 @@ def bonjour ():
 
 @app.route('/submit', methods=['POST'])
 
+@app.route ('/login')
+
+def login ():
+    return render_template("login.html")
+
 def submit():
     # Récupérer les données du formulaire
     pas = request.form.get('pas')
