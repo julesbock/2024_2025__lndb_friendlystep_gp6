@@ -38,13 +38,26 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
+@app.route("/login", methods=["POST", "GET"])
+def login():
+    if request.method=="POST":
+        donnees=request.form
+        nom= donnees.get("nom")
+        mdp= donnees.get("mdp")
+        if nom =="Maxime" and mdp== "2468":
+            return render_template("traitement.html", nom_utilisateur=nom)
+        else:
+            return render_template("traitement.html")
+    else:
+        return render_template("login.html")
 
 
 
-
-
-
-@app.route ("/compteur")
+@app.route ("/123")
 def compteur():
+    if "compteur" not in session:
+        session ["compteur"] = 1
+    else:
+        session["compteur"] = session["compteur"] + 1
     print(session)
     return "Nombre de visites"
