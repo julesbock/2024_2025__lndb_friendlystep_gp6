@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox as mbox
 import webbrowser
 from fen_center import *
-from data import *
+from old_data import *
 
 class FitBitLoginApp:
     def __init__(self, root):
