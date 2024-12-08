@@ -6,7 +6,10 @@
     <title>Mon appli</title>
 </head>
 <body>
-    <p>Bienvenue sur notre page web!</p>
-    <a href="{{ url_for('login') }}">Se connecter</a>
+    {% if nom_utilisateur %}
+        <p>Bonjour {{nom_utilisateur}}, vous êtes connecté</p>
+    {% else %}
+        <p>Un problème est survenu.</p>
+    {% endif %}
 </body>
 </html>

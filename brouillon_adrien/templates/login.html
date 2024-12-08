@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Page de connexion</h1>
-    <form action="" method="">
+    <form action="{{ url_for('traitement') }}",  method="POST">
         <p>
             <!-- Champ de type "text" -->
             <label for = "nom">Nom : </label>
