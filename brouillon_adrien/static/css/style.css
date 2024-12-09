@@ -1,3 +1,80 @@
-body {
-    background-color: aliceblue;
+/* Réinitialisation des marges et paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+/* Mise en page du body */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+/* Style de la navbar */
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+#navbar img {
+    max-width: 50px;
+    height: auto;
+}
+
+#navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+#navbar ul li {
+    display: inline-block;
+}
+
+#navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#navbar ul li a:hover {
+    background-color: #575757;
+}
+
+/* Conteneur principal */
+#container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles responsives */
+@media (max-width: 768px) {
+    #navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #navbar ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #container {
+        margin: 10px;
+        padding: 15px;
+    }
+}
+
+/* CHATGPT on n en doute pas */
