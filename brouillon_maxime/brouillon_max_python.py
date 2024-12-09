@@ -4,9 +4,13 @@ app.secret_key = "039291df98be34655173c930564e88b1098ac6e1a173a61eacd268b6af8d7c
 
 @app.route ("/")
 def bonjour ():
+    return render_template ("index.html")
+@app.route ("/formulaire", methods=["GET", "POST"])
+def formulaire ():
     return render_template ("formulaires.html")
 
-@app.route("/submit", methods=['POST'])
+
+@app.route("/submit", methods=["POST"])
 def submit():
     # Récupérer les données du formulaire
     pas = request.form.get('pas')
@@ -39,26 +43,21 @@ def recherche_utilisateur(nom_utilisateur, mot_de_passe):
     return None
 
 #chemin  pour se connecter
-@app.route("/login", methods=["POST", "GET"])
+@app.route("/login", methods=["POST"])
 def login():
-    if request.method=="POST":
-        donnees=request.form
-        nom= donnees.get("nom")
-        mdp= donnees.get("mdp")
+    if request.method == "POST":
+        donnees = request.form
+        nom = donnees.get("nom")
+        mdp = donnees.get("mdp")
 
-        utilisateur= recherche_utilisateur(nom, mdp)
+        utilisateur = recherche_utilisateur(nom, mdp)
         if utilisateur is not None:
-            print("utilisateur trouvé")
+            print("Utilisateur trouvé")
             session['nom_utilisateur'] = utilisateur['nom']
-            print(session)
-            return redirect(url_for('index'))
+            return redirect(url_for('index'))  # Rediriger après la connexion réussie
         else:
-            print("utilisateur inconnu")
-            return redirect(request.url)
-    else:
-        if 'nom_utilisateur' in session:
-            return  redirect(url_for('index'))
-        return render_template("login.html")
+            print("Utilisateur inconnu")
+            return redirect(request.url)  
 
 #liste des noms des utlisateurs enregistrés
 utilisateurs= [{"nom":"maxime", "mdp": "123456"},
@@ -66,7 +65,7 @@ utilisateurs= [{"nom":"maxime", "mdp": "123456"},
               {"nom": "adrien", "mdp": "3546879"}
               ]
 
-@app.route ("/compteur", methods=["GET"])
+@app.route ("/compteur", methods=["POST"])
 def compteur():
     if "compteur" not in session:
         session ["compteur"] = 1
@@ -77,7 +76,7 @@ def compteur():
 
 
 #pour se déconnecter
-@app.route("/logout")
+@app.route("/logout", methods=["POST"])
 def logout():
     session.pop ('nom_utilisateur', None)
     return redirect(url_for('login'))
