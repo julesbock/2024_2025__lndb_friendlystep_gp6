@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-
+from data_brouillon.py import *
 app = Flask(__name__)
 app.secret_key = "039291df98be34655173c930564e88b1098ac6e1a173a61eacd268b6af8d7c44"
 
@@ -45,15 +45,15 @@ def login():
         nom= donnees.get("nom")
         mdp= donnees.get("mdp")
         if nom =="Maxime" and mdp== "2468":
-            return render_template("traitement.html", nom_utilisateur=nom)
+            return redirect(url_for('index'))
         else:
-            return render_template("traitement.html")
+            return redirect(request.url)
     else:
         return render_template("login.html")
 
 
 
-@app.route ("/123")
+@app.route ("/compteur")
 def compteur():
     if "compteur" not in session:
         session ["compteur"] = 1
