@@ -3,15 +3,10 @@ app = Flask(__name__)
 app.secret_key = "039291df98be34655173c930564e88b1098ac6e1a173a61eacd268b6af8d7c44"
 
 @app.route ("/")
-
-# def helloword ():
-#     return hellotext + maximetext
-
 def bonjour ():
     return render_template ("formulaires.html")
 
-@app.route('/submit', methods=['POST'])
-
+@app.route("/submit", methods=['POST'])
 def submit():
     # Récupérer les données du formulaire
     pas = request.form.get('pas')
@@ -36,12 +31,14 @@ def submit():
 if __name__ == '__main__':
     app.run(debug=True)
 
+#pour vérifier si les données rentrées par l'utilisateur sont dans le dictionnaire
 def recherche_utilisateur(nom_utilisateur, mot_de_passe):
     for utilisateur in utilisateurs:
         if utilisateur ['nom'] == nom_utilisateur and utilisateur['mdp'] == mot_de_passe:
             return utilisateur
     return None
 
+#chemin  pour se connecter
 @app.route("/login", methods=["POST", "GET"])
 def login():
     if request.method=="POST":
@@ -63,12 +60,13 @@ def login():
             return  redirect(url_for('index'))
         return render_template("login.html")
 
+#liste des noms des utlisateurs enregistrés
 utilisateurs= [{"nom":"maxime", "mdp": "123456"},
               {"nom": "jules", "mdp" : "2008"},
               {"nom": "adrien", "mdp": "3546879"}
               ]
 
-@app.route ("/compteur")
+@app.route ("/compteur", methods=["GET"])
 def compteur():
     if "compteur" not in session:
         session ["compteur"] = 1
@@ -76,3 +74,10 @@ def compteur():
         session["compteur"] = session["compteur"] + 1
     print(session)
     return "Nombre de visites"
+
+
+#pour se déconnecter
+@app.route("/logout")
+def logout():
+    session.pop ('nom_utilisateur', None)
+    return redirect(url_for('login'))

@@ -1,0 +1,9 @@
+
+{% block content%}
+<h1> Accueil</h1>
+{% if session ['nom_utilisateur']%}
+    <p> Bonjour {{ session['nom_utilisateur']|title}}, bienvenue sur l'application!</p>
+{% else %}
+    <p> Bonjour</p>
+{% endif %}
+{% endblock %}
