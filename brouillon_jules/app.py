@@ -20,7 +20,7 @@ def bonjour ():
 def login ():
     return render_template("login.html")
 
-def submit():
+# def submit():
     # Récupérer les données du formulaire
     pas = request.form.get('pas')
     kilometres = request.form.get('kilometres')
