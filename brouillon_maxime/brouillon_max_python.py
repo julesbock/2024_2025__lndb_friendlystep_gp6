@@ -43,6 +43,7 @@ def recherche_utilisateur(nom_utilisateur, mot_de_passe):
     return None
 
 #chemin  pour se connecter
+
 @app.route("/login", methods=["POST"])
 def login():
     if request.method == "POST":
@@ -58,6 +59,7 @@ def login():
         else:
             print("Utilisateur inconnu")
             return redirect(request.url)  
+
 
 #liste des noms des utlisateurs enregistrés
 utilisateurs= [{"nom":"maxime", "mdp": "123456"},
