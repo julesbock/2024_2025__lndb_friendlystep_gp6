@@ -1,11 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 # import datetime
 
 app = Flask(__name__)
-
+app.secret_key = "02458d8b8e67adc5966be5f1b3e109341e2507abfd007fa2785cde99996611e5"
 @app.route('/')
 def index():
     return render_template("index.html")
+
+users = [
+    {"nom" : 'admin', "mdp":"1234"},
+    {"nom" : 'marie', "mdp":"nsi"},
+    {"nom" : 'paul', "mdp":"azerty"}
+]
+
 
 # @app.route("/heure")
 # def heure():
@@ -31,24 +38,54 @@ def index():
 #     else:
 #         eleves_selectionnes = []
 #     return render_template("eleves.html", eleves=eleves_selectionnes)
-@app.route('/login')
-def login():
-    return render_template("login.html")
 
-@app.route('/traitement', methods=["POST", "GET"])
-def traitement():
+def recherch_user(name_user, mdp):
+    for user in users:
+        if user["nom"] == name_user and user["mdp"] == mdp:
+            return user
+    return None
+
+@app.route('/login',  methods=["POST", "GET"])
+def login():
     if request.method == "POST":
         # print(request.args)
         donnees = request.form
         nom = donnees.get('nom')
         mdp = donnees.get('mdp')
-        if nom == 'admin' and mdp == "1234":
-            return render_template("traitement.html", nom_utilisateur = nom)
+        user=recherch_user(nom, mdp)
+        if user is not None:
+            print('utilisateur trouvé')
+            session["name_user"] = user['nom']
+            print(session)
+            return redirect(url_for('index'))
         else:
-            return render_template("traitement.html")
+            print('utilisateur inconnu')
+            return redirect(request.url)
         # return "Traitement de données" render_template("traitement.html")
     else:
-        return redirect(url_for('index'))
+        print(session)
+        if "name_user" in session:
+            return redirect(url_for('index'))
+        return render_template("login.html")
+    
+@app.route('/logout')
+def logout():
+    print(session)
+    session.pop("name_user", None)
+    print(session)
+    return redirect(url_for('login'))
+
+
+@app.route('/compteur')
+def compteur():
+    if "compteur" not in session:
+        session ["compteur"] = 1
+    else:
+        session ["compteur"] += 1
+    print(session)
+    nb_visits = session ["compteur"]
+    return f"Vous avez visité cette page {nb_visits} fois."
+
 if __name__ =='__main__':
     app.run(debug=True)
 

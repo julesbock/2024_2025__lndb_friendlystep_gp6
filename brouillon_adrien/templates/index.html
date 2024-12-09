@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon appli</title>
-</head>
-<body>
-    <p>Bienvenue sur notre page web!</p>
-    <a href="{{ url_for('login') }}">Se connecter</a>
-</body>
-</html>
+{% extends "base.html"%}
+
+{% block content%}
+<h1 id="Accueil"></h1>
+
+<p>Bonjour {{ session['name_user']|title if session ["name_user"]
+else 'invité'}}, bienvenue sur notre page web!</p>
+
+{% endblock %}
