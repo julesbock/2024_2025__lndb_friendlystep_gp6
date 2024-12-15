@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-# import datetime
+import datetime
 
 app = Flask(__name__)
 app.secret_key = "02458d8b8e67adc5966be5f1b3e109341e2507abfd007fa2785cde99996611e5"
 @app.route('/')
-def index():
-    return render_template("index.html")
+def homepage():
+    return render_template("homepage.html")
 
 users = [
     {"nom" : 'admin', "mdp":"1234"},
@@ -14,13 +14,13 @@ users = [
 ]
 
 
-# @app.route("/heure")
-# def heure():
-#     date_heure = datetime.datetime.now()
-#     h = date_heure.hour
-#     m = date_heure.minute
-#     s = date_heure.second
-#     return render_template("heure.html", heure=h, minute=m, seconde=s)
+@app.route("/heure")
+def heure():
+    date_heure = datetime.datetime.now()
+    h = date_heure.hour
+    m = date_heure.minute
+    s = date_heure.second
+    return render_template("heure.html", heure=h, minute=m, seconde=s)
 
 # liste_eleves = [
 #     {"nom" : 'Dupont', "prenom": 'Jean', "classe" : '2A'},
@@ -57,7 +57,7 @@ def login():
             print('utilisateur trouvé')
             session["name_user"] = user['nom']
             print(session)
-            return redirect(url_for('index'))
+            return redirect(url_for('homepage'))
         else:
             print('utilisateur inconnu')
             return redirect(request.url)
@@ -65,7 +65,7 @@ def login():
     else:
         print(session)
         if "name_user" in session:
-            return redirect(url_for('index'))
+            return redirect(url_for('homepage'))
         return render_template("login.html")
     
 @app.route('/logout')
@@ -75,6 +75,13 @@ def logout():
     print(session)
     return redirect(url_for('login'))
 
+@app.route('/logout_confirmation')
+def logout_confirmation():
+    return render_template("logout_confirmation.html")
+
+@app.route('/formulaire')
+def formulaire():
+    return render_template("formulaire.html")
 
 @app.route('/compteur')
 def compteur():

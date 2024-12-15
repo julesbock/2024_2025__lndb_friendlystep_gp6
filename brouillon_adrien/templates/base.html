@@ -9,13 +9,14 @@
 <body>
     <nav id="navbar">
         <img src="{{ url_for('static', filename='img/img_accueil.png') }}" alt="logo" width="50">
+        <h1 id="My-Fitibit-App">My Fitibit App</h1>
         <ul>
             <li>
-                <a href="{{ url_for('index') }}">Accueil</a>
+                <a href="{{ url_for('homepage') }}">Accueil</a>
             </li>
             <li>
                 {% if session ["name_user"] %}
-                    <a href="{{ url_for('logout') }}">Se déconnecter</a>
+                <a href="#" onclick="showLogoutConfirmation()">Se déconnecter</a>
                 {% else %}
                     <a href="{{ url_for('login') }}">Se connecter</a>
                 {% endif %}
@@ -27,5 +28,39 @@
         {% block content %}{% endblock %}
     </div>
 
+    <div id="logout_confirmation" style="display: none;">
+        <p>{{ session['name_user']|title }}, êtes-vous sur de vouloir vous déconnecter ? </p>
+        <a href="{{ url_for('logout') }}"><button class="logout_button" id="yes_logout">Oui</button></a>
+        <button onclick="hideLogoutConfirmation()" class="logout_button" id="no_logout">Non</button>
+    </div>
+    <!-- Chatgpt -->
+    <script>
+        function page_name() {
+            return "Bienvenue sur " + document.title; // Exemple : utilise le titre de la page
+        }
+
+        // Fonction pour mettre à jour dynamiquement une option dans le menu
+        function updateDynamicOption() {
+            const dynamicOption = document.getElementById('dynamic_option');
+            dynamicOption.textContent = page_name(); // Remplace le texte par le résultat de page_name()
+        }
+        // function page_name() {
+        //     const selectMenu = document.getElementById('page_circulation');
+        //     const selectedValue = selectMenu.textContent;
+        // }
+        function navigateToPage() {
+            const selectMenu = document.getElementById('page_circulation');
+            const selectedValue = selectMenu.value; // Gets the `value` of the selected option
+            window.location.href = selectedValue;  // Redirects the browser to the selected URL
+        }
+        function showLogoutConfirmation() {
+            document.getElementById('logout_confirmation').style.display = 'block';
+        }
+
+        function hideLogoutConfirmation() {
+            document.getElementById('logout_confirmation').style.display = 'none';
+        }
+    </script> 
+    <!-- Chatgpt -->
 </body>
 </html>
