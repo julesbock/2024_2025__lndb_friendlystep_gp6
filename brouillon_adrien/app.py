@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import datetime
+import os
 
 app = Flask(__name__)
 app.secret_key = "02458d8b8e67adc5966be5f1b3e109341e2507abfd007fa2785cde99996611e5"
@@ -44,6 +45,17 @@ def recherch_user(name_user, mdp):
         if user["nom"] == name_user and user["mdp"] == mdp:
             return user
     return None
+def create_user(user_personnal_data):
+    name = user_personnal_data[0]  # Récupère le nom de l'utilisateur
+    user_folder_path = os.path.join("users" + str(name))  # Crée le chemin relatif pour le dossier utilisateur
+    
+    # Crée le dossier s'il n'existe pas déjà
+    if not os.path.exists(user_folder_path):
+        os.mkdir(user_folder_path)
+        print(f"Dossier pour {name} créé à : {user_folder_path}")
+    else:
+        print(f"Le dossier pour {name} existe déjà.")
+    
 
 @app.route('/login',  methods=["POST", "GET"])
 def login():
@@ -60,7 +72,12 @@ def login():
             return redirect(url_for('homepage'))
         else:
             print('utilisateur inconnu')
-            return redirect(request.url)
+            d=["Sophie"]
+            create_user(d)
+            print(d)
+            session["name_user"] = d[0]
+            print(session)
+            return redirect(url_for('homepage'))
         # return "Traitement de données" render_template("traitement.html")
     else:
         print(session)
