@@ -15,6 +15,9 @@
                 <a href="{{ url_for('homepage') }}">Accueil</a>
             </li>
             <li>
+                <a href="{{ url_for('formulaire') }}">Formulaire</a>
+            </li>
+            <li>
                 {% if session ["name_user"] %}
                 <a href="#" onclick="showLogoutConfirmation()">Se déconnecter</a>
                 {% else %}
@@ -35,19 +38,6 @@
     </div>
     <!-- Chatgpt -->
     <script>
-        function page_name() {
-            return "Bienvenue sur " + document.title; // Exemple : utilise le titre de la page
-        }
-
-        // Fonction pour mettre à jour dynamiquement une option dans le menu
-        function updateDynamicOption() {
-            const dynamicOption = document.getElementById('dynamic_option');
-            dynamicOption.textContent = page_name(); // Remplace le texte par le résultat de page_name()
-        }
-        // function page_name() {
-        //     const selectMenu = document.getElementById('page_circulation');
-        //     const selectedValue = selectMenu.textContent;
-        // }
         function navigateToPage() {
             const selectMenu = document.getElementById('page_circulation');
             const selectedValue = selectMenu.value; // Gets the `value` of the selected option
