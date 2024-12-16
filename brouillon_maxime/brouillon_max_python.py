@@ -90,7 +90,7 @@ def add_to_user_dictionnnaire():
     user_data={}
     
 
-#création d'un dictionnaire lorsque
+#création d'un dictionnaire lorsqu'il s'agit d'un nouvel utilisateur
 def new_user(name,user_data):
     utilisateurs_infos={}
     user_data[name]=utilisateurs_infos
