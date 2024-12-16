@@ -12,10 +12,13 @@
         <h1 id="My-Fitibit-App">My Fitibit App</h1>
         <ul>
             <li>
-                <a href="{{ url_for('homepage') }}">Accueil</a>
+                <a href="{{ url_for('root') }}">Accueil</a>
             </li>
             <li>
-                <a href="{{ url_for('formulaire') }}">Formulaire</a>
+                <a href="{{ url_for('forms') }}">Formulaire</a>
+            </li>
+            <li>
+                <a href="{{ url_for('account_settings') }}">Profil</a>
             </li>
             <li>
                 {% if session ["name_user"] %}

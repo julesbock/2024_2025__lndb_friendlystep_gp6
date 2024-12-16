@@ -1,0 +1,45 @@
+{% extends "base.html"%}
+
+{% block content%}
+
+<body> 
+    <h1> Vos données de santé</h1>
+    <form action = "/submit" method="">
+
+<p>
+    <label for="données_pas"> Pas :</label>
+    <input type="number" name="pas" id=" données_pas">
+</p>
+
+<p> 
+    <label for="kilomètres parcourus"> Nombre de kilomètres (km)</label>
+    <input type="number" name="kilomètres" id="kilomètres parcourus">
+</p>
+<p>
+    <label for="calories"> Calories brulées (kcal)</label>
+    <input type="number" name="calories" id="calories">
+</p>
+
+<!-- Si il y a besoin de saisir quelque chose sous la forme d'un choix multiple type QCM ou (oui/non)
+Il faut faire sur le modèle du radio, de ce type: -->
+
+<p>
+    Est ce que vous êtes reposé(e) après cette nuit ?
+    <input type= "radio" name = "sleep_quality" value= "1" id = "1">
+    <label for="choix1" >Non</label>
+    <input type= "radio" name = "sleep_quality" value= "2" id = "2">
+    <label for="choix2" >Moyennement</label>
+    <input type= "radio" name = "sleep_quality" value= "3" id = "3">
+    <label for="choix3" >Oui</label> 
+
+</p>
+
+<p>
+    <input type="submit" value="Enregister">
+</p>
+ 
+
+</body>
+
+
+{% endblock %}
