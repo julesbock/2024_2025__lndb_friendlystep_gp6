@@ -82,3 +82,17 @@ def compteur():
 def logout():
     session.pop ('nom_utilisateur', None)
     return redirect(url_for('login'))
+
+
+
+# Création d'un dictionnaire dans lequel on ajoute les éléments rentrés par l'utilisateur
+def add_to_user_dictionnnaire():
+    user_data={}
+    
+
+#création d'un dictionnaire lorsque
+def new_user(name,user_data):
+    utilisateurs_infos={}
+    user_data[name]=utilisateurs_infos
+
+
