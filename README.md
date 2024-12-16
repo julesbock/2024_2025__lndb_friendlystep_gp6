@@ -62,8 +62,12 @@ Page :
                 distance parcourue (en km)
                 calorie totale
                 ...
+<<<<<<< Updated upstream
 
             
 
 
 
+=======
+            1 bouton : pour donner les données
+>>>>>>> Stashed changes
