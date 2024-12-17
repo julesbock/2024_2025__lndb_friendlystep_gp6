@@ -49,9 +49,9 @@ def logout_confirmation():
 def forms():
     return render_template("forms.html")
 
-@app.route ('/account_settings')
-def account_settings ():
-    return render_template ("account_settings.html")
+@app.route ('/sign_up')
+def sign_up ():
+    return render_template ("sign_up.html")
 
 @app.route ('/import')
 def data_import ():
