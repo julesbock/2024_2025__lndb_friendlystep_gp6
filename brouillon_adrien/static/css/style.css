@@ -21,6 +21,12 @@ body {
     padding: 10px 20px;
 }
 
+#navbar h1 {
+    color: blueviolet;
+    position: relative;
+    left: 40px;
+    text-shadow: rgba(149, 85, 182, 0.258) 1px 1px 7px;
+}
 #navbar img {
     max-width: 50px;
     height: auto;
@@ -59,6 +65,26 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+#logout_confirmation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.logout_button {
+    text-decoration: none;
+    padding: 1%;
+    top: 7%;
+    position: relative;
+    left: 34%;
+    margin-left: 3%;
+}
 /* Styles responsives */
 @media (max-width: 768px) {
     #navbar {

@@ -3,7 +3,7 @@
 {% block content%}
 
 <h1> Bienvenue sur notre application</h1>
-<h2> Veuillez renseigner les informations suivantes :</h2>
+<h2> Pour commencer, veuillez renseigner les informations suivantes :</h2>
 <form action="" method = "post"> 
     <p> <!-- Entrée du prénom -->
         <label for = "first_name">Prénom : </label>
@@ -58,7 +58,7 @@
         </select>
         
         <!-- Un menu déroulant générant dynamiquement les années depuis l'année courante jusqu'à 1900 grâce à une boucle JavaScript. (ChatGPT) -->
-        <select name="birth_year" id="birth_year">
+        <select name = "birth_year" id= "birth_year">
             <option value="">Année</option>
             <script>
                 const currentYear = new Date().getFullYear();
@@ -79,8 +79,27 @@
 
         <input type = "radio" name = "gender_choice" value = "A" id = "Autre">
         <label for ="Autre">Autre</label>
+
+        <input type = "radio" name = "gender_choice" value = "C" id = "Croissant">
+        <label for ="Croissant">Croissant</label>
+    </p>
+
+    <p> <!-- Choix de la nationalité -->
+        <select name = "origin" id = "origin"  </p>
+
+    <p> <!-- Entrée de la taille -->
+        <label for = "height">Taille (en cm) : </label>
+        <input type = "text" name = "height" id = "height">
     </p>
     
+    <p> <!-- Entrée du poids -->
+        <label for = "weight">Poids (en kg) : </label>
+        <input type = "text" name = "weight" id = "weight">
+    </p>
+
+    <p>
+        <input type="submit" value="Enregister">
+    </p>
 </form>
 
 {% endblock %}
