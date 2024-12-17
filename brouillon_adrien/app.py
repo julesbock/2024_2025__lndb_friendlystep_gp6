@@ -25,7 +25,7 @@ def recherch_user(name_user, mdp):
 
 
 def create_user(user_personnal_data): #user_personal_data est la récupération des données et doit être un dictionnaire afin de placer dans le fichier json le dico
-    name = user_personnal_data[0]  # Récupère le nom de l'utilisateur
+    name = user_personnal_data["name"]  # Récupère le nom de l'utilisateur
     dossier_projet = os.path.dirname(__file__)
     # Chemin du dossier 'users'
     chemin_users = os.path.join(dossier_projet, "users", name)
@@ -62,12 +62,7 @@ def login():
             return redirect(url_for('homepage'))
         else:
             print('utilisateur inconnu')
-            d=["Maxime"]
-            create_user(d)
-            print(d)
-            session["name_user"] = d[0]
-            print(session)
-            return redirect(url_for('homepage'))
+            return redirect(url_for('sign_up'))
         # return "Traitement de données" render_template("traitement.html")
     else:
         print(session)
@@ -75,7 +70,29 @@ def login():
             return redirect(url_for('homepage'))
         return render_template("login.html")
     
+@app.route('/sign_up', methods=["POST", "GET"])
+def sign_up():
+    if request.method == "POST":
+        # Récupération des données du formulaire
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        username = request.form['username']
+        email = request.form['email']
+        birth_day = request.form['birth_day']
+        birth_month = request.form['birth_month']
+        birth_year = request.form['birth_year']
+        gender_choice = request.form['gender_choice']
+        origin = request.form['origin']
+        height = request.form['height']
+        weight = request.form['weight']
+        print(first_name, last_name, username,email, birth_day, birth_month, birth_year,
+              gender_choice, origin,height,weight)
 
+        # Traite ici les données reçues, par exemple, en les enregistrant dans une base de données
+        print(f"Prénom: {first_name}, Nom: {last_name}, Email: {email}")
+
+
+    return render_template("sign_up.html")
 @app.route('/logout')
 def logout():
     print(session)
