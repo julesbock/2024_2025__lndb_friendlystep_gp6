@@ -4,11 +4,11 @@
 
 <body> 
     <h1> Vos données de santé</h1>
-    <form action = "/submit" method="">
+    <form action = "{{ url_for('forms') }}" method="POST">
 
 <p>
     <label for="données_pas"> Pas :</label>
-    <input type="number" name="pas" id=" données_pas">
+    <input type="number" name="pas" id="données_pas">
 </p>
 
 <p> 

@@ -84,7 +84,7 @@ def login():
             return redirect(url_for('homepage'))
         else:
             print('utilisateur inconnu')
-            return redirect(url_for('sign_up'))
+            return render_template("login.html", error = "Utilisateur ou mot de passe inconnu. Veuillez réessayer.")
         # return "Traitement de données" render_template("traitement.html")
     else:
         print(session)
@@ -137,7 +137,7 @@ def logout():
     print(session)
     session.pop("name_user", None)
     print(session)
-    return redirect(url_for('login'))
+    return redirect(url_for('homepage'))
 
 
 @app.route('/logout_confirmation')

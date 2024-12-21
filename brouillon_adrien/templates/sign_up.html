@@ -18,7 +18,7 @@
     <p>
         <!-- Entrée du nom d'utilisateur -->
         <label for = "username" >Nom d'utilisateur : </label>
-        <input type = "text" name = "username" id = "username">
+        <input type = "text" name = "username" id = "username" onkeydown="return event.key !== ' '">
     </p>
     <p>
         <!-- Champ de type "password" -->

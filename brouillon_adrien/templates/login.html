@@ -4,10 +4,13 @@
 
 <h1>Page de connexion</h1>
 <form action="{{ url_for('login') }}",  method="POST">
+    {% if error %}
+    <p id="error", style="color:red">{{ error }}</p>
+    {% endif %}
     <p>
         <!-- Champ de type "text" -->
         <label for = "nom">Nom : </label>
-        <input type = "text" name="nom" id="nom" required>
+        <input type = "text" name="nom" id="nom" onkeydown="return event.key !== ' '" required>
     </p>
     <p>
         <!-- Champ de type "password" -->
@@ -20,6 +23,7 @@
         <!-- <button type="submit">Envoyer le formulaire</button> -->
     </p>
 </form>
+<a href="{{ url_for('sign_up') }}">Sign up</a>
 
 {% endblock %}
 
