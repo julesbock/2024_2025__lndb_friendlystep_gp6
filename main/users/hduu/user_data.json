@@ -20,6 +20,18 @@
             "kilometres parcourus": "1000",
             "calories": "1",
             "sleep_quality": "1"
+        },
+        {
+            "donnees_pas": "",
+            "kilometres parcourus": "",
+            "calories": "",
+            "sleep_quality": "1"
+        },
+        {
+            "donnees_pas": "",
+            "kilometres parcourus": "",
+            "calories": "",
+            "sleep_quality": "1"
         }
     ]
 }

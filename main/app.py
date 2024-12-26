@@ -18,7 +18,7 @@ def login():
         donnees = request.form
         nom = donnees.get('nom')
         mdp = donnees.get('mdp')
-        user=recherch_user(nom, mdp)
+        user= recherch_user(nom, mdp)
         if user is not None:
             print('utilisateur trouvé')
             session["name_user"] = user['username']
@@ -56,7 +56,7 @@ def put_data(personnal_user_data):
 
 @app.route('/forms', methods=["POST", "GET"])
 def forms():
-    if request.method == "POST":
+    if request.method == "POST" :
         personnal_data = {
             "donnees_pas" : request.form['pas'],
             "kilometres parcourus" : request.form['kilomètres'],
