@@ -1,0 +1,42 @@
+La méthode setdefault() est utilisée pour accéder à une clé dans un dictionnaire, et si cette clé n'existe pas, elle l'ajoute avec une valeur par défaut spécifiée.
+Syntaxe :
+
+dict.setdefault(key, default_value)
+
+    key : la clé que vous souhaitez vérifier ou ajouter dans le dictionnaire.
+    default_value : la valeur à attribuer à key si elle n'existe pas dans le dictionnaire. Par défaut, cette valeur est None si elle n'est pas spécifiée.
+
+Comportement :
+
+    Si la clé key existe déjà dans le dictionnaire, la méthode renvoie la valeur associée à cette clé.
+    Si la clé key n'existe pas dans le dictionnaire, elle est ajoutée avec la valeur default_value et cette valeur est renvoyée.
+
+Exemples :
+1. Si la clé existe déjà :
+
+my_dict = {'a': 1, 'b': 2}
+value = my_dict.setdefault('a', 10)  # La clé 'a' existe, donc la valeur 1 est renvoyée
+print(value)  # Affiche : 1
+print(my_dict)  # Affiche : {'a': 1, 'b': 2}
+
+2. Si la clé n'existe pas :
+
+my_dict = {'a': 1, 'b': 2}
+value = my_dict.setdefault('c', 10)  # La clé 'c' n'existe pas, donc elle est ajoutée avec la valeur 10
+print(value)  # Affiche : 10
+print(my_dict)  # Affiche : {'a': 1, 'b': 2, 'c': 10}
+
+3. Utilisation avec un dictionnaire imbriqué :
+
+my_dict = {}
+my_dict.setdefault('user_data', {}).setdefault('2024', {}).setdefault('12', {}).setdefault('28', [])
+print(my_dict)  # Affiche : {'user_data': {'2024': {'12': {'28': []}}}} 
+
+Pourquoi c'est utile :
+
+    Éviter les erreurs de clé manquante : Si vous voulez accéder à une clé sans vérifier manuellement si elle existe ou non, setdefault permet de l'ajouter avec une valeur par défaut si nécessaire.
+    Initialisation rapide de structures imbriquées : Dans des dictionnaires imbriqués, vous pouvez chaîner plusieurs appels à setdefault pour garantir que toutes les clés intermédiaires existent sans avoir à vérifier leur présence explicitement.
+
+Limites :
+
+    Renvoie la valeur : Même si vous utilisez setdefault pour initialiser une clé, elle renverra toujours la valeur associée à cette clé (qu'elle soit nouvellement ajoutée ou déjà existante). Ce comportement peut ne pas être souhaité si vous voulez juste initialiser sans renvoyer quoi que ce soit.

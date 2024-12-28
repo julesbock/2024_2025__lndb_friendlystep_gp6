@@ -1,4 +1,4 @@
-Créer une IHM qui permet d'accéder aux données de l'utilisateur et le comparer à d'autres utilsateurs (de data sur internet) et à d'autres users plus precis (amis, a travers un echange ..)
+Créer une IHM   qui permet d'accéder aux données de l'utilisateur et le comparer à d'autres utilsateurs (de data sur internet) et à d'autres users plus precis (amis, a travers un echange ..)
 
 
 
@@ -62,7 +62,6 @@ Page :
                 distance parcourue (en km)
                 calorie totale
                 ...
-<<<<<<< Updated upstream
 
 
 
@@ -70,7 +69,7 @@ dossier users
     dossier user
         2 fichiers:
             1er : données perso
-                personnal_data={
+                personnal_data={    
                     "name"
                     "surname"
                     "user_name"
@@ -136,6 +135,4 @@ dossier users
 
 
 
-=======
             1 bouton : pour donner les données
->>>>>>> Stashed changes

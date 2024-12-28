@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from tools import *
 from data import *
-import os
+import os, datetime, json
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ def login():
         donnees = request.form
         nom = donnees.get('nom')
         mdp = donnees.get('mdp')
-        user= recherch_user(nom, mdp)
+        user = recherch_user(nom, mdp)
         if user is not None:
             print('utilisateur trouvé')
             session["name_user"] = user['username']
@@ -50,9 +50,29 @@ def put_data(personnal_user_data):
     chemin_file = os.path.join(chemin_user, "user_data.json")
     with open(chemin_file, "r") as json_file:
         all_data = json.load(json_file)
-    all_data ["user_data"].append(personnal_user_data)
+    date_heure = datetime.datetime.now()
+    current_year = str(date_heure.year)
+    current_month = str(date_heure.month)
+    current_day = str(date_heure.day)
+
+
+    # if "user_data" not in all_data:
+    #     all_data["user_data"] = {}
+    # if current_year not in all_data["user_data"]:
+    #     all_data["user_data"][current_year] = {}
+    # if current_month not in all_data["user_data"][current_year]:
+    #     all_data["user_data"][current_year][current_month] = {}
+    # if current_day not in all_data["user_data"][current_year][current_month]:
+    #     all_data["user_data"][current_year][current_month][current_day] = []
+
+    all_data = check_if_all_good(all_data, current_year, current_month, current_day)
+    all_data ["user_data"][current_year][current_month][current_day] = (personnal_user_data)
     with open(chemin_file, "w") as json_file:
         json.dump(all_data, json_file, indent=4)
+
+def check_if_all_good(dic, current_year, current_month, current_day):
+    dic.setdefault('user_data', {}).setdefault(current_year, {}).setdefault(current_month, {}).setdefault(current_day, {})
+    return dic
 
 @app.route('/forms', methods=["POST", "GET"])
 def forms():
@@ -64,6 +84,7 @@ def forms():
             "sleep_quality" : request.form['sleep_quality']
         }
         # ne pas mettre d accent sinon cela va les coder ex : \u00e9 pour "é"
+
         put_data(personnal_data)
     return render_template("forms.html")
 
