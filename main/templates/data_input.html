@@ -3,12 +3,12 @@
 {% block content%}
 
 <body> 
-    <h1> Vos données de santé</h1>
-    <form action = "{{ url_for('forms') }}" method="POST">
+    <h1> Ajouter/modifier vos données d'aujourd'hui</h1>
+    <form action = "{{ url_for('data_input') }}" method="POST">
 
 <p>
-    <label for="données_pas"> Pas :</label>
-    <input type="number" name="pas" id="données_pas">
+    <label for="step_data"> Pas :</label>
+    <input type="number" name="step_data" id="step_data" required min = "0">
 </p>
 
 <p> 

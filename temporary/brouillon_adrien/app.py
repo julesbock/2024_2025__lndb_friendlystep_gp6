@@ -145,9 +145,9 @@ def logout_confirmation():
     return render_template("logout_confirmation.html")
 
 
-@app.route('/formulaire')
-def formulaire():
-    return render_template("formulaire.html")
+@app.route('/data_input')
+def data_input():
+    return render_template("data_input.html")
 
 
 

@@ -64,7 +64,7 @@ def put_data(personnal_user_data):
     #     all_data["user_data"][current_year][current_month] = {}
     # if current_day not in all_data["user_data"][current_year][current_month]:
     #     all_data["user_data"][current_year][current_month][current_day] = []
-
+    
     all_data = check_if_all_good(all_data, current_year, current_month, current_day)
     all_data ["user_data"][current_year][current_month][current_day] = (personnal_user_data)
     with open(chemin_file, "w") as json_file:
@@ -74,8 +74,8 @@ def check_if_all_good(dic, current_year, current_month, current_day):
     dic.setdefault('user_data', {}).setdefault(current_year, {}).setdefault(current_month, {}).setdefault(current_day, {})
     return dic
 
-@app.route('/forms', methods=["POST", "GET"])
-def forms():
+@app.route('/data_input', methods=["POST", "GET"])
+def data_input ():
     if request.method == "POST" :
         personnal_data = {
             "donnees_pas" : request.form['pas'],
@@ -86,7 +86,7 @@ def forms():
         # ne pas mettre d accent sinon cela va les coder ex : \u00e9 pour "é"
 
         put_data(personnal_data)
-    return render_template("forms.html")
+    return render_template("data_input.html")
 
 
 @app.route ('/import')
