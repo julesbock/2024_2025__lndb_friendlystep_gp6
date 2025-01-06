@@ -27,7 +27,7 @@
 <input type = "email" name = "email" id = "email">
 </p>
 
-<p> <!-- Entrée de la date de naissance (menu déroulant)-->
+<p> <!-- date de naissance -->
     <label for = "birth_date">Date de naissance :</label>
         
     <select name = "birth_day" id = "birth_day">
@@ -66,7 +66,7 @@
     </select>
 </p>
 
-<p> <!-- Choix du sexe -->
+<p> <!-- sexe -->
     Sexe : 
     <input type = "radio" name = "gender_choice" value = "H" id = "Homme">
     <label for ="Homme">Homme</label>
@@ -81,7 +81,7 @@
     <label for ="Autre">Autre</label>
 
 </p>
-<p> <!-- Choix de la nationalité -->
+<p> <!-- nationalité -->
     <label for = "nationality">Nationalité : </label>
     <select name="nationality" id="nationality">
         <option value="">Sélectionnez une nationalité</option>
@@ -266,7 +266,19 @@
     </select>
 </p>
 
+<p> <!-- taille -->
+    <label for = "height">Taille (en cm) : </label>
+    <input type = "number" min = 0 name = "height" id = "height">
+</p>
 
+<p> <!-- poids -->
+    <label for = "weight">Poids (en kg) : </label>
+    <input type = "number" min = 0 name = "weight" id = "weight">
+</p>
+
+<p>
+    <input type="submit" value="Enregister">
+</p>
 
 
 
