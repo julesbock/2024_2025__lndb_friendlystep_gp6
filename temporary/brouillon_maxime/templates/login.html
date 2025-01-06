@@ -1,27 +1,28 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon appli</title>
-</head>
-<body>
-    <h1>Page de connexion</h1>
-    <form action="{{ url_for('login') }}" method="POST"> <!-- Correction ici -->
-        <p>
-            <!-- Champ de type "text" -->
-            <label for="nom">Nom : </label>
-            <input type="text" name="nom" id="nom" required>
-        </p>
-        <p>
-            <!-- Champ de type "password" -->
-             <label for="mdp">Mot de passe : </label>
-             <input type="password" name="mdp" id="mdp" required>
-        </p>
-        <p>
-            <!-- Bouton d'envoi du formulaire -->
-            <input type="submit" value="Se connecter">
-        </p>
-    </form>
-</body>
-</html>
+{% extends "base.html"%}
+
+{% block content%}
+
+<h1>Page de connexion</h1>
+<form action="{{ url_for('login') }}",  method="POST">
+    {% if error %}
+    <p id="error", style="color:red">{{ error }}</p>
+    {% endif %}
+    <p>
+        <!-- Champ de type "text", le onkeydown permet d empecher le client de mettre un espace qui crée des bugs sur la creation/recherche du dossier après-->
+        <label for = "nom">Nom : </label>
+        <input type = "text" name="nom" id="nom" onkeydown="return event.key !== ' '" required> 
+    </p>
+    <p>
+        <!-- Champ de type "password" -->
+         <label for="mdp">Mot de passe : </label>
+         <input type="password" name="mdp" id="mdp" required>
+    </p>
+    <p>
+        <!-- Bouton d'envoi du formulaire -->
+        <input type="submit" value="Se connecter">
+        <!-- <button type="submit">Envoyer le formulaire</button> -->
+    </p>
+</form>
+<a href="{{ url_for('sign_up') }}">Sign up</a>
+
+{% endblock %}
