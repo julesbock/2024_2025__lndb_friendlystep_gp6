@@ -78,7 +78,7 @@ def check_if_all_good(dic, current_year, current_month, current_day):
 def data_input ():
     if request.method == "POST" :
         personnal_data = {
-            "donnees_pas" : request.form['pas'],
+            "donnees_pas" : request.form['step_data'],
             "kilometres parcourus" : request.form['kilomètres'],
             "calories" : request.form['calories'],
             "sleep_quality" : request.form['sleep_quality']
@@ -116,7 +116,70 @@ def sign_up():
         return redirect(url_for('root'))
     
     return render_template("sign_up.html")
+@app.route('/dashboard')
+def dashboard():
+    # Obtenir la date actuelle
+    date_heure = datetime.datetime.now()
+    current_year = date_heure.year
+    current_month = date_heure.month
+    current_day = date_heure.day
 
+    # Récupérer les données de l'utilisateur pour aujourd'hui, les 7 derniers jours, le mois, et l'année
+    user_data = get_user_data()
+
+    # Données pour le jour même
+    today_data = user_data["user_data"][str(current_year)][str(current_month)].get(str(current_day), {})
+
+    # Données pour les 7 derniers jours
+    last_7_days_data = get_last_7_days_data(user_data, current_year, current_month, current_day)
+
+    # Données pour le mois actuel
+    month_data = get_month_data(user_data, current_year, current_month, current_day)
+
+    # Données pour l'année actuelle
+    year_data = get_year_data(user_data, current_year, current_month)
+
+    # Passer les données au template
+    return render_template("dashboard.html", 
+                           today_data=today_data, 
+                           last_7_days_data=last_7_days_data, 
+                           month_data=month_data,
+                           year_data=year_data)
+def get_user_data():
+    # Récupérer les données de l'utilisateur à partir du fichier JSON
+    dossier_projet = os.path.dirname(__file__)
+    chemin_user = os.path.join(dossier_projet, "users", session["name_user"], "user_data.json")
+    with open(chemin_user, "r") as json_file:
+        all_data = json.load(json_file)
+    return all_data
+
+def get_last_7_days_data(user_data, current_year, current_month, current_day):
+    # Récupérer les données des 7 derniers jours
+    last_7_days = []
+    for i in range(7):
+        day = current_day - i
+        if day <= 0:
+            current_month -= 1
+            if current_month <= 0:
+                current_year -= 1
+                current_month = 12
+            day = calendar.monthrange(current_year, current_month)[1] + day
+        last_7_days.append(user_data["user_data"][str(current_year)][str(current_month)].get(str(day), {}))
+    return last_7_days
+
+def get_month_data(user_data, current_year, current_month, current_day):
+    # Récupérer les données du mois actuel
+    month_data = {}
+    for day in range(1, current_day + 1):
+        month_data[day] = user_data["user_data"][str(current_year)][str(current_month)].get(str(day), {})
+    return month_data
+
+def get_year_data(user_data, current_year, current_month):
+    # Récupérer les données de l'année actuelle
+    year_data = {}
+    for month in range(1, current_month + 1):
+        year_data[month] = user_data["user_data"][str(current_year)].get(str(month), {})
+    return year_data
 
 if __name__ =='__main__':
     app.run(debug=True)

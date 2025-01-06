@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Dashboard de l'utilisateur</h1>
+
+    <!-- Affichage des données du jour -->
+    <h2>Jour actuel</h2>
+    <div>
+        <p>Pas : {{ today_data.donnees_pas }}</p>
+        <p>Kilomètres : {{ today_data.kilometres_parcourus }}</p>
+        <p>Calories : {{ today_data.calories }}</p>
+        <p>Qualité du sommeil : {{ today_data.sleep_quality }}</p>
+    </div>
+
+    <!-- Affichage des données des 7 derniers jours -->
+    <h2>7 derniers jours</h2>
+    <canvas id="last7DaysChart"></canvas>
+
+    <h2>Mois actuel</h2>
+    <canvas id="monthChart"></canvas>
+
+    <h2>Année actuelle</h2>
+    <canvas id="yearChart"></canvas>
+
+    <script>
+        // Passer les données `year_data`, `month_data` et `last_7_days_data` de Python (Flask) vers JavaScript
+        var yearData = JSON.parse('{{ year_data | tojson | safe }}');
+        var monthData = JSON.parse('{{ month_data | tojson | safe }}');
+        var last7DaysData = JSON.parse('{{ last_7_days_data | tojson | safe }}');
+
+        // Histogramme pour les 7 derniers jours
+        var ctx = document.getElementById('last7DaysChart').getContext('2d');
+        var last7DaysChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['J-6', 'J-5', 'J-4', 'J-3', 'J-2', 'J-1', 'Aujourd\'hui'],
+                datasets: [
+                    {
+                        label: 'Pas',
+                        data: last7DaysData.map(function(day) { return day.donnees_pas; }),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Kilomètres',
+                        data: last7DaysData.map(function(day) { return day.kilometres_parcourus; }),
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Calories',
+                        data: last7DaysData.map(function(day) { return day.calories; }),
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Qualité du sommeil',
+                        data: last7DaysData.map(function(day) { return day.sleep_quality; }),
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 1
+                    }
+                ]
+            }
+        });
+
+        // Histogramme pour le mois actuel
+        var ctx2 = document.getElementById('monthChart').getContext('2d');
+        var monthChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(monthData),
+                datasets: [
+                    {
+                        label: 'Pas',
+                        data: Object.values(monthData).map(function(day) { return day.donnees_pas; }),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Kilomètres',
+                        data: Object.values(monthData).map(function(day) { return day.kilometres_parcourus; }),
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Calories',
+                        data: Object.values(monthData).map(function(day) { return day.calories; }),
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Qualité du sommeil',
+                        data: Object.values(monthData).map(function(day) { return day.sleep_quality; }),
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 1
+                    }
+                ]
+            }
+        });
+
+        // Histogramme pour l'année actuelle
+        var ctx3 = document.getElementById('yearChart').getContext('2d');
+        var yearChart = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(yearData),
+                datasets: [
+                    {
+                        label: 'Pas',
+                        data: Object.values(yearData).map(function(month) { return month.donnees_pas; }),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Kilomètres',
+                        data: Object.values(yearData).map(function(month) { return month.kilometres_parcourus; }),
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Calories',
+                        data: Object.values(yearData).map(function(month) { return month.calories; }),
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Qualité du sommeil',
+                        data: Object.values(yearData).map(function(month) { return month.sleep_quality; }),
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 1
+                    }
+                ]
+            }
+        });
+    </script>
+</body>
+</html>
