@@ -9,13 +9,16 @@
 <body>
     <nav id="navbar">
         <img src="{{ url_for('static', filename='img/img_accueil.png') }}" alt="logo" width="50">
-        <h1 id="My-Fitibit-App">My Fitibit App</h1>
+        <h1 id="frendly_steps">Friendly steps </h1>
         <ul>
             <li>
-                <a href="{{ url_for('homepage') }}">Accueil</a>
+                <a href="{{ url_for('root') }}">Accueil</a>
             </li>
             <li>
                 <a href="{{ url_for('data_input') }}">Ajouter des données</a>
+            </li>
+            <li>
+                <a>Profil</a>
             </li>
             <li>
                 {% if session ["name_user"] %}
@@ -33,7 +36,7 @@
 
     <div id="logout_confirmation" style="display: none;">
         <p>{{ session['name_user']|title }}, êtes-vous sur de vouloir vous déconnecter ? </p>
-        <a href="{{ url_for('logout') }}"><button class="logout_button" id="yes_logout">Oui</button></a>
+        <a href="{{ url_for('logout') }}"><button type="button" class="logout_button" id="yes_logout">Oui</button></a>
         <button onclick="hideLogoutConfirmation()" class="logout_button" id="no_logout">Non</button>
     </div>
     <!-- Chatgpt -->
