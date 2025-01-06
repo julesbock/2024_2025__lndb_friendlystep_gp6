@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+from datetime import date
 from tools import *
 from data import *
 import os, datetime, json
@@ -76,17 +77,19 @@ def check_if_all_good(dic, current_year, current_month, current_day):
 
 @app.route('/data_input', methods=["POST", "GET"])
 def data_input ():
+    today_date = date.today().strftime("%Y-%m-%d")
     if request.method == "POST" :
         personnal_data = {
-            "donnees_pas" : request.form['pas'],
-            "kilometres parcourus" : request.form['kilomètres'],
-            "calories" : request.form['calories'],
-            "sleep_quality" : request.form['sleep_quality']
+            "step_data" : request.form['step_data'],
+            "distance_data" : request.form['distance_data'],
+            "calories_data" : request.form['calories_data'],
+            "sleep_duration_data" : request.form['sleep_duration_data'],
+            "sleep_score_data" : request.form['sleep_score_data']
         }
         # ne pas mettre d accent sinon cela va les coder ex : \u00e9 pour "é"
 
         put_data(personnal_data)
-    return render_template("data_input.html")
+    return render_template(request, "data_input.html", , {'today_date': today_date}))
 
 
 @app.route ('/import')

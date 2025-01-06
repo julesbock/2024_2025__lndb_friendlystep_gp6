@@ -3,39 +3,36 @@
 {% block content%}
 
 <body> 
-    <h1> Ajouter/modifier vos données d'aujourd'hui</h1>
+    <h1>Ajouter/modifier vos données du <span>{{ today_date }}</span></h1>
     <form action = "{{ url_for('data_input') }}" method="POST">
         <p>
-            <label for="step_data"> Pas :</label>
+            <label for="step_data">Pas : </label>
             <input type="number" name="step_data" id="step_data" required min = "0">
         </p>
 
         <p> 
-            <label for="kilomètres parcourus"> Nombre de kilomètres parcourus (km)</label>
-            <input type="number" name="kilomètres" id="kilomètres parcourus">
+            <label for="distance_data">Nombre de kilomètres parcourus (km) : </label>
+            <input type="number" name="distance_data" id="distance_data" required min = "0" step = "0.01">
         </p>
         
         <p>
-            <label for="calories"> Calories brulées (kcal)</label>
-            <input type="number" name="calories" id="calories">
+            <label for="calories_data">Calories brulées (kcal)</label>
+            <input type="number" name="calories_data" id="calories_data" required min = "0" >
         </p>
         
         <p>
-            Est ce que vous êtes reposé(e) après cette nuit ?
-            <input type= "radio" name = "sleep_quality" value= "1" id = "1">
-            <label for="choix1" >Non</label>
-            <input type= "radio" name = "sleep_quality" value= "2" id = "2">
-            <label for="choix2" >Moyennement</label>
-            <input type= "radio" name = "sleep_quality" value= "3" id = "3">
-            <label for="choix3" >Oui</label> 
-
-</p>
-
-<p>
-    <input type="submit" value="Enregister">
-</p>
+            <label for = "sleep_duration_data">Temps de sommeil cette nuit (heures : minutes) :</label>
+            <input type = "time" name = "sleep_duration_data" id = "sleep_duration_data" required min = "0" required max = "24">
+        </p>
+        <p>
+            <label for = "sleep_score_data">Quelle note attribuerez vous à votre sommeil cette nuit ? </label>
+            <input type = "number" name = "sleep_score_data" id = "sleep_score_data" required min = "0" required max = "10" step = "0.1">
+        </p>
+        
+        <p>
+            <input type="submit" value="Enregister les données">
+        </p>
  
-
 </body>
 
 
