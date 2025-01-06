@@ -136,3 +136,47 @@ dossier users
 
 
             1 bouton : pour donner les données
+
+
+
+
+6 janvier 2025 : 
+
+    On a fait:
+
+        Un site fonctionnel dans lequel une petite interface générale et un peu de CSS (et java)
+        Sur ce site, nous avons une page de connexion, depuis laquelle on peux accéder à la page sign up(fonctionnelle), un bouton déconnexion(si connecté, fonctionnel).
+        Une petite page d'accueil, et une page formulaire que l'on peux remplir et avec laquelle on peux envoyer et sauvegarder les données dans les dossiers personnels (fonctionnel)
+        Structure de data fonctionnel (un tout petit point à revoir)
+        Structure :
+        {
+            année: {
+                mois: {
+                    jour: {}
+                }
+            }
+        }
+
+        - Chaque jour est une clé avec un dictionnaire vide comme valeur.
+        - Les années passées incluent tous les mois et jours.
+        - L'année en cours inclut uniquement les mois jusqu'au mois actuel et les jours jusqu'au jour actuel.
+        
+
+    Il reste à faire : 
+
+        Profil pour povoir modifier les donnees personnelles (sur la page mais désactivé)
+        Interface montrant et résumant les données (ajd, 7 derniers jours, dernier mois, derniere année, n importe quel jour)
+        Permettre la création de groupe entre users (que l'on choisit en mettant 1 username et enverra une demande(notif)) et la comparaison de données dans ce meme groupe (classement)
+        
+
+
+    Bonus : 
+        Envoi de mail de rappel
+        Mail recap
+        Adaptation de la page
+        Regarder par rapport à la sécurité
+        Meilleur CSS
+        business (vente des données aux grosses boîtes)
+        ...
+
+    Pourcentage d'avancement du projet : 50,1%

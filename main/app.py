@@ -64,7 +64,7 @@ def put_data(personnal_user_data):
     #     all_data["user_data"][current_year][current_month] = {}
     # if current_day not in all_data["user_data"][current_year][current_month]:
     #     all_data["user_data"][current_year][current_month][current_day] = []
-    
+
     all_data = check_if_all_good(all_data, current_year, current_month, current_day)
     all_data ["user_data"][current_year][current_month][current_day] = (personnal_user_data)
     with open(chemin_file, "w") as json_file:
