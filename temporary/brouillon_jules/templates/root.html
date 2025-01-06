@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friendly step</title>
-</head>
+{% extends "base.html"%}
 
-<body> 
-    <h1>Notre projet</h1>
-    <p>
-        Notre objectif est de favoriser la mobilité de chacun en encourageant chacun à adopter un meilleur mode de vie
+{% block content%}
+<h1 id="Accueil"></h1>
 
-    </p>
-    
-    <p>
-        <a href="/account_settings">
-            <button>Créer un compte</button>
-        </a>
-    </p>
-    
-    <p>
-        <a href="/login">
-            <button>Se connecter</button>
-        </a>
-    </p>
-</body>
+<p>Bonjour {{ session['name_user']|title if session ["name_user"]
+else 'invité'}}, bienvenue sur notre page web!</p>
+
+{% endblock %}
