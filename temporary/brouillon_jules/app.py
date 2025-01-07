@@ -77,6 +77,7 @@ def check_if_all_good(dic, current_year, current_month, current_day):
 
 @app.route('/data_input', methods=["POST", "GET"])
 def data_input ():
+
     today_date = date.today().strftime("%Y-%m-%d")
     if request.method == "POST" :
         personnal_data = {
@@ -89,8 +90,7 @@ def data_input ():
         # ne pas mettre d accent sinon cela va les coder ex : \u00e9 pour "é"
 
         put_data(personnal_data)
-    return render_template(request, "data_input.html", , {'today_date': today_date}))
-
+    return render_template(request, "data_input.html", {'today_date': today_date})
 
 @app.route ('/import')
 def data_import ():
