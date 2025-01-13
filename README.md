@@ -179,4 +179,4 @@ dossier users
         business (vente des données aux grosses boîtes)
         ...
 
-    Pourcentage d'avancement du projet : 50,1%
+    Pourcentage d'avancement du projet : 50,2%
