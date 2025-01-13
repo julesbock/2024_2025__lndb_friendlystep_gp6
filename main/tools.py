@@ -29,6 +29,9 @@ def put_data(personnal_user_data):
     with open(chemin_file, "w") as json_file:
         json.dump(all_data, json_file, indent=4)
 
+def get_data ():
+    pass
+
 def check_if_all_good(dic, current_year, current_month, current_day):
     dic.setdefault('user_data', {}).setdefault(current_year, {}).setdefault(current_month, {}).setdefault(current_day, {})
     return dic

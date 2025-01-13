@@ -49,6 +49,7 @@ def logout_confirmation():
 def data_input ():
     locale.setlocale(locale.LC_TIME, "French")
     today_date = date.today().strftime("%d %B %Y")
+    existing_data = get_data()
     if request.method == "POST" :
         personnal_data = {
             "step_data" : request.form['step_data'],
@@ -58,11 +59,8 @@ def data_input ():
             "sleep_score_data" : request.form['sleep_score_data']
         }
         put_data(personnal_data)
-    return render_template("data_input.html", today_date = today_date)
-
-@app.route ('/import')
-def data_import ():
-    return render_template ("data_import.html")
+    existing_data = personnal_data
+    return render_template("data_input.html", today_date = today_date, data = existing_data)
     
 @app.route('/sign_up', methods=["POST", "GET"])
 def sign_up():
