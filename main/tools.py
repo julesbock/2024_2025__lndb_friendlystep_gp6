@@ -3,6 +3,36 @@ from app import *
 from data import *
 import json, os, datetime, calendar
 
+def put_data(personnal_user_data): 
+    dossier_projet = os.path.dirname(__file__)
+    chemin_user = os.path.join(dossier_projet, "users", session["name_user"])
+    chemin_file = os.path.join(chemin_user, "user_data.json")
+    with open(chemin_file, "r") as json_file:
+        all_data = json.load(json_file)
+    date_heure = datetime.datetime.now()
+    current_year = str(date_heure.year)
+    current_month = str(date_heure.month)
+    current_day = str(date_heure.day)
+
+
+    # if "user_data" not in all_data:
+    #     all_data["user_data"] = {}
+    # if current_year not in all_data["user_data"]:
+    #     all_data["user_data"][current_year] = {}
+    # if current_month not in all_data["user_data"][current_year]:
+    #     all_data["user_data"][current_year][current_month] = {}
+    # if current_day not in all_data["user_data"][current_year][current_month]:
+    #     all_data["user_data"][current_year][current_month][current_day] = []
+
+    all_data = check_if_all_good(all_data, current_year, current_month, current_day)
+    all_data ["user_data"][current_year][current_month][current_day] = (personnal_user_data)
+    with open(chemin_file, "w") as json_file:
+        json.dump(all_data, json_file, indent=4)
+
+def check_if_all_good(dic, current_year, current_month, current_day):
+    dic.setdefault('user_data', {}).setdefault(current_year, {}).setdefault(current_month, {}).setdefault(current_day, {})
+    return dic
+
 def recherch_user(name_user, mdp):
     dossier_projet = os.path.dirname(__file__)
     chemin_users_list = os.path.join(dossier_projet, "users", "users_list.json")
