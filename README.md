@@ -177,6 +177,7 @@ dossier users
         Regarder par rapport à la sécurité
         Meilleur CSS
         business (vente des données aux grosses boîtes)
+        Régler le probleme de la création de 2 comptes en meme temps
         ...
 
     Pourcentage d'avancement du projet : 50,1%
