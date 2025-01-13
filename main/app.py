@@ -49,6 +49,7 @@ def logout_confirmation():
 def data_input ():
     locale.setlocale(locale.LC_TIME, "French")
     today_date = date.today().strftime("%d %B %Y")
+    existing_data = get_data()
     if request.method == "POST" :
         personnal_data = {
             "step_data" : request.form['step_data'],
@@ -58,11 +59,8 @@ def data_input ():
             "sleep_score_data" : request.form['sleep_score_data']
         }
         put_data(personnal_data)
-    return render_template("data_input.html", today_date = today_date)
-
-@app.route ('/import')
-def data_import ():
-    return render_template ("data_import.html")
+    existing_data = personnal_data
+    return render_template("data_input.html", today_date = today_date, data = existing_data)
     
 @app.route('/sign_up', methods=["POST", "GET"])
 def sign_up():
@@ -95,7 +93,7 @@ def profile():
     chemin_file = os.path.join(chemin_user, "user_data.json")
     with open(chemin_file, 'r') as json_file:
         user_data = json.load(json_file)
-    user_data = modify_data_user(user_data)
+    user_data = modify_data_user(user_data) # il nous faut encore définir cette fonction mais qui ressemblerait à celle de création des données de l'utilisateur présentes dans le tool
     with open(chemin_file, 'w') as json_file:
         user_data = json.dump(user_data, json_file, indent = 4)
     return render_template("profil_settings.html", user=user_data)
