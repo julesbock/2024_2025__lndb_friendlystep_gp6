@@ -167,6 +167,7 @@ dossier users
         Profil pour povoir modifier les donnees personnelles (sur la page mais désactivé)
         Interface montrant et résumant les données (ajd, 7 derniers jours, dernier mois, derniere année, n importe quel jour)
         Permettre la création de groupe entre users (que l'on choisit en mettant 1 username et enverra une demande(notif)) et la comparaison de données dans ce meme groupe (classement)
+        Faire en sorte qu on ne puisse ajouter de données si pas co
         
 
 
