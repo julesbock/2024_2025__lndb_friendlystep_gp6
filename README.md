@@ -180,4 +180,4 @@ dossier users
         Régler le probleme de la création de 2 comptes en meme temps
         ...
 
-    Pourcentage d'avancement du projet : 50,1%
+    Pourcentage d'avancement du projet : 50,2%
