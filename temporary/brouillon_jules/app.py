@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import date
 from tools import *
 from data import *
-import os, datetime, json
+import os, datetime, json, locale
 
 app = Flask(__name__)
 
@@ -77,8 +77,8 @@ def check_if_all_good(dic, current_year, current_month, current_day):
 
 @app.route('/data_input', methods=["POST", "GET"])
 def data_input ():
-
-    today_date = date.today().strftime("%Y-%m-%d")
+    locale.setlocale(locale.LC_TIME, "French")
+    today_date = date.today().strftime("%d %B %Y")
     if request.method == "POST" :
         personnal_data = {
             "step_data" : request.form['step_data'],
@@ -87,14 +87,9 @@ def data_input ():
             "sleep_duration_data" : request.form['sleep_duration_data'],
             "sleep_score_data" : request.form['sleep_score_data']
         }
-        # ne pas mettre d accent sinon cela va les coder ex : \u00e9 pour "é"
-
         put_data(personnal_data)
-    return render_template(request, "data_input.html", {'today_date': today_date})
+    return render_template("data_input.html", today_date = today_date)
 
-@app.route ('/import')
-def data_import ():
-    return render_template ("data_import.html")
     
 @app.route('/sign_up', methods=["POST", "GET"])
 def sign_up():

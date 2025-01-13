@@ -7,17 +7,17 @@
     <form action = "{{ url_for('data_input') }}" method="POST">
         <p>
             <label for="step_data">Pas : </label>
-            <input type="number" name="step_data" id="step_data" required min = "0">
+            <input type="number" name="step_data" id="step_data" required min = "0" placeholer = "Nombre de pas">
         </p>
 
         <p> 
-            <label for="distance_data">Nombre de kilomètres parcourus (km) : </label>
-            <input type="number" name="distance_data" id="distance_data" required min = "0" step = "0.01">
+            <label for="distance_data">Nombre de kilomètres parcourus : </label>
+            <input type="number" name="distance_data" id="distance_data" required min = "0" step = "0.01" placeholder="Kilomètres">
         </p>
         
         <p>
-            <label for="calories_data">Calories brulées (kcal)</label>
-            <input type="number" name="calories_data" id="calories_data" required min = "0" >
+            <label for="calories_data">Calories brulées </label>
+            <input type="number" name="calories_data" id="calories_data" required min = "0" placeholder="Kilocalories">
         </p>
         
         <p>
@@ -26,7 +26,7 @@
         </p>
         <p>
             <label for = "sleep_score_data">Quelle note attribuerez vous à votre sommeil cette nuit ? </label>
-            <input type = "number" name = "sleep_score_data" id = "sleep_score_data" required min = "0" required max = "10" step = "0.1">
+            <input type = "number" name = "sleep_score_data" id = "sleep_score_data" required min = "0" required max = "10" step = "0.1" placeholder = "Sur 10">
         </p>
         
         <p>
