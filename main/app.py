@@ -95,7 +95,7 @@ def profile():
     chemin_file = os.path.join(chemin_user, "user_data.json")
     with open(chemin_file, 'r') as json_file:
         user_data = json.load(json_file)
-    user_data = modify_data_user(user_data)
+    user_data = modify_data_user(user_data) # il nous faut encore définir cette fonction mais qui ressemblerait à celle de création des données de l'utilisateur présentes dans le tool
     with open(chemin_file, 'w') as json_file:
         user_data = json.dump(user_data, json_file, indent = 4)
     return render_template("profil_settings.html", user=user_data)
