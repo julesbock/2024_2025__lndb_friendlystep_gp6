@@ -22,7 +22,7 @@ body {
 }
 
 #navbar h1 {
-    color: blueviolet;
+    color: rgb(255, 255, 255);
     position: relative;
     left: 10%;
     text-shadow: rgba(149, 85, 182, 0.258) 1px 1px 7px;
