@@ -46,7 +46,6 @@ def recherch_user(name_user, mdp):
             return user
     return None
 
-
 def create_and_register_user(user_personnal_data):
     name = user_personnal_data["username"] 
     dossier_projet = os.path.dirname(__file__)
@@ -114,8 +113,7 @@ def create_user(user_personnal_data, chemin_users):
         json.dump(user_personnal_data, json_file, indent=4)
     the_dic = create_all_dates_dic()
     with open(chemin_second_file, "w") as json_file:
-        json.dump(the_dic, json_file, indent=4)
-    
+        json.dump(the_dic, json_file, indent=4)   
 
 def register_user(username, mdp, chemin_projet):
     chemin_users_list = os.path.join(chemin_projet, "users", "users_list.json")
