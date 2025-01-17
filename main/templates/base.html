@@ -18,7 +18,7 @@
                 <a href="{{ url_for('data_input') }}">Ajouter des données</a>
             </li>
             <li>
-                <a>Profil</a>
+                <a href="{{ url_for('profile') }}">Profil</a>
             </li>
             <li>
                 {% if session ["name_user"] %}
