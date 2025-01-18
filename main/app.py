@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import date
 from tools import *
 from data import *
-import os, datetime, json, locale
+import os, datetime, json, locale, platform
 
 app = Flask(__name__)
 
@@ -47,7 +47,10 @@ def logout_confirmation():
 
 @app.route('/data_input', methods=["POST", "GET"])
 def data_input ():
-    locale.setlocale(locale.LC_TIME, "French")
+    if platform.system() == "windows":
+        locale.setlocale(locale.LC_TIME, "French_France")
+    else:
+        locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
     today_date = date.today().strftime("%d %B %Y")
     existing_data = get_data("user_data.json")
     if request.method == "POST" :
@@ -55,6 +58,7 @@ def data_input ():
             "step_data" : request.form['step_data'],
             "distance_data" : request.form['distance_data'],
             "calories_data" : request.form['calories_data'],
+            "floors_data" : request.form['floors_data'],
             "sleep_duration_data" : request.form['sleep_duration_data'],
             "sleep_score_data" : request.form['sleep_score_data']
         }
