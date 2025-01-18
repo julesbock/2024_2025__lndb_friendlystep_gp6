@@ -13,7 +13,7 @@
             id="step_data" 
             required min = "0" 
             placeholder = "Nombre de pas"
-            value = "{{ data['step_data'] }}"
+            value="{{ data['step_data'] if data.get('step_data') else '' }}"
             >
         </p>
 
@@ -88,5 +88,10 @@
 
 </body>
 
-
+<script>
+    function afficherModification() {
+      // Cette fonction peut être utilisée pour afficher en temps réel les modifications dans un autre endroit de la page
+    }
+</script>
+    
 {% endblock %}

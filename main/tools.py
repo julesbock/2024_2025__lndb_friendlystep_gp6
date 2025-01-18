@@ -18,6 +18,24 @@ def give_data(file_wanted, data):
     with open(chemin_file, "w") as json_file:
         json.dump(data, json_file, indent=4)
 
+def check_if_data_exists(existing_data):
+    date_time = datetime.datetime.now()
+    current_year = str(date_time.year)
+    current_month = str(date_time.month)
+    current_day = str(date_time.day)
+    if current_year in existing_data["user_data"]:
+        if current_month in existing_data["user_data"][current_year]:
+            if current_day in existing_data["user_data"][current_year][current_month]:
+                # Si des données existent, récupérer celles-ci
+                existing_data_for_today = existing_data["user_data"][current_year][current_month][current_day]
+            else:
+                existing_data_for_today = {}
+        else:
+            existing_data_for_today = {}
+    else:
+        existing_data_for_today = {}
+    return existing_data_for_today
+
 def put_data_in_user_data(personnal_user_data): 
     all_data = get_data("user_data.json")
     date_heure = datetime.datetime.now()

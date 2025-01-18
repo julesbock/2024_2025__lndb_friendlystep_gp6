@@ -47,12 +47,22 @@ def logout_confirmation():
 
 @app.route('/data_input', methods=["POST", "GET"])
 def data_input ():
+    date_time = datetime.datetime.now()
+    current_year = str(date_time.year)
+    current_month = str(date_time.month)
+    current_day = str(date_time.day)
     if platform.system() == "windows":
         locale.setlocale(locale.LC_TIME, "French_France")
     else:
         locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
     today_date = date.today().strftime("%d %B %Y")
+
     existing_data = get_data("user_data.json")
+    existing_data_for_today = {}
+    personnal_data = {}
+
+    check_if_data_exists (existing_data)
+    
     if request.method == "POST" :
         personnal_data = {
             "step_data" : request.form['step_data'],
@@ -62,9 +72,10 @@ def data_input ():
             "sleep_duration_data" : request.form['sleep_duration_data'],
             "sleep_score_data" : request.form['sleep_score_data']
         }
-        existing_data = personnal_data
-        put_data_in_user_data(personnal_data)
-    return render_template("data_input.html", today_date = today_date, data = existing_data)
+    existing_data["user_data"][current_year][current_month][current_day] = personnal_data
+    existing_data_for_today = personnal_data
+    put_data_in_user_data(personnal_data)
+    return render_template("data_input.html", today_date = today_date, data = existing_data_for_today)
     
 @app.route('/sign_up', methods=["POST", "GET"])
 def sign_up():
