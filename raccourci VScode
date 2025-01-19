@@ -1,0 +1,79 @@
+Gestion des fichiers
+
+    Nouveau fichier : Ctrl + N
+    Ouvrir un fichier : Ctrl + O
+    Enregistrer : Ctrl + S
+    Enregistrer sous : Ctrl + Shift + S
+    Fermer un fichier : Ctrl + W
+    Fermer tout : Ctrl + K, Ctrl + W
+    Explorer (Ouvrir/fermer) : Ctrl + Shift + E
+
+Navigation dans les fichiers
+
+    Changer d'onglet : Ctrl + Tab
+    Revenir à l'onglet précédent : Ctrl + Shift + Tab
+    Naviguer vers une ligne spécifique : Ctrl + G
+    Rechercher un fichier : Ctrl + P
+    Ouvrir la palette de commandes : Ctrl + Shift + P
+
+Recherche et remplacement
+
+    Rechercher dans un fichier : Ctrl + F
+    Rechercher et remplacer : Ctrl + H
+    Rechercher dans tout le projet : Ctrl + Shift + F
+
+Édition
+
+    Copier : Ctrl + C
+    Couper : Ctrl + X
+    Coller : Ctrl + V
+    Annuler : Ctrl + Z
+    Rétablir : Ctrl + Shift + Z
+    Dupliquer une ligne : Shift + Alt + ↓ (ou ↑ pour la déplacer vers le haut)
+    Supprimer une ligne : Ctrl + Shift + K
+    Indenter (augmenter le retrait) : Ctrl + ]
+    Désindenter (réduire le retrait) : Ctrl + [
+    Sélectionner tout : Ctrl + A
+
+Code
+
+    Changer le mode de langage : Ctrl + K, M
+    Formater le code : Shift + Alt + F
+    Commenter/décommenter une ligne : Ctrl + /
+    Commenter/décommenter un bloc : Shift + Alt + A
+    Accéder à la définition : F12
+    Accéder à l'implémentation : Ctrl + F12
+    Renommer une variable : F2
+    Afficher les références : Shift + F12
+    Recherche rapide d'erreurs : Ctrl + Shift + M
+    IntelliSense (suggestions) : Ctrl + Space
+
+Terminal
+
+    Afficher/Masquer le terminal : Ctrl + `` (touche en dessous d’Échap)
+    Nouvelle instance du terminal : Ctrl + Shift + ``
+
+Fenêtres et affichage
+
+    Basculer en mode plein écran : F11
+    Basculer en mode Zen : Ctrl + K, Z
+    Diviser l'éditeur (vertical) : Ctrl + \
+    Passer d'une vue à l'autre : Ctrl + 1, Ctrl + 2, etc.
+
+Débogage
+
+    Lancer/Démarrer le débogage : F5
+    Pause/Reprendre : F6
+    Avancer pas à pas : F10
+    Placer/retirer un point d'arrêt : F9
+
+Pour aller à la fin d'une ligne dans Visual Studio Code :
+Raccourci clavier :
+
+    Windows/Linux : End
+
+Créer un raccourci personnalisé dans VS Code : Si tu préfères un autre raccourci, tu peux le configurer :
+
+    Va dans Fichier > Préférences > Raccourcis clavier (ou Ctrl + K, Ctrl + S).
+    Cherche cursorEnd.
+    Ajoute un raccourci qui te convient mieux (par exemple, Ctrl + E).
