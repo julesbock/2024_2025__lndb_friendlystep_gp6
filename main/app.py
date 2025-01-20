@@ -118,5 +118,9 @@ def create_tournament():
 def join_tournament():
     return render_template("join_tournament.html")
 
+@app.route("/faq")
+def faq():
+    return render_template("faq.html")
+
 if __name__ =='__main__':
     app.run(debug=True)
