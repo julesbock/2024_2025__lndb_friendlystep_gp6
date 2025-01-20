@@ -98,18 +98,22 @@
 
 <p> <!-- sexe -->
     Sexe : 
-    <input type = "radio" name = "gender_choice" value = "H" id = "Homme">
+    <input type = "radio" name = "gender_choice" value = "H" id = "Homme"
+    {% if user['gender_choice'] == 'Homme' %} checked {% endif %}>
     <label for ="Homme">Homme</label> 
     
-    <input type = "radio" name = "gender_choice" value = "F" id = "Femme">
+    <input type = "radio" name = "gender_choice" value = "F" id = "Femme"
+    {% if user['gender_choice'] == 'Femme' %} checked {% endif %}>
     <label for ="Femme">Femme</label>
 
-    <input type = "radio" name = "gender_choice" value = "C" id = "Croissant">
+    <input type = "radio" name = "gender_choice" value = "C" id = "Croissant"
+    {% if user['gender_choice'] == 'Croissant' %} checked {% endif %}>
     <label for ="Croissant">Croissant</label>
 
-    <input type = "radio" name = "gender_choice" value = "A" id = "Autre">
+    <input type = "radio" name = "gender_choice" value = "A" id = "Autre"
+    {% if user['gender_choice'] == 'Autre' %} checked {% endif %}>
     <label for ="Autre">Autre</label> 
-    <option value="{{ user['last_name'] }}" 
+   
     
 
 </p>
