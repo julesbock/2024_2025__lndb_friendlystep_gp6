@@ -98,25 +98,29 @@
 
 <p> <!-- sexe -->
     Sexe : 
-    <input type = "radio" name = "gender_choice" value = "H" id = "Homme">
+    <input type = "radio" name = "gender_choice" value = "H" id = "Homme"
+    {% if user['gender_choice'] == 'H' %} checked {% endif %}>
     <label for ="Homme">Homme</label> 
     
-    <input type = "radio" name = "gender_choice" value = "F" id = "Femme">
+    <input type = "radio" name = "gender_choice" value = "F" id = "Femme"
+    {% if user['gender_choice'] == 'F' %} checked {% endif %}>
     <label for ="Femme">Femme</label>
 
-    <input type = "radio" name = "gender_choice" value = "C" id = "Croissant">
+    <input type = "radio" name = "gender_choice" value = "C" id = "Croissant"
+    {% if user['gender_choice'] == 'C' %} checked {% endif %}>
     <label for ="Croissant">Croissant</label>
 
-    <input type = "radio" name = "gender_choice" value = "A" id = "Autre">
+    <input type = "radio" name = "gender_choice" value = "A" id = "Autre"
+    {% if user['gender_choice'] == 'A' %} checked {% endif %}>
     <label for ="Autre">Autre</label> 
-    <option value="{{ user['last_name'] }}" 
+   
     
 
 </p>
 <p> <!-- nationalité -->
     <label for = "nationality">Nationalité : </label>
     <select name="nationality" id="nationality">
-        <option value="">Sélectionnez une nationalité</option>
+        <option value="{{user['nationality'] }}">{{ user['birth_month'] }}</option>
         <option value="afghanistan">Afghan</option>
         <option value="albanie">Albanais</option>
         <option value="algerie">Algérien</option>
@@ -300,12 +304,12 @@
 
 <p> <!-- taille -->
     <label for = "height">Taille (en cm) : </label>
-    <input type = "number" min = 0 name = "height" id = "height">
+    <input type = "number" min = 0 name = "height" value = "{{ user['height'] }}" id = "height">
 </p>
 
 <p> <!-- poids -->
     <label for = "weight">Poids (en kg) : </label>
-    <input type = "number" min = 0 name = "weight" value= id = "weight">
+    <input type = "number" min = 0 name = "weight" value= "{{ user['weight'] }}" id = "weight">
 </p>
 
 <p>
