@@ -2,22 +2,6 @@
 
 {% block content%}
 
-
-
-<h1>Mon Profil</h1>
-    
-<p><strong>Prénom:</strong> {{ user["first_name"] }}</p>
-<p><strong>Nom:</strong> {{ user["last_name"] }}</p>
-<p><strong>Nom d'utilisateur:</strong> {{ user["username"] }}</p>
-<p><strong>Email:</strong> {{ user["email"] }}</p>
-<p><strong>Date de naissance:</strong> {{ user["birth_day"] }} / {{ user["birth_month"] }} / {{ user["birth_year"] }}</p>
-<p><strong>Sexe:</strong> {{ user["gender_choice"] }}</p>
-<p><strong>Nationalité:</strong> {{ user["nationality"] }}</p>
-<p><strong>Taille:</strong> {{ user["height"] }} cm</p>
-<p><strong>Poids:</strong> {{ user["weight"] }} kg</p>
-<body>
-
-
 <h1> Profil</h1>
 <p> <!-- prénom -->
   <label for = "first_name">Prénom : </label>
@@ -115,7 +99,7 @@
 <p> <!-- sexe -->
     Sexe : 
     <input type = "radio" name = "gender_choice" value = "H" id = "Homme">
-    <label for ="Homme">Homme</label>
+    <label for ="Homme">Homme</label> 
     
     <input type = "radio" name = "gender_choice" value = "F" id = "Femme">
     <label for ="Femme">Femme</label>
@@ -124,7 +108,9 @@
     <label for ="Croissant">Croissant</label>
 
     <input type = "radio" name = "gender_choice" value = "A" id = "Autre">
-    <label for ="Autre">Autre</label>
+    <label for ="Autre">Autre</label> 
+    <option value="{{ user['last_name'] }}" 
+    
 
 </p>
 <p> <!-- nationalité -->
@@ -319,7 +305,7 @@
 
 <p> <!-- poids -->
     <label for = "weight">Poids (en kg) : </label>
-    <input type = "number" min = 0 name = "weight" id = "weight">
+    <input type = "number" min = 0 name = "weight" value= id = "weight">
 </p>
 
 <p>
@@ -352,9 +338,19 @@ function afficherModification() {
     document.getElementById("output-choix").innerText = birth_month;
 
     const birth_year = document.getElementById("choix").value;
-    document.getElementById("output-choix").innerText = birth_year;
+    document.getElementById("output-choix").innerText = birth_year
+
+    const sexe = document.getElementById("texte").value;
+    document.getElementById("output-texte").innerText = sexe;
     
+    const nationality = document.getElementById("texte").value;
+    document.getElementById("output-texte").innerText = nationality;
+
+    const height = document.getElementById("motdepasse").value;
+    document.getElementById("output-motdepasse").innerText = height;    
     
+    const weight = document.getElementById("motdepasse").value;
+    document.getElementById("output-motdepasse").innerText = weight;
 
     // Récupérer et afficher les langues parlées (cases à cocher)
     // const langues = [];
