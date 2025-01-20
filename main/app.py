@@ -106,5 +106,17 @@ def profile():
     give_data("personnal_data.json", user_personnal_data)
     return render_template("profil_settings.html", user=user_personnal_data)
 
+@app.route("/tournaments")
+def tournaments():
+    return render_template("tournaments.html")
+
+@app.route("/create_tournament")
+def create_tournament():
+    return render_template("create_tournament.html")
+
+@app.route("/join_tournament")
+def join_tournament():
+    return render_template("join_tournament.html")
+
 if __name__ =='__main__':
     app.run(debug=True)
