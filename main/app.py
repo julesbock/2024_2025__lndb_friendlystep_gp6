@@ -6,12 +6,18 @@ import os, datetime, json, locale, platform
 
 app = Flask(__name__)
 
-app.secret_key = "02458d8b8e67adc5966be5f1b3e109341e2507abfd007fa2785cde99996611e5"
+app.secret_key = "02458d8b8e67hbd5966be5f1b3e109341e2507abfd007fa2785cde99996611e5"
 
 
 @app.route('/')
 def root():
-    return render_template("root.html")
+    if "name_user" in session:
+        all_user_data = get_data("user_data.json")
+        existing_data = check_if_data_exists (all_user_data)
+        return render_template("root.html", data=existing_data, is_logged = True)
+    else:
+        return render_template('root.html', data=None, is_logged = False)
+
 
 @app.route('/login',  methods=["POST", "GET"])
 def login():

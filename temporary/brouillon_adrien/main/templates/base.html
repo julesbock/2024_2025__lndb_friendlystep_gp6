@@ -39,13 +39,8 @@
         <a href="{{ url_for('logout') }}"><button type="button" class="logout_button" id="yes_logout">Oui</button></a>
         <button onclick="hideLogoutConfirmation()" class="logout_button" id="no_logout">Non</button>
     </div>
-    <!-- Chatgpt -->
+
     <script>
-        function navigateToPage() {
-            const selectMenu = document.getElementById('page_circulation');
-            const selectedValue = selectMenu.value; // Gets the `value` of the selected option
-            window.location.href = selectedValue;  // Redirects the browser to the selected URL
-        }
         function showLogoutConfirmation() {
             document.getElementById('logout_confirmation').style.display = 'block';
         }
@@ -53,7 +48,6 @@
         function hideLogoutConfirmation() {
             document.getElementById('logout_confirmation').style.display = 'none';
         }
-    </script> 
-    <!-- Chatgpt -->
+    </script>
 </body>
 </html>
