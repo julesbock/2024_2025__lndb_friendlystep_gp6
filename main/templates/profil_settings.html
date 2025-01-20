@@ -116,7 +116,7 @@
 <p> <!-- nationalité -->
     <label for = "nationality">Nationalité : </label>
     <select name="nationality" id="nationality">
-        <option value="">Sélectionnez une nationalité</option>
+        <option value="{{user['nationality'] }}">{{ user['birth_month'] }}</option>
         <option value="afghanistan">Afghan</option>
         <option value="albanie">Albanais</option>
         <option value="algerie">Algérien</option>
@@ -300,12 +300,12 @@
 
 <p> <!-- taille -->
     <label for = "height">Taille (en cm) : </label>
-    <input type = "number" min = 0 name = "height" id = "height">
+    <input type = "number" min = 0 name = "height" value = "{{ user['height'] }}" id = "height">
 </p>
 
 <p> <!-- poids -->
     <label for = "weight">Poids (en kg) : </label>
-    <input type = "number" min = 0 name = "weight" value= id = "weight">
+    <input type = "number" min = 0 name = "weight" value= "{{ user['weight'] }}" id = "weight">
 </p>
 
 <p>
