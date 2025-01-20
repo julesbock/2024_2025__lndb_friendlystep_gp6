@@ -9789,7 +9789,15 @@
                 "3": {},
                 "4": {},
                 "5": {},
-                "6": {}
+                "6": {},
+                "20": {
+                    "step_data": "3146",
+                    "distance_data": "2.5",
+                    "calories_data": "103",
+                    "floors_data": "4",
+                    "sleep_duration_data": "06:37",
+                    "sleep_score_data": "4.6"
+                }
             }
         }
     }
