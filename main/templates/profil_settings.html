@@ -1,7 +1,7 @@
 {% extends "base.html"%}
 
 {% block content%}
-
+<from method="POST" action="">
 <h1> Profil</h1>
 <p> <!-- prénom -->
   <label for = "first_name">Prénom : </label>
@@ -43,6 +43,7 @@
  type="password" 
  name="mdp" 
  id="mdp" 
+ value="{{ user['mdp'] }}"
  oninput="afficherModification()"
  >
 </p>
@@ -120,7 +121,7 @@
 <p> <!-- nationalité -->
     <label for = "nationality">Nationalité : </label>
     <select name="nationality" id="nationality">
-        <option value="{{user['nationality'] }}">{{ user['birth_month'] }}</option>
+        <option value="{{user['nationality'] }}">{{ user['nationality'] }}</option>
         <option value="afghanistan">Afghan</option>
         <option value="albanie">Albanais</option>
         <option value="algerie">Algérien</option>
@@ -356,12 +357,6 @@ function afficherModification() {
     const weight = document.getElementById("motdepasse").value;
     document.getElementById("output-motdepasse").innerText = weight;
 
-    // Récupérer et afficher les langues parlées (cases à cocher)
-    // const langues = [];
-    // if (document.getElementById("francais").checked) langues.push("Français");
-    // if (document.getElementById("anglais").checked) langues.push("Anglais");
-    // if (document.getElementById("espagnol").checked) langues.push("Espagnol");
-    // document.getElementById("output-langues").innerText = langues.join(", ") || "Aucune langue sélectionnée";
 }
 </script>
 
