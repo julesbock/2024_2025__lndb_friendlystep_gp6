@@ -3,6 +3,7 @@ from datetime import date
 from tools import *
 from data import *
 from app_routes.tournament_app_routes import *
+from app_routes.logout_app_routes import *
 import os, datetime, json, locale, platform
 
 app = Flask(__name__)
@@ -39,17 +40,6 @@ def login():
         if "name_user" in session:
             return redirect(url_for('root'))
         return render_template("login.html")
-    
-@app.route('/logout')
-def logout():
-    print(session)
-    session.pop("name_user", None)
-    print(session)
-    return redirect(url_for('root'))
-
-@app.route('/logout_confirmation')
-def logout_confirmation():
-    return render_template("logout_confirmation.html")
 
 @app.route('/data_input', methods=["POST", "GET"])
 def data_input ():
@@ -125,6 +115,7 @@ def profile():
     give_data("personnal_data.json", user_personnal_data)
     return render_template("profil_settings.html", user=user_personnal_data)
 
+app.register_blueprint(logout_blueprint)
 app.register_blueprint(tournaments_blueprint)
 
 @app.route("/faq")
