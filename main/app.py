@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import date
 from tools import *
 from data import *
+from app_routes.tournament_app_routes import *
 import os, datetime, json, locale, platform
 
 app = Flask(__name__)
@@ -17,7 +18,6 @@ def root():
         return render_template("root.html", data=existing_data, is_logged = True)
     else:
         return render_template('root.html', data=None, is_logged = False)
-
 
 @app.route('/login',  methods=["POST", "GET"])
 def login():
@@ -112,17 +112,7 @@ def profile():
     give_data("personnal_data.json", user_personnal_data)
     return render_template("profil_settings.html", user=user_personnal_data)
 
-@app.route("/tournaments")
-def tournaments():
-    return render_template("tournaments.html")
-
-@app.route("/create_tournament")
-def create_tournament():
-    return render_template("create_tournament.html")
-
-@app.route("/join_tournament")
-def join_tournament():
-    return render_template("join_tournament.html")
+app.register_blueprint(tournaments_blueprint)
 
 @app.route("/faq")
 def faq():
