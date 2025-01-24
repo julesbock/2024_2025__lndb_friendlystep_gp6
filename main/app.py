@@ -106,20 +106,19 @@ def sign_up():
     return render_template("sign_up.html")
 
 @app.route("/profil", methods=["POST", "GET"])
-def profil_settings():
-    if request.method == "POST":
-            "first_name" = request.form.get('first_name'),
-            "last_name" = request.form.get('last_name'),
-            "username" = request.form.get('username'),
-            "mdp" = request.form.get('mdp'),
-            "email" = request.form('email'),
-            "birth_day" = request.form('birth_day'),
-            "birth_month" = request.form('birth_month'),
-            "birth_year" = request.form('birth_year'),
-            "gender_choice" = request.form('gender_choice'),
-            "nationality" = request.form('nationality'),
-            "height" = request.form('height'),
-            "weight" = request.form('weight')
+def profile():
+            # "first_name" = request.form.get('first_name'),
+            # "last_name" = request.form.get('last_name'),
+            # "username" = request.form.get('username'),
+            # "mdp" = request.form.get('mdp'),
+            # "email" = request.form('email'),
+            # "birth_day" = request.form('birth_day'),
+            # "birth_month" = request.form('birth_month'),
+            # "birth_year" = request.form('birth_year'),
+            # "gender_choice" = request.form('gender_choice'),
+            # "nationality" = request.form('nationality'),
+            # "height" = request.form('height'),
+            # "weight" = request.form('weight')
         
     user_personnal_data = get_data("personnal_data.json")
     # user_personnal_data = modify_data_user(user_personnal_data) # il nous faut encore définir cette fonction mais qui ressemblerait à celle de création des données de l'utilisateur présentes dans le tool
