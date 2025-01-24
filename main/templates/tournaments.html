@@ -4,9 +4,9 @@
 
 <h1>Mes compétitions</h1>
 <p>
-    <a href="{{ url_for('create_tournament') }}">Créer une compétition</a>
+    <a href="{{ url_for('tournaments.create_tournament') }}">Créer une compétition</a>
     ou bien
-    <a href="{{ url_for('join_tournament') }}">rejoindre une compétition déjà en cours</a>
+    <a href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
 </p>
 <h2>Compétitions en cours :</h2>
 il va falloir implémenter une fct qui nous affiche " y'a pas de compétitions en cours " si y'en a pas
