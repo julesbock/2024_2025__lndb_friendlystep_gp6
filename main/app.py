@@ -105,7 +105,7 @@ def sign_up():
     
     return render_template("sign_up.html")
 
-@app.route("/profil")
+@app.route("/profil", methods=["POST", "GET"])
 def profile():
     user_personnal_data = get_data("personnal_data.json")
     # user_personnal_data = modify_data_user(user_personnal_data) # il nous faut encore définir cette fonction mais qui ressemblerait à celle de création des données de l'utilisateur présentes dans le tool
