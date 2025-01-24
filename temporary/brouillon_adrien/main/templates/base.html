@@ -14,12 +14,25 @@
             <li>
                 <a href="{{ url_for('root') }}">Accueil</a>
             </li>
+
+            {% if session ["name_user"] %}
             <li>
                 <a href="{{ url_for('data_input') }}">Ajouter des données</a>
             </li>
+
             <li>
-                <a>Profil</a>
+                <a href="{{ url_for('tournaments.tournaments') }}">Compétitions</a>
             </li>
+
+            <li>
+                <a href="{{ url_for('profile') }}">Profil</a>
+            </li>
+            {% endif %}
+            
+            <li>
+                <a href="{{ url_for('faq') }}">Aide</a>
+            </li>
+            
             <li>
                 {% if session ["name_user"] %}
                 <a href="#" onclick="showLogoutConfirmation()">Se déconnecter</a>
@@ -39,8 +52,13 @@
         <a href="{{ url_for('logout') }}"><button type="button" class="logout_button" id="yes_logout">Oui</button></a>
         <button onclick="hideLogoutConfirmation()" class="logout_button" id="no_logout">Non</button>
     </div>
-
+    <!-- Chatgpt -->
     <script>
+        function navigateToPage() {
+            const selectMenu = document.getElementById('page_circulation');
+            const selectedValue = selectMenu.value; // Gets the `value` of the selected option
+            window.location.href = selectedValue;  // Redirects the browser to the selected URL
+        }
         function showLogoutConfirmation() {
             document.getElementById('logout_confirmation').style.display = 'block';
         }
@@ -48,6 +66,7 @@
         function hideLogoutConfirmation() {
             document.getElementById('logout_confirmation').style.display = 'none';
         }
-    </script>
+    </script> 
+    <!-- Chatgpt -->
 </body>
 </html>

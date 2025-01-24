@@ -22,7 +22,7 @@ body {
 }
 
 #navbar h1 {
-    color: blueviolet;
+    color: rgb(255, 255, 255);
     position: relative;
     left: 10%;
     text-shadow: rgba(149, 85, 182, 0.258) 1px 1px 7px;
@@ -85,8 +85,7 @@ body {
     left: 34%;
     margin-left: 3%;
 }
-
-/* Styles pour le tableau de bord */
+/* Styles du tableau de bord */
 .dashboard {
     display: flex;
     flex-wrap: wrap;
@@ -95,19 +94,20 @@ body {
 
 .container {
     flex: 1 1 calc(33.333% - 20px);
-    padding: 20px;
+    padding: 21px;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 17px;
+    box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
     position: relative;
-}
+    list-style-type: none; /* Masque les puces */
+    padding-left: 2; /* Place 2 tabulations */
+  }
 
 .container:hover {
     background-color: #f0f0f0;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-
 
 /* Styles responsives */
 @media (max-width: 768px) {
@@ -126,7 +126,5 @@ body {
         padding: 15px;
     }
 }
-
-
 
 /* CHATGPT on n en doute pas */

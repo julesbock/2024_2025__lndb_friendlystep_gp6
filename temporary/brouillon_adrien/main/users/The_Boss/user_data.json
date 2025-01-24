@@ -9789,16 +9789,6 @@
                     "sleep_quality": "2"
                 }
             }
-        },
-        "2025": {
-            "1": {
-                "6": {
-                    "donnees_pas": "010101",
-                    "kilometres parcourus": "101010",
-                    "calories": "01010",
-                    "sleep_quality": "1"
-                }
-            }
         }
     }
 }

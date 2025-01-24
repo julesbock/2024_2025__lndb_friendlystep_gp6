@@ -3,27 +3,54 @@ from app import *
 from data import *
 import json, os, datetime, calendar
 
-def recherch_user(name_user, mdp):
-    dossier_projet = os.path.dirname(__file__)
-    chemin_users_list = os.path.join(dossier_projet, "users", "users_list.json")
-    with open(chemin_users_list, "r") as json_file:
-            all_data = json.load(json_file)
-    for user in all_data["users_list"]:
-        if user["username"] == name_user and user["mdp"] == mdp:
-            return user
-    return None
+# Fonctions root
 
 
-def create_and_register_user(user_personnal_data):
-    name = user_personnal_data["username"] 
+
+# Fonctions de gestion de données des utilisateurs
+
+def get_data (file_wanted):
     dossier_projet = os.path.dirname(__file__)
-    chemin_users = os.path.join(dossier_projet, "users", name)
-    if not os.path.exists(chemin_users):
-        create_user(user_personnal_data, chemin_users)
-        register_user(name, user_personnal_data['mdp'], dossier_projet)
+    chemin_user = os.path.join(dossier_projet, "users", session["name_user"])
+    chemin_file = os.path.join(chemin_user, file_wanted)
+    with open(chemin_file, "r") as json_file:
+        all_data = json.load(json_file)
+    return all_data
+
+def give_data(file_wanted, data):
+    dossier_projet = os.path.dirname(__file__)
+    chemin_user = os.path.join(dossier_projet, "users", session["name_user"])
+    chemin_file = os.path.join(chemin_user, file_wanted)
+    with open(chemin_file, "w") as json_file:
+        json.dump(data, json_file, indent=4)
+
+def check_if_data_exists(existing_data):
+    date_time = datetime.datetime.now()
+    current_year = str(date_time.year)
+    current_month = str(date_time.month)
+    current_day = str(date_time.day)
+    if current_year in existing_data["user_data"]:
+        if current_month in existing_data["user_data"][current_year]:
+            if current_day in existing_data["user_data"][current_year][current_month]:
+                # Si des données existent, récupérer celles-ci
+                existing_data_for_today = existing_data["user_data"][current_year][current_month][current_day]
+            else:
+                existing_data_for_today = {}
+        else:
+            existing_data_for_today = {}
     else:
-        pass
-    return redirect(url_for("root"))
+        existing_data_for_today = {}
+    return existing_data_for_today
+
+def put_data_in_user_data(personnal_user_data): 
+    all_data = get_data("user_data.json")
+    date_heure = datetime.datetime.now()
+    current_year = str(date_heure.year)
+    current_month = str(date_heure.month)
+    current_day = str(date_heure.day)
+    all_data = check_if_all_good(all_data, current_year, current_month, current_day)
+    all_data ["user_data"][current_year][current_month][current_day] = (personnal_user_data)
+    give_data("user_data.json", all_data)
 
 def create_all_dates_dic():
     """
@@ -71,6 +98,33 @@ def create_all_dates_dic():
                     all_dates_dic["user_data"][year][month][day] = {}
     return all_dates_dic
 
+# Fonctions de gestion des utilisateurs
+
+def check_if_all_good(dic, current_year, current_month, current_day):
+    dic.setdefault('user_data', {}).setdefault(current_year, {}).setdefault(current_month, {}).setdefault(current_day, {})
+    return dic
+
+def recherch_user(name_user, mdp):
+    dossier_projet = os.path.dirname(__file__)
+    chemin_users_list = os.path.join(dossier_projet, "users", "users_list.json")
+    with open(chemin_users_list, "r") as json_file:
+            all_data = json.load(json_file)
+    for user in all_data["users_list"]:
+        if user["username"] == name_user and user["mdp"] == mdp:
+            return user
+    return None
+
+def create_and_register_user(user_personnal_data):
+    name = user_personnal_data["username"] 
+    dossier_projet = os.path.dirname(__file__)
+    chemin_users = os.path.join(dossier_projet, "users", name)
+    if not os.path.exists(chemin_users):
+        create_user(user_personnal_data, chemin_users)
+        register_user(name, user_personnal_data['mdp'], dossier_projet)
+    else:
+        pass
+    return redirect(url_for("root"))
+
 def create_user(user_personnal_data, chemin_users):
     os.mkdir(chemin_users)
     first_file_name = "personnal_data"
@@ -81,8 +135,7 @@ def create_user(user_personnal_data, chemin_users):
         json.dump(user_personnal_data, json_file, indent=4)
     the_dic = create_all_dates_dic()
     with open(chemin_second_file, "w") as json_file:
-        json.dump(the_dic, json_file, indent=4)
-    
+        json.dump(the_dic, json_file, indent=4)   
 
 def register_user(username, mdp, chemin_projet):
     chemin_users_list = os.path.join(chemin_projet, "users", "users_list.json")
@@ -95,3 +148,4 @@ def register_user(username, mdp, chemin_projet):
     all_data ["users_list"].append(user_and_mdp)
     with open(chemin_users_list, "w") as json_file:
         json.dump(all_data, json_file, indent=4)
+

@@ -1,54 +1,42 @@
 {% extends "base.html" %}
-
 {% block content %}
+{% if data or is_logged %}
+
 <h1 id="Accueil">Tableau de bord</h1>
 
 <p>Bonjour {{ session['name_user']|title if session["name_user"] else 'invité'}}, bienvenue sur votre tableau de bord de suivi !</p>
-{% if session ["name_user"] %}
+
 <div class="dashboard">
     <div class="container">
-        <li>Nombre de pas : ****** pas</li>
+        <li>Nombre de pas : {{ data['step_data'] if data.get('step_data') else 0 }} pas </li>
     </div>
     <div class="container">
-        <li>Distance : ****** km</li>
+        <li>Distance : {{ data['distance_data'] if data.get('distance_data') else 0 }} km </li>
     </div>
     <div class="container">
-        <li>Calories : ****** kcal</li>
+        <li>Calories : {{ data['calories_data'] if data.get('calories_data') else 0 }} kcal </li>
     </div>
     <div class="container">
-        <li>Nombre d’étages : ****** étages <li>
+        <li>Nombre d’étages : {{ data['floors_data'] if data.get('floors_data') else 0 }} étages </li>
     </div>
     <div class="container">
-        <li>Durée du sommeil : **h**min </li>
+        <li>Durée du sommeil : {{ data['sleep_duration_data'] if data.get('sleep_duration_data') else 0 }} heures </li>
     </div>
     <div class="container">
-        <li>Score du sommeil : ** </li>
+        <li>Score du sommeil : {{ data['sleep_score_data'] if data.get('sleep_score_data') else  'aucun' }} </li>
     </div>
 </div>
+
 {% else %}
-<div class="dashboard">
-    <div class="container">
-        <li>Nombre de pas : "{{ data['step_data'] }}" pas </li>
-    </div>
-    <div class="container">
-        <li>Distance : "{{ data['distance_data'] }}" km </li>
-    </div>
-    <div class="container">
-        <li>Calories : "{{ data['calories_data'] }}" kcal </li>
-    </div>
-    <div class="container">
-        <li>Nombre d’étages : "{{ data['floors_data'] }}" étages <li>
-    </div>
-    <div class="container">
-        <li>Durée du sommeil : "{{ data['sleep_duration_data']  }}" heures </li>
-    </div>
-    <div class="container">
-        <li>Score du sommeil : "{{ data['sleep_score_data']  }}" </li>
-    </div>
-</div>
+<h1 id="Accueil"></h1>
+
+<p>Bonjour {{ session['name_user']|title if session ["name_user"]
+else 'invité'}}, bienvenue sur notre page web!</p>
 {% endif %}
 
 {% endblock %}
+
+{% if data %}
 
 <style>
     .container {
@@ -62,3 +50,5 @@
         background-color: gray;
     }
 </style>
+
+{% endif %}
