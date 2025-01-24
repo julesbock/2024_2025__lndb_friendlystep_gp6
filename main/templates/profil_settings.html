@@ -1,7 +1,7 @@
 {% extends "base.html"%}
 
 {% block content%}
-<from method="POST" action="">
+<from method="POST" action="{{url_for('profil_settings')}}">
 <h1> Profil</h1>
 <p> <!-- prénom -->
   <label for = "first_name">Prénom : </label>
@@ -359,6 +359,7 @@ function afficherModification() {
 
 }
 </script>
+
 
 </body>
 {% endblock %}
