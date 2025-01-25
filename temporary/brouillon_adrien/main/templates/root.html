@@ -1,5 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
+
+<script>
+    // Mon père v1 : 
+    function navigateToPages(data_type, label) {
+        alert('test');
+        window.location.href = "{{url_for('user_data_graphics', data_type='"+data_type+"', label_name='"+label+"')}}";
+    }
+    // Mon père v2 : 
+    function navigateToPage1() {
+        alert('test');
+        window.location.href = "{{url_for('user_data_graphics', data_type='step_data', label_name='Pas')}}";
+    }
+    // Chatgpt:
+    function navigateToGraphPage(data_type, label) {
+        // URL dynamique générée par Jinja avec placeholders
+        var url = "{{ url_for('user_data_graphics', data_type='data_type', label_name='label_name') }}"
+            .replace('data_type', encodeURIComponent(data_type))
+            .replace('label_name', encodeURIComponent(label));
+
+        window.location.href = url;
+    }
+</script>
+
 {% if data or is_logged %}
 
 <h1 id="Accueil">Tableau de bord</h1>
@@ -7,48 +30,31 @@
 <p>Bonjour {{ session['name_user']|title if session["name_user"] else 'invité'}}, bienvenue sur votre tableau de bord de suivi !</p>
 
 <div class="dashboard">
-    <div class="container">
-        <li>Nombre de pas : {{ data['step_data'] if data.get('step_data') else 0 }} pas </li>
+    <div class="container" onclick="navigateToGraphPage('step_data', 'Pas')">
+        <span class="link">Nombre de pas : {{ data['step_data'] if data.get('step_data') else 0 }} pas</span>
+    </div>                         
+    <div class="container" onclick="navigateToGraphPage('distance_data', 'Distance')">
+        <span class="link">Distance : {{ data['distance_data'] if data.get('distance_data') else 0 }} km</span>
     </div>
-    <div class="container">
-        <li>Distance : {{ data['distance_data'] if data.get('distance_data') else 0 }} km </li>
+    <div class="container" onclick="navigateToGraphPage('calories_data', 'Calories')">
+        <span class="link">Calories : {{ data['calories_data'] if data.get('calories_data') else 0 }} kcal</span>
     </div>
-    <div class="container">
-        <li>Calories : {{ data['calories_data'] if data.get('calories_data') else 0 }} kcal </li>
+    <div class="container" onclick="navigateToGraphPage('floors_data', 'Étages')">
+        <span class="link">Nombre d’étages : {{ data['floors_data'] if data.get('floors_data') else 0 }} étages</span>
     </div>
-    <div class="container">
-        <li>Nombre d’étages : {{ data['floors_data'] if data.get('floors_data') else 0 }} étages </li>
+    <div class="container" onclick="navigateToGraphPage('sleep_duration_data', 'Durée du sommeil')">
+        <span class="link">Durée du sommeil : {{ data['sleep_duration_data'] if data.get('sleep_duration_data') else 0 }} heures</span>
     </div>
-    <div class="container">
-        <li>Durée du sommeil : {{ data['sleep_duration_data'] if data.get('sleep_duration_data') else 0 }} heures </li>
-    </div>
-    <div class="container">
-        <li>Score du sommeil : {{ data['sleep_score_data'] if data.get('sleep_score_data') else  'aucun' }} </li>
+    <div class="container" onclick="navigateToGraphPage('sleep_score_data', 'Score du sommeil')">
+        <span class="link">Score du sommeil : {{ data['sleep_score_data'] if data.get('sleep_score_data') else 'aucun' }}</span>
     </div>
 </div>
 
 {% else %}
 <h1 id="Accueil"></h1>
 
-<p>Bonjour {{ session['name_user']|title if session ["name_user"]
-else 'invité'}}, bienvenue sur notre page web!</p>
+<p>Bonjour {{ session['name_user']|title if session["name_user"] else 'invité'}}, bienvenue sur notre page web!</p>
 {% endif %}
 
 {% endblock %}
 
-{% if data %}
-
-<style>
-    .container {
-        padding: 10px;
-        margin: 5px;
-        border: 1px solid #ccc;
-        transition: background-color 0.3s ease;
-    }
-
-    .container:hover {
-        background-color: gray;
-    }
-</style>
-
-{% endif %}

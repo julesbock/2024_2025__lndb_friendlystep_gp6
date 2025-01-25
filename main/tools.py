@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from app import *
 from data import *
+from data_show import *
 import json, os, datetime, calendar
 
 # Fonctions root
@@ -8,6 +8,125 @@ import json, os, datetime, calendar
 
 
 # Fonctions de gestion de données des utilisateurs
+def do_all_graphics(data_type, label):
+    all_user_data = get_data("user_data.json")
+    needed_data = {}
+    # Récupérer les données pour les années 2024 et 2025
+    if "2024" in all_user_data["user_data"]:
+        needed_data["2024"] = all_user_data["user_data"]["2024"]
+    if "2025" in all_user_data["user_data"]:
+        needed_data["2025"] = all_user_data["user_data"]["2025"]
+    data_of_the_seven_days_to_graph = get_last_seven_days_value(data_type, needed_data)
+    data_of_the_month_to_graph = get_month_values(data_type, needed_data)
+    data_of_the_year_to_graph= get_last_year_values(data_type, needed_data)
+    create_graphics(label, data_of_the_seven_days_to_graph, data_of_the_month_to_graph, data_of_the_year_to_graph)
+    
+def create_graphics(label, data_of_the_seven_days_to_graph, data_of_the_month_to_graph, data_of_the_year_to_graph):
+    create_seven_days_graph(label, data_of_the_seven_days_to_graph)
+    print(data_of_the_month_to_graph)
+    create_month_graph(label, data_of_the_month_to_graph)
+    create_year_graph(label, data_of_the_year_to_graph)
+    
+
+def get_precise_day_value(data_type, all_data, year_month_day):
+    """
+    Récupère la valeur associée à un type de données spécifique pour une date précise.
+
+    Args:
+        data_type (str): Le type de données à récupérer (par exemple, "step_data").
+        all_data (dict): Le dictionnaire contenant toutes les dates et leurs valeurs associées.
+        year_month_day (tuple): Un tuple contenant l'année, le mois et le jour pour la date précise.
+
+    Returns:
+        int: La valeur associée au type de données spécifié pour la date précise.
+    """
+    year, month, day = year_month_day
+    year = str(year)
+    month = str(month)
+    day = str(day)
+
+    if year in all_data and month in all_data[year] and day in all_data[year][month]:
+        return int(all_data[year][month][day].get(data_type, 0))
+    return 0
+
+def get_last_seven_days_value(data_type, all_data):
+    today = datetime.datetime.now()
+    lasts_days_values = []
+    
+    for i in range(7):
+        day = today - datetime.timedelta(days=i)
+        current_day = day.day
+        year = day.year
+        month = day.month
+       
+        value = get_precise_day_value(data_type, all_data, (year, month, current_day))
+        lasts_days_values.append(value)
+            
+    return lasts_days_values
+
+def get_month_values(data_type, all_data, last_x_month=0):
+    """
+    Récupère les valeurs associées à un type de données spécifique pour le mois en cours jusqu'à la date actuelle,
+    et pour les mois précédents spécifiés par last_x_month.
+
+    Args:
+        data_type (str): Le type de données à récupérer (par exemple, "step_data").
+        all_data (dict): Le dictionnaire contenant toutes les dates et leurs valeurs associées.
+        last_x_month (int): Le nombre de mois précédents à inclure dans les valeurs récupérées.
+
+    Returns:
+        list: Une liste contenant les valeurs pour le mois en cours jusqu'à la date actuelle et les mois précédents spécifiés.
+    """
+    today = datetime.datetime.now()
+    current_year = today.year
+    current_month = today.month
+    current_day = today.day
+    month_values = []
+    the_month = current_month-last_x_month
+    if the_month == 0:
+        the_month = 12
+        current_year -= 1
+
+
+    if last_x_month == 0:
+        number_of_days_in_the_month = calendar.monthrange(current_year, current_month)[1]
+        for day in range(1, current_day + 1):
+            value=get_precise_day_value(data_type, all_data, (current_year, the_month, day))
+            month_values.append(int(value))
+    else:
+        number_of_days_in_the_month = calendar.monthrange(current_year, the_month)[1]
+        for day in range(1, number_of_days_in_the_month + 1):
+            value=get_precise_day_value(data_type, all_data, (current_year, the_month, day))
+            month_values.append(int(value))
+
+    return month_values
+
+def calculate_mean(list_values):
+    """
+    Calcule la moyenne des valeurs dans une liste.
+
+    Args:
+        list_values (list): Une liste de valeurs numériques.
+
+    Returns:
+        float: La moyenne des valeurs dans la liste.
+    """
+    if len(list_values) == 0:
+        return 0
+    return sum(list_values) / len(list_values)
+    
+        
+def get_last_year_values(data_type, all_data):
+    today = datetime.datetime.now()
+    current_month = int(today.month)
+    month_values = []
+    for month in range(current_month + 1):
+        values_list = get_month_values(data_type, all_data, month)
+        mean_value = calculate_mean(values_list)
+        month_values.append(mean_value)
+
+        
+    return month_values
 
 def get_data (file_wanted):
     dossier_projet = os.path.dirname(__file__)

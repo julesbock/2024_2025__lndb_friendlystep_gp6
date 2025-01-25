@@ -18,6 +18,15 @@ def root():
         return render_template("root.html", data=existing_data, is_logged = True)
     else:
         return render_template('root.html', data=None, is_logged = False)
+    
+@app.route('/user_data_graphics/<data_type>/<label_name>', methods=["POST", "GET"])
+def user_data_graphics(data_type, label_name):
+
+    if request.method == "GET":
+        do_all_graphics(data_type, label_name)
+        return render_template("user_data_graphics.html", label=label_name)
+    else:
+        return render_template("user_data_graphics.html", label=label_name)
 
 @app.route('/login',  methods=["POST", "GET"])
 def login():
