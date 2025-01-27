@@ -1,9 +1,20 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
 
-{% block content%}
-<h1 id="Accueil"></h1>
+{% block content %}
+<h1 id="Accueil">Tableau de bord</h1>
 
-<p>Bonjour {{ session['name_user']|title if session ["name_user"]
-else 'invité'}}, bienvenue sur notre page web!</p>
+<p>Bonjour {{ session['name_user']|title if session["name_user"] else 'invité'}}, bienvenue sur votre tableau de bord de suivi !</p>
+
+<div class="dashboard">
+    <ul>
+        <li>Nombre de pas : ******</li>
+        <li>Distance : ****** km</li>
+        <li>Calories : ****** kcal</li>
+        <li>Nombre d’étages : ******</li>
+        <li>Durée du sommeil : ****** heures</li>
+        <li>Score du sommeil : ******</li>
+    </ul>
+    <a href="{{ url_for('details') }}">Voir en détails</a>
+</div>
 
 {% endblock %}

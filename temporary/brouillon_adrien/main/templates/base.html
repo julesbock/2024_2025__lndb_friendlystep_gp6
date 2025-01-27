@@ -14,12 +14,15 @@
             <li>
                 <a href="{{ url_for('root') }}">Accueil</a>
             </li>
+            {% if session ["name_user"] %}
             <li>
                 <a href="{{ url_for('data_input') }}">Ajouter des données</a>
             </li>
             <li>
-                <a>Profil</a>
+                <a href="{{ url_for('profile') }}">Profil</a>
             </li>
+            {% endif %}
+
             <li>
                 {% if session ["name_user"] %}
                 <a href="#" onclick="showLogoutConfirmation()">Se déconnecter</a>

@@ -51,7 +51,7 @@ def data_input ():
     current_year = str(date_time.year)
     current_month = str(date_time.month)
     current_day = str(date_time.day)
-    if platform.system() == "windows":
+    if platform.system() == "window":
         locale.setlocale(locale.LC_TIME, "French_France")
     else:
         locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")

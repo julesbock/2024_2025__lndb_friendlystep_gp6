@@ -154,6 +154,7 @@ def get_user_data():
         all_data = json.load(json_file)
     return all_data
 
+
 def get_last_7_days_data(user_data, current_year, current_month, current_day):
     # Récupérer les données des 7 derniers jours
     last_7_days = []
@@ -181,6 +182,7 @@ def get_year_data(user_data, current_year, current_month):
     for month in range(1, current_month + 1):
         year_data[month] = user_data["user_data"][str(current_year)].get(str(month), {})
     return year_data
+
 
 if __name__ =='__main__':
     app.run(debug=True)
