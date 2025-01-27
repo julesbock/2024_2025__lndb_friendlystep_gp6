@@ -1,0 +1,37 @@
+{% extends "base.html"%}
+
+{% block content%}
+
+
+<h1>FAQ</h1>
+<p> les questions que vous pouvez vous poser</p>
+
+
+<div class="faq-item">
+    <button class="faq-question"> Comment modifier les informations personnelles?</button>
+    <div class="faq-answer" style="display: none;">
+        <p>Pour modifier vos informations personnelles, il faut cliquer sur la page profil et modifier les informations que vous souhaitez. N'oubliez pas d'enregistrer les données modifiées</p>
+    </div>
+</div>
+
+<div class="faq-item">
+    <button class="faq-question"> </button>
+    <div class="faq-answer" style="display: none;">
+        <p>Pour réinitialiser votre mot de passe, cliquez sur "Mot de passe oublié" sur la page de connexion.</p>
+    </div>
+</div>
+
+<!-- fct faire en java avec Copilot à modifier-->
+<script>
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block';
+            } else {
+                answer.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

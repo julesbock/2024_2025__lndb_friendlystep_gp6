@@ -9,7 +9,7 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f4f4f4;
+    background-color: #f3f3f3;
 }
 
 /* Style de la navbar */
@@ -22,7 +22,7 @@ body {
 }
 
 #navbar h1 {
-    color: blueviolet;
+    color: rgb(255, 255, 255);
     position: relative;
     left: 10%;
     text-shadow: rgba(149, 85, 182, 0.258) 1px 1px 7px;
@@ -60,7 +60,7 @@ body {
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background-color: white;
+    background-color: rgba(249, 248, 248, 0.922);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -84,6 +84,39 @@ body {
     position: relative;
     left: 34%;
     margin-left: 3%;
+}
+/* Styles du tableau de bord */
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.container {
+    flex: 1 1 calc(33.333% - 20px);
+    padding: 21px;
+    background-color: #fff;
+    border-radius: 17px;
+    box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    list-style-type: none; /* Masque les puces */
+    padding-left: 2; /* Place 2 tabulations */
+    cursor: pointer;
+  }
+
+.container:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.link {
+    cursor: pointer; /* Ajoute un curseur de pointeur pour indiquer que le texte est cliquable */
+}
+
+#hi_text {
+    margin-bottom: 10px;
+    min-block-size: 46px;
 }
 /* Styles responsives */
 @media (max-width: 768px) {

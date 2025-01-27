@@ -1,7 +1,7 @@
 {% extends "base.html"%}
 
 {% block content%}
-
+<from method="POST" action="{{url_for('profil_settings')}}">
 <h1> Profil</h1>
 <p> <!-- prénom -->
   <label for = "first_name">Prénom : </label>
@@ -43,6 +43,7 @@
  type="password" 
  name="mdp" 
  id="mdp" 
+ value="{{ user['mdp'] }}"
  oninput="afficherModification()"
  >
 </p>
@@ -98,25 +99,29 @@
 
 <p> <!-- sexe -->
     Sexe : 
-    <input type = "radio" name = "gender_choice" value = "H" id = "Homme">
+    <input type = "radio" name = "gender_choice" value = "H" id = "Homme"
+    {% if user['gender_choice'] == 'H' %} checked {% endif %}>
     <label for ="Homme">Homme</label> 
     
-    <input type = "radio" name = "gender_choice" value = "F" id = "Femme">
+    <input type = "radio" name = "gender_choice" value = "F" id = "Femme"
+    {% if user['gender_choice'] == 'F' %} checked {% endif %}>
     <label for ="Femme">Femme</label>
 
-    <input type = "radio" name = "gender_choice" value = "C" id = "Croissant">
+    <input type = "radio" name = "gender_choice" value = "C" id = "Croissant"
+    {% if user['gender_choice'] == 'C' %} checked {% endif %}>
     <label for ="Croissant">Croissant</label>
 
-    <input type = "radio" name = "gender_choice" value = "A" id = "Autre">
+    <input type = "radio" name = "gender_choice" value = "A" id = "Autre"
+    {% if user['gender_choice'] == 'A' %} checked {% endif %}>
     <label for ="Autre">Autre</label> 
-    <option value="{{ user['last_name'] }}" 
+   
     
 
 </p>
 <p> <!-- nationalité -->
     <label for = "nationality">Nationalité : </label>
     <select name="nationality" id="nationality">
-        <option value="{{user['nationality'] }}">{{ user['birth_month'] }}</option>
+        <option value="{{user['nationality'] }}">{{ user['nationality'] }}</option>
         <option value="afghanistan">Afghan</option>
         <option value="albanie">Albanais</option>
         <option value="algerie">Algérien</option>
@@ -352,14 +357,9 @@ function afficherModification() {
     const weight = document.getElementById("motdepasse").value;
     document.getElementById("output-motdepasse").innerText = weight;
 
-    // Récupérer et afficher les langues parlées (cases à cocher)
-    // const langues = [];
-    // if (document.getElementById("francais").checked) langues.push("Français");
-    // if (document.getElementById("anglais").checked) langues.push("Anglais");
-    // if (document.getElementById("espagnol").checked) langues.push("Espagnol");
-    // document.getElementById("output-langues").innerText = langues.join(", ") || "Aucune langue sélectionnée";
 }
 </script>
+
 
 </body>
 {% endblock %}

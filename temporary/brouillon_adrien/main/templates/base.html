@@ -14,15 +14,25 @@
             <li>
                 <a href="{{ url_for('root') }}">Accueil</a>
             </li>
+
             {% if session ["name_user"] %}
             <li>
                 <a href="{{ url_for('data_input') }}">Ajouter des données</a>
             </li>
+
             <li>
-                <a href="{{ url_for('profile') }}">Profil</a>
+                <a href="{{ url_for('tournaments.tournaments') }}">Compétitions</a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('profil_settings') }}">Profil</a>
             </li>
             {% endif %}
-
+            
+            <li>
+                <a href="{{ url_for('faq') }}">Aide</a>
+            </li>
+            
             <li>
                 {% if session ["name_user"] %}
                 <a href="#" onclick="showLogoutConfirmation()">Se déconnecter</a>

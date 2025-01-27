@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ label }}</h1>
+
+<div class="graph-container">
+    <h2>Graphiques des données utilisateur</h2>
+    <div class="graph">
+        <h3>7 derniers jours</h3>
+        <img src="{{ url_for('static', filename='images/seven_days_graph.png') }}" alt="Graphique des 7 derniers jours">
+    </div>
+    <div class="graph">
+        <h3>Ce mois-ci</h3>
+        <img src="{{ url_for('static', filename='images/month_graph.png') }}" alt="Graphique du mois en cours">
+    </div>
+    <div class="graph">
+        <h3>Cette année</h3>
+        <img src="{{ url_for('static', filename='images/year_graph.png') }}" alt="Graphique de l'année en cours">
+    </div>
+</div>
+
+{% endblock %}

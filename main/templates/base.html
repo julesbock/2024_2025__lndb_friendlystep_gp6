@@ -14,15 +14,25 @@
             <li>
                 <a href="{{ url_for('root') }}">Accueil</a>
             </li>
+
             {% if session ["name_user"] %}
             <li>
                 <a href="{{ url_for('data_input') }}">Ajouter des données</a>
             </li>
+
+            <li>
+                <a href="{{ url_for('tournaments.tournaments') }}">Compétitions</a>
+            </li>
+
             <li>
                 <a href="{{ url_for('profile') }}">Profil</a>
             </li>
             {% endif %}
-
+            
+            <li>
+                <a href="{{ url_for('faq') }}">Aide</a>
+            </li>
+            
             <li>
                 {% if session ["name_user"] %}
                 <a href="#" onclick="showLogoutConfirmation()">Se déconnecter</a>
@@ -39,7 +49,7 @@
 
     <div id="logout_confirmation" style="display: none;">
         <p>{{ session['name_user']|title }}, êtes-vous sur de vouloir vous déconnecter ? </p>
-        <a href="{{ url_for('logout') }}"><button type="button" class="logout_button" id="yes_logout">Oui</button></a>
+        <a href="{{ url_for('logout.logout') }}"><button type="button" class="logout_button" id="yes_logout">Oui</button></a>
         <button onclick="hideLogoutConfirmation()" class="logout_button" id="no_logout">Non</button>
     </div>
     <!-- Chatgpt -->

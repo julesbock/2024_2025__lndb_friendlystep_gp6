@@ -115,6 +115,17 @@ def sign_up():
     
     return render_template("sign_up.html")
 
+@app.route("/tournaments")
+def tournaments():
+    return render_template("tournaments.html")
+
+@app.route("/create_tournament")
+def create_tournament():
+    return render_template("create_tournament.html")
+
+@app.route("/join_tournament")
+def join_tournament():
+    return render_template("join_tournament.html")
 
 if __name__ =='__main__':
     app.run(debug=True)
