@@ -1,0 +1,256 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url('../images/background_image.jpg');
+    background-size: cover;  /* L'image couvrira toute la surface de la page */
+    background-repeat: no-repeat;  /* L'image ne se répétera pas */
+    background-attachment: fixed;  /* L'image restera fixe lors du défilement */
+    background-position: center;  /* L'image sera centrée */
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;  /* Aligne le contenu en haut */
+    height: 100vh;
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+    padding-top: 50px;  /* Ajoute un espace en haut */
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1); /* Couleur blanche avec 50% de transparence */
+    z-index: -1; /* Place la superposition derrière le contenu */
+}
+
+#container {
+    text-align: center;
+}
+
+#tableau_de_bord_de_productivité {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 1.7em;
+    margin-block-end: 2em;
+    border: none;
+    font-weight: bold;
+}
+#tasks ul {
+    display: flex;           /* Disposition horizontale */
+    justify-content: center; /* Centre les éléments horizontalement */
+    align-items: flex-start;     /* Aligne les éléments verticalement */
+    list-style: none;        /* Supprime les puces */
+    gap: 100px;              /* Espacement entre chaque colonne */
+    padding: 0;
+}
+
+#tasks ul li {
+    display: flex;
+    flex-direction: column;  /* Empile les éléments (tâche + bouton) verticalement */
+    align-items: center;
+    text-align: center;
+}
+
+.taches {
+    display: flex;
+    max-width: 300px;
+    padding: 20px;
+    background-color: rgb(73, 121, 139);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: white;
+    font-weight: bold;
+    position: relative;
+    width: 200px;
+    justify-content: center;
+}
+
+.add-container {
+    margin-top: 10px;  /* Espacement entre la tâche et le bouton */
+}
+
+.add {
+    width: 185px;
+    height: 40px;
+    font-size: 1.5em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition:  0.3s ease;
+}
+
+.add:hover {
+    background-color: #8d99ac;
+}
+
+.task-description {
+    display: none;
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+.task-description.visible {
+    display: block;
+}
+
+.task-block {
+    border: 1px solid #ccc;
+    margin-bottom: 0px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+    width: 185px;
+    margin-block-start: 10px;
+}
+
+.task-block h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: none;
+}
+
+.task-block:hover .delete-button {
+    background-color: #d32f2f;
+    display: inline-block;
+}
+#task-sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Caché par défaut */
+    width: 300px;
+    height: 100%;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#task-sidebar.visible {
+    right: 0; /* S'affiche en glissant */
+}
+
+#close-sidebar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#sidebar-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#sidebar-description {
+    font-size: 16px;
+    line-height: 1.5;
+}
+.editable-description {
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    resize: vertical; /* Permet de redimensionner le champ en hauteur */
+}
+/* Styles pour la fenêtre modale */
+.modal {
+    display: none; /* Cacher par défaut */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fond sombre transparent */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"], textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+}
+
+textarea {
+    height: 120px;
+}
+
+.textarea_btn {
+    background-color: #4CAF50; /* Vert */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.textarea_btn:hover {
+    background-color: #a04545;
+}
+
+.textarea_btn:nth-child(2) {
+    background-color: #f44336; /* Rouge */
+}
+
+.textarea_btn:nth-child(2):hover {
+    background-color: #e53935;
+}
+
+/* Styles pour afficher la modale */
+.modal.show {
+    display: flex;
+}
