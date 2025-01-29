@@ -56,7 +56,7 @@ def data_input ():
     current_year = str(date_time.year)
     current_month = str(date_time.month)
     current_day = str(date_time.day)
-    if platform.system() == "windows":
+    if platform.system() == "window":
         locale.setlocale(locale.LC_TIME, "French_France")
     else:
         locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
@@ -106,23 +106,26 @@ def sign_up():
 
 @app.route("/profil", methods=["POST", "GET"])
 def profile():
-            # "first_name" = request.form.get('first_name'),
-            # "last_name" = request.form.get('last_name'),
-            # "username" = request.form.get('username'),
-            # "mdp" = request.form.get('mdp'),
-            # "email" = request.form('email'),
-            # "birth_day" = request.form('birth_day'),
-            # "birth_month" = request.form('birth_month'),
-            # "birth_year" = request.form('birth_year'),
-            # "gender_choice" = request.form('gender_choice'),
-            # "nationality" = request.form('nationality'),
-            # "height" = request.form('height'),
-            # "weight" = request.form('weight')
-        
-    user_personnal_data = get_data("personnal_data.json")
-    # user_personnal_data = modify_data_user(user_personnal_data) # il nous faut encore définir cette fonction mais qui ressemblerait à celle de création des données de l'utilisateur présentes dans le tool
-    give_data("personnal_data.json", user_personnal_data)
-    return render_template("profil_settings.html", user=user_personnal_data)
+    if request.method == "POST":
+        user_personnal_data = {
+            "first_name": request.form.get('first_name'),
+            "last_name": request.form.get('last_name'),
+            "username": request.form.get('username'),
+            "mdp": request.form.get('mdp'),
+            "email": request.form.get('email'),
+            "birth_day": request.form.get('birth_day'),
+            "birth_month": request.form.get('birth_month'),
+            "birth_year": request.form.get('birth_year'),
+            "gender_choice": request.form.get('gender_choice'),
+            "nationality": request.form.get('nationality'),
+            "height": request.form.get('height'),
+            "weight": request.form.get('weight')
+        }
+        give_data("personnal_data.json", user_personnal_data)
+        return redirect(url_for('profile'))
+    else:
+        user_personnal_data = get_data("personnal_data.json")
+        return render_template("profil_settings.html", user=user_personnal_data)
 
 app.register_blueprint(logout_blueprint)
 app.register_blueprint(tournaments_blueprint)
