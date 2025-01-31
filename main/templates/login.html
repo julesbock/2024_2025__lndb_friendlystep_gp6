@@ -3,7 +3,7 @@
 {% block content%}
 
 <h1>Page de connexion</h1>
-<form action="{{ url_for('login') }}",  method="POST">
+<form action="{{ url_for('login.login') }}",  method="POST">
     {% if error %}
     <p id="error", style="color:red">{{ error }}</p>
     {% endif %}

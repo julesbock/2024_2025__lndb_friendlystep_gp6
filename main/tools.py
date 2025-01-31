@@ -266,8 +266,3 @@ def register_user(username, mdp, chemin_projet):
     all_data ["users_list"].append(user_and_mdp)
     with open(chemin_users_list, "w") as json_file:
         json.dump(all_data, json_file, indent=4)
-
-def check_saved_routes ():
-    print("Routes enregistrées :")
-    for rule in app.url_map.iter_rules():
-        print(rule)
