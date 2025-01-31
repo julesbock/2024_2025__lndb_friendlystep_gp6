@@ -37,7 +37,7 @@
                 {% if session ["name_user"] %}
                 <a href="#" onclick="showLogoutConfirmation()">Se déconnecter</a>
                 {% else %}
-                    <a href="{{ url_for('login') }}">Se connecter</a>
+                    <a href="{{ url_for('login.login') }}">Se connecter</a>
                 {% endif %}
             </li>
         </ul>

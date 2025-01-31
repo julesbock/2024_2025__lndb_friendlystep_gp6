@@ -2,8 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import date
 from tools import *
 from data import *
-from app_routes.tournament_ap import *
+from app_routes.login_ap import *
 from app_routes.logout_ap import *
+from app_routes.tournament_ap import *
 import os, datetime, json, locale, platform
 
 app = Flask(__name__)
@@ -29,26 +30,6 @@ def user_data_graphics(data_type, label_name):
     else:
         return render_template("user_data_graphics.html", label=label_name)
     
-@app.route('/login',  methods=["POST", "GET"])
-def login():
-    if request.method == "POST":
-        donnees = request.form
-        nom = donnees.get('nom')
-        mdp = donnees.get('mdp')
-        user = recherch_user(nom, mdp)
-        if user is not None:
-            print('utilisateur trouvé')
-            session["name_user"] = user['username']
-            print(session)
-            return redirect(url_for('root'))
-        else:
-            print('utilisateur inconnu')
-            return render_template("login.html", error = "Utilisateur ou mot de passe inconnu. Veuillez réessayer.")
-    else:
-        print(session)
-        if "name_user" in session:
-            return redirect(url_for('root'))
-        return render_template("login.html")
 
 @app.route('/data_input', methods=["POST", "GET"])
 def data_input ():
@@ -127,6 +108,7 @@ def profile():
         user_personnal_data = get_data("personnal_data.json")
         return render_template("profil_settings.html", user=user_personnal_data)
 
+app.register_blueprint(login_blueprint)
 app.register_blueprint(logout_blueprint)
 app.register_blueprint(tournaments_blueprint)
 
@@ -134,5 +116,13 @@ app.register_blueprint(tournaments_blueprint)
 def faq():
     return render_template("faq.html")
 
+def check_saved_routes ():
+    print("Routes enregistrées :")
+    for rule in app.url_map.iter_rules():
+        print(rule)
+
+check_saved_routes ()
+
 if __name__ =='__main__':
     app.run(debug=True)
+
