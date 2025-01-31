@@ -46,7 +46,7 @@ def get_precise_day_value(data_type, all_data, year_month_day):
     day = str(day)
 
     if year in all_data and month in all_data[year] and day in all_data[year][month]:
-        return int(all_data[year][month][day].get(data_type, 0))
+        return float(str(all_data[year][month][day].get(data_type, 0)).lstrip("0") or "0")
     return 0
 
 def get_last_seven_days_value(data_type, all_data):
@@ -92,12 +92,12 @@ def get_month_values(data_type, all_data, last_x_month=0):
         number_of_days_in_the_month = calendar.monthrange(current_year, current_month)[1]
         for day in range(1, current_day + 1):
             value=get_precise_day_value(data_type, all_data, (current_year, the_month, day))
-            month_values.append(int(value))
+            month_values.append(float(value))
     else:
         number_of_days_in_the_month = calendar.monthrange(current_year, the_month)[1]
         for day in range(1, number_of_days_in_the_month + 1):
             value=get_precise_day_value(data_type, all_data, (current_year, the_month, day))
-            month_values.append(int(value))
+            month_values.append(float(value))
 
     return month_values
 
