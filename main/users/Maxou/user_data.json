@@ -9813,6 +9813,14 @@
                     "floors_data": "6",
                     "sleep_duration_data": "07:46",
                     "sleep_score_data": "7"
+                },
+                "31": {
+                    "step_data": "1875",
+                    "distance_data": "1.5",
+                    "calories_data": "50",
+                    "floors_data": "5",
+                    "sleep_duration_data": "06:52",
+                    "sleep_score_data": "6"
                 }
             }
         }
