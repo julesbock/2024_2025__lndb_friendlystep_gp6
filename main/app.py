@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import date
 from tools import *
+from app_routes.sign_up_ap import *
 from app_routes.login_ap import *
 from app_routes.logout_ap import *
 from app_routes.tournament_ap import *
@@ -60,30 +61,6 @@ def data_input ():
     else : 
         return render_template("data_input.html", today_date = today_date, data = existing_data)
     
-@app.route('/sign_up', methods=["POST", "GET"])
-def sign_up():
-    if request.method == "POST":
-        user_dico = {
-            "first_name" : request.form['first_name'],
-            "last_name" : request.form['last_name'],
-            "username" : request.form['username'],
-            "mdp" : request.form['mdp'],
-            "email" : request.form['email'],
-            "birth_day" : request.form['birth_day'],
-            "birth_month" : request.form['birth_month'],
-            "birth_year" : request.form['birth_year'],
-            "gender_choice" : request.form['gender_choice'],
-            "nationality" : request.form['nationality'],
-            "height" : request.form['height'],
-            "weight" : request.form['weight']
-        }
-        create_and_register_user(user_dico)
-        session["name_user"] = user_dico['username']
-
-        return redirect(url_for('root'))
-    
-    return render_template("sign_up.html")
-
 @app.route("/profil", methods=["POST", "GET"])
 def profile():
     if request.method == "POST":
@@ -109,6 +86,8 @@ def profile():
 
 app.register_blueprint(login_blueprint)
 app.register_blueprint(logout_blueprint)
+
+app.register_blueprint(sign_up_blueprint)  
 app.register_blueprint(tournaments_blueprint)
 
 @app.route("/faq")
