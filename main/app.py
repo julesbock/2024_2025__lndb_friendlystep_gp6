@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import date
 from tools import *
-from data import *
 from app_routes.login_ap import *
 from app_routes.logout_ap import *
 from app_routes.tournament_ap import *
@@ -116,12 +115,12 @@ app.register_blueprint(tournaments_blueprint)
 def faq():
     return render_template("faq.html")
 
-def check_saved_routes ():
-    print("Routes enregistrées :")
-    for rule in app.url_map.iter_rules():
-        print(rule)
 
-check_saved_routes ()
+# Présentation des routes enregistrées dans le terminal
+
+print("Routes enregistrées :")
+for rule in app.url_map.iter_rules():
+    print(rule)
 
 if __name__ =='__main__':
     app.run(debug=True)

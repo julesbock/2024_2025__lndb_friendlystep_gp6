@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from data import *
 from data_show import *
 import json, os, datetime, calendar
 
@@ -268,3 +267,7 @@ def register_user(username, mdp, chemin_projet):
     with open(chemin_users_list, "w") as json_file:
         json.dump(all_data, json_file, indent=4)
 
+def check_saved_routes ():
+    print("Routes enregistrées :")
+    for rule in app.url_map.iter_rules():
+        print(rule)
