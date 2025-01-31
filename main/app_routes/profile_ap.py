@@ -1,5 +1,5 @@
-from flask import Flask, Blueprint, render_template, request, redirect, url_for, session
-from tools import * 
+from flask import Blueprint, render_template, request, redirect, url_for, session
+from main_tools import * 
 
 profil_blueprint = Blueprint("profil", __name__, url_prefix="/profil")
 

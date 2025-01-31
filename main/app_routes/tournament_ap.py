@@ -1,6 +1,5 @@
 from flask import render_template, request, redirect, url_for, Blueprint, session
-import os
-import json
+import os, json
 
 tournaments_blueprint = Blueprint('tournaments', __name__, url_prefix='/tournaments')
 

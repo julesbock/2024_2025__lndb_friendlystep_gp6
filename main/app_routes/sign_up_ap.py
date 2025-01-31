@@ -1,7 +1,7 @@
-from flask import Flask, Blueprint, render_template, request, redirect, url_for, session
-from tools import *
+from flask import Blueprint, render_template, request, redirect, url_for, session
+from main_tools import *
 
-sign_up_blueprint = Blueprint("signup", __name__, url_prefix="/sign_up")
+sign_up_blueprint = Blueprint("sign_up", __name__, url_prefix="/sign_up")
 
 @sign_up_blueprint.route("/", methods=["POST", "GET"])
 

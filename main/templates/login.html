@@ -9,13 +9,14 @@
     {% endif %}
     <p>
         <!-- Champ de type "text", le onkeydown permet d empecher le client de mettre un espace qui crée des bugs sur la creation/recherche du dossier après-->
-        <label for = "nom">Nom : </label>
+        <label for = "nom">Nom d'utilisateur : </label>
         <input type = "text" name="nom" id="nom" onkeydown="return event.key !== ' '" required> 
     </p>
     <p>
         <!-- Champ de type "password" -->
          <label for="mdp">Mot de passe : </label>
          <input type="password" name="mdp" id="mdp" required>
+         <input type="checkbox" id="showPassword"> Afficher le mot de passe
     </p>
     <p>
         <!-- Bouton d'envoi du formulaire -->
@@ -23,6 +24,24 @@
         <!-- <button type="submit">Envoyer le formulaire</button> -->
     </p>
 </form>
-<a href="{{ url_for('sign_up.sign_up') }}">Sign up</a>
+
+<p> 
+   Vous n'avez pas encore de compte ? Créez un compte en <a href="{{ url_for('sign_up.sign_up') }}">cliquant ici</a> 
+</p>
+<p>
+    Besoin n'aide ? N'hesitez pas à consulter notre <a href="{{ url_for('faq.faq') }}">foire aux questions</a>
+</p>
+<script>
+    // Afficher le mot de passe
+    const showPassword = document.getElementById("showPassword");
+    const mdp = document.getElementById("mdp");
+    showPassword.addEventListener("click", function() {
+        if (mdp.type === "password") {
+            mdp.type = "text";
+        } else {
+            mdp.type = "password";
+        }
+    });
+</script>
 
 {% endblock %}

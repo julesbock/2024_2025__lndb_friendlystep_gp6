@@ -137,4 +137,12 @@ body {
     }
 }
 
+#new_logo {
+    background-image: url('{{ url_for('static', filename='images/logo.png') }}');
+    background-size: contain; /* S'ajuste pour contenir l'image */
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 100px;
+}
+
 /* CHATGPT on n en doute pas */
