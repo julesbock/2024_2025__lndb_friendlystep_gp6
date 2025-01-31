@@ -6,6 +6,7 @@ from app_routes.profile_ap import *
 from app_routes.login_ap import *
 from app_routes.logout_ap import *
 from app_routes.tournament_ap import *
+from app_routes.faq_ap import *
 import os, datetime, json, locale, platform
 
 app = Flask(__name__)
@@ -67,10 +68,8 @@ app.register_blueprint(logout_blueprint)
 app.register_blueprint(sign_up_blueprint)
 app.register_blueprint(profil_blueprint)
 app.register_blueprint(tournaments_blueprint)
+app.register_blueprint(faq_blueprint)
 
-@app.route("/faq")
-def faq():
-    return render_template("faq.html")
 
 
 # Présentation des routes enregistrées dans le terminal
