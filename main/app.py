@@ -2,8 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import date
 from tools import *
 from data import *
-from app_routes.tournament_app_routes import *
-from app_routes.logout_app_routes import *
+from app_routes.tournament_ap import *
+from app_routes.logout_ap import *
 import os, datetime, json, locale, platform
 
 app = Flask(__name__)
