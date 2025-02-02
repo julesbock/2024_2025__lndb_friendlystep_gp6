@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-from data import *
+from flask import redirect, url_for, session
 from data_show import *
 import json, os, datetime, calendar
 
@@ -8,7 +7,6 @@ import json, os, datetime, calendar
 
 
 # Fonctions de gestion de données des utilisateurs
-
 def do_all_graphics(data_type, label):
     all_user_data = get_data("user_data.json")
     needed_data = {}
