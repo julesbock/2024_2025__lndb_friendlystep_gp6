@@ -61,10 +61,14 @@ def create_month_graph(the_data_label, the_data_to_graph):
     
 def create_year_graph(the_data_label, list_of_the_data_to_graph):
     labels = []
-
-    for i in range(2): # 12 mois
-        labels.append(calendar.month_name[i + 1])
-    
+    today = datetime.datetime.now()
+    current_month = today.month
+    print(current_month)
+    for i in range(current_month): # 12 mois
+        print(i)
+        labels.append(calendar.month_name[i+1])
+    print(labels)
+    print(list_of_the_data_to_graph)
     # Création de la figure et de l'axe
     fig, ax1 = plt.subplots()
 

@@ -52,7 +52,7 @@ def get_last_seven_days_value(data_type, all_data):
     today = datetime.datetime.now()
     lasts_days_values = []
     
-    for i in range(7):
+    for i in range(6, -1, -1):
         day = today - datetime.timedelta(days=i)
         current_day = day.day
         year = day.year
@@ -119,7 +119,7 @@ def get_last_year_values(data_type, all_data):
     today = datetime.datetime.now()
     current_month = int(today.month)
     month_values = []
-    for month in range(current_month + 1):
+    for month in range(1, current_month +1 ):
         values_list = get_month_values(data_type, all_data, month)
         mean_value = calculate_mean(values_list)
         month_values.append(mean_value)
