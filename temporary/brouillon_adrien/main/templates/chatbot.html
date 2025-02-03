@@ -1,0 +1,31 @@
+{% extends "base.html"%}
+{% block content%}
+
+<h1>Chatbot</h1>
+<div id="chat-container">
+    <div id="messages"></div>
+    <input type="text" id="user-input" placeholder="Tapez un message...">
+    <button id="send">Envoyer</button>
+</div>
+<script>
+document.querySelector("#send").addEventListener("click", async () => {
+    let inputField = document.querySelector("#user-input");
+    let message = inputField.value.trim();
+    if (message === "") return;
+    
+    let chatBox = document.querySelector("#messages");
+    chatBox.innerHTML += `<p><strong>Vous:</strong> ${message}</p>`;
+    inputField.value = "";
+
+    let response = await fetch("/chatbot/api", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message })
+    });
+
+    let data = await response.json();
+    chatBox.innerHTML += `<p><strong>Chatbot:</strong> ${data.response}</p>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+});
+</script>
+{% endblock %}

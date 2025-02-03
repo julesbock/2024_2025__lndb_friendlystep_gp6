@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <nav id="navbar">
-        <img src="{{ url_for('static', filename='img/img_accueil.png') }}" alt="logo" width="50">
+     <nav id="navbar">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" width="100">
         <h1 id="frendly_steps">Friendly steps </h1>
         <ul>
             <li>
-                <a href="{{ url_for('root') }}">Accueil</a>
+                <a href="{{ url_for('root.root') }}">Accueil</a>
             </li>
 
             {% if session ["name_user"] %}
             <li>
-                <a href="{{ url_for('data_input') }}">Ajouter des données</a>
+                <a href="{{ url_for('data_input.data_input') }}">Ajouter des données</a>
             </li>
 
             <li>
@@ -25,19 +25,19 @@
             </li>
 
             <li>
-                <a href="{{ url_for('profile') }}">Profil</a>
+                <a href="{{ url_for('profil.profile') }}">Profil</a>
             </li>
             {% endif %}
             
             <li>
-                <a href="{{ url_for('faq') }}">Aide</a>
+                <a href="{{ url_for('faq.faq') }}">Aide</a>
             </li>
             
             <li>
                 {% if session ["name_user"] %}
                 <a href="#" onclick="showLogoutConfirmation()">Se déconnecter</a>
                 {% else %}
-                    <a href="{{ url_for('login') }}">Se connecter</a>
+                    <a href="{{ url_for('login.login') }}">Se connecter</a>
                 {% endif %}
             </li>
         </ul>

@@ -14,6 +14,7 @@ def create_x_days_graph(the_data_label, list_of_the_data_to_graph, number_of_day
     if number_of_days < 10:
         for i in range(1, number_of_days+1):
             labels.append(f"{day-number_of_days+i} {month_name}")
+            
     else:
         for i in range(1, number_of_days+1):
             labels.append(
@@ -44,7 +45,7 @@ def create_x_days_graph(the_data_label, list_of_the_data_to_graph, number_of_day
     
     
 def create_seven_days_graph(the_data_label, the_data_to_graph):
-    fig, ax1 = create_x_days_graph(the_data_label, the_data_to_graph, 7)
+    create_x_days_graph(the_data_label, the_data_to_graph, 7)
     # Ajouter un titre
     plt.title('7 derniers jours')
     save_graph("seven_days_graph.png")
@@ -53,7 +54,7 @@ def create_month_graph(the_data_label, the_data_to_graph):
     today = datetime.datetime.now()
     number_of_days_in_month = today.day
 
-    fig, ax1 = create_x_days_graph(the_data_label, the_data_to_graph, number_of_days_in_month)
+    create_x_days_graph(the_data_label, the_data_to_graph, number_of_days_in_month)
     # Ajouter un titre
     plt.title('Ce mois-ci')
     save_graph("month_graph.png")

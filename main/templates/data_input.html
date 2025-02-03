@@ -4,7 +4,7 @@
 
 <body> 
     <h1>Ajouter/modifier vos données du <span>{{ today_date }}</span></h1>
-    <form action = "{{ url_for('data_input') }}" method="POST">
+    <form action = "{{ url_for('data_input.data_input') }}" method="POST">
         <p>
             <label for="step_data">Pas : </label>
             <input 
