@@ -1,5 +1,6 @@
 from flask import redirect, url_for, session
 from data_show import *
+from data import BASE32_ALPHABET
 import json, os, datetime, calendar, random, string
 
 # Fonctions de gestion de données des utilisateurs
@@ -265,19 +266,28 @@ def register_user(username, mdp, chemin_projet):
 
 # Fonctions de gestion des tournois
 def generate_tournament_id():
-    tournament_id = "".join(random.choices(BASE32_ALPHABET, k=length))
+    tournament_id = "".join(random.choices(BASE32_ALPHABET, k=11))
     return tournament_id
 
-def save_tournament_data(tournament_name, tournament_data):
-    file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'tournaments.json')
+def check_if_tournament_id_exists(tournament_id, filename = "tournaments.json"):
+    try:
+        with open(filename, "r") as tournament_files:
+            tournaments = json.load(tournament_files)
+            return tournament_id in tournaments
+    except (FileNotFoundError, json.JSONDecodeError):
+        return False
+    
+def get_unique_tournament_id():
+    while True:
+        tournament_id = generate_tournament_id()
+        if not check_if_tournament_id_exists(tournament_id):
+            return tournament_id
 
-    if os.path.exists(file_path):
-        with open(file_path, 'r') as file:
-            data = json.load(file)
-    else:
-        data = {}
-
-    data[tournament_name] = tournament_data
-
-    with open(file_path, 'w') as file:
-        json.dump(data, file, indent=4)
+def save_tournament_data(tournament_id, tournament_data):
+    if not check_if_tournament_id_exists(tournament_id):
+        with open(f"{tournament_id}.json", "r") as tournament_files:
+            tournament_data = json.load(tournament_files)
+    elif 
+    tournaments[tournament_id] = tournament_data
+    with open("tournaments.json", "w") as tournament_files:
+        json.dump(tournaments, tournament_files, indent=4)
