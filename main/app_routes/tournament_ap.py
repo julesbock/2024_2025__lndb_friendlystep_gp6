@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, Blueprint, session
-from main_tools import save_tournament_data
+from main_tools import save_tournament_data, create_tournament_id
 
 tournaments_blueprint = Blueprint('tournaments', __name__, url_prefix='/tournaments')
 
@@ -19,7 +19,7 @@ def create_tournament():
             "date": date,
             "duration": duration,
             "created_by": session.get('username')}
-        
+        create_tournament_id()
         save_tournament_data(name, tournament_data)
 
         return redirect(url_for('tournaments.tournaments'))

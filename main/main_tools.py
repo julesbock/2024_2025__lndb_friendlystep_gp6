@@ -1,6 +1,6 @@
 from flask import redirect, url_for, session
 from data_show import *
-import json, os, datetime, calendar
+import json, os, datetime, calendar, random, string
 
 # Fonctions de gestion de données des utilisateurs
 def do_all_graphics(data_type, label):
@@ -264,8 +264,9 @@ def register_user(username, mdp, chemin_projet):
         json.dump(all_data, json_file, indent=4)
 
 # Fonctions de gestion des tournois
-
-
+def generate_tournament_id():
+    tournament_id = "".join(random.choices(BASE32_ALPHABET, k=length))
+    return tournament_id
 
 def save_tournament_data(tournament_name, tournament_data):
     file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'tournaments.json')
