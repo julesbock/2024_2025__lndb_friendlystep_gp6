@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, Blueprint, session
-import os, json
+from main_tools import save_tournament_data
 
 tournaments_blueprint = Blueprint('tournaments', __name__, url_prefix='/tournaments')
 
@@ -35,17 +35,3 @@ def join_tournament():
 def view_tournament(tournament_id):
     return f"Voir les détails du tournoi {tournament_id}"
 
-
-def save_tournament_data(tournament_name, tournament_data):
-    file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'tournaments.json')
-
-    if os.path.exists(file_path):
-        with open(file_path, 'r') as file:
-            data = json.load(file)
-    else:
-        data = {}
-
-    data[tournament_name] = tournament_data
-
-    with open(file_path, 'w') as file:
-        json.dump(data, file, indent=4)
