@@ -269,13 +269,9 @@ def generate_tournament_id():
     tournament_id = "".join(random.choices(BASE32_ALPHABET, k=11))
     return tournament_id
 
-def check_if_tournament_id_exists(tournament_id, filename = "tournaments.json"):
-    try:
-        with open(filename, "r") as tournament_files:
-            tournaments = json.load(tournament_files)
-            return tournament_id in tournaments
-    except (FileNotFoundError, json.JSONDecodeError):
-        return False
+def check_if_tournament_id_exists(tournament_id, folder = "tournaments"):
+    file_path = os.path.join(folder, f"{tournament_id}.json")
+    return os.path.exists(file_path)
     
 def get_unique_tournament_id():
     while True:
@@ -283,11 +279,18 @@ def get_unique_tournament_id():
         if not check_if_tournament_id_exists(tournament_id):
             return tournament_id
 
-def save_tournament_data(tournament_id, tournament_data):
-    if not check_if_tournament_id_exists(tournament_id):
-        with open(f"{tournament_id}.json", "r") as tournament_files:
-            tournament_data = json.load(tournament_files)
-    elif 
-    tournaments[tournament_id] = tournament_data
-    with open("tournaments.json", "w") as tournament_files:
-        json.dump(tournaments, tournament_files, indent=4)
+def save_tournament_data(tournament_id, tournament_data, folder = "tournaments"):
+    os.makedirs(folder, exist_ok=True)
+    file_path = os.path.join(folder, f"{tournament_id}.json")
+    try:
+        with open(file_path, "w") as tournament_file:
+            json.dump(tournament_data, tournament_file, indent=4)
+    except Exception as e:
+        error_message = f"Une erreur s'est produite lors de l'enregistrement du tournoi {tournament_id}: {e}"
+        print(error_message)
+        delete_tournament(tournament_id)
+        return error_message
+
+def delete_tournament(tournament_id):
+    file_path = os.path.join("tournaments", f"{tournament_id}.json")
+    os.remove(file_path)

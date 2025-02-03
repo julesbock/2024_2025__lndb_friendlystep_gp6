@@ -1,5 +1,5 @@
-from flask import render_template, request, redirect, url_for, Blueprint, session
-from main_tools import save_tournament_data, create_tournament_id
+from flask import render_template, request, redirect, url_for, Blueprint, session, flash
+from main_tools import *
 
 tournaments_blueprint = Blueprint('tournaments', __name__, url_prefix='/tournaments')
 
@@ -13,15 +13,19 @@ def create_tournament():
         name= request.form.get('name')
         date= request.form.get('date')
         duration= request.form.get('duration')
-
+        tournament_id = get_unique_tournament_id()
         tournament_data= {
+            "id" : tournament_id,
             "name": name,
             "date": date,
             "duration": duration,
             "created_by": session.get('username')}
-        create_tournament_id()
-        save_tournament_data(name, tournament_data)
-
+        error = save_tournament_data(tournament_id, tournament_data)
+        if error:
+            flash(error, "error")
+            return redirect(url_for('tournaments.create_tournament'))
+        else :
+            flash("Tournoi créé avec succès !", "success")
         return redirect(url_for('tournaments.tournaments'))
     return render_template('create_tournament.html')
 
