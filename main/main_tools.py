@@ -280,8 +280,10 @@ def get_unique_tournament_id():
             return tournament_id
 
 def save_tournament_data(tournament_id, tournament_data, folder = "tournaments"):
-    os.makedirs(folder, exist_ok=True)
-    file_path = os.path.join(folder, f"{tournament_id}.json")
+    path = os.path.dirname(__file__)
+    true_path = os.path.join(path, folder)
+    os.makedirs(true_path, exist_ok=True)
+    file_path = os.path.join(true_path, f"{tournament_id}.json")
     try:
         with open(file_path, "w") as tournament_file:
             json.dump(tournament_data, tournament_file, indent=4)
