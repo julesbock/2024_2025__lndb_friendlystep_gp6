@@ -9,35 +9,30 @@ def create_x_days_graph(the_data_label, list_of_the_data_to_graph, number_of_day
     today = datetime.datetime.now()
     day = today.day
     month = today.month
-    year = today.year
-    month_name = calendar.month_name[today.month]
     if number_of_days < 10:
-        for i in range(1, number_of_days+1):
-            day = day-number_of_days+i
-            if day < 1:
-                if month == 1:
-                    month = 12
-                    year -= 1
-                else:
-                    month -= 1
-                day = calendar.monthrange(year, month)[1] + day
-            labels.append(f"{day} {month_name}")
+        for i in range(number_of_days):
+            date = today - datetime.timedelta(days=number_of_days - 1 - i)
+            day = date.day
+            if day == 1:
+                extend = 'st'
+            elif day == 2:
+                extend = 'nd'
+            elif day == 3:
+                extend = 'rd'
+            else:
+                extend = 'th'
+            # Format spécial pour le 1er du mois
+            labels.append(f"{day}{extend} {calendar.month_name[date.month]} {date.year}")
             
-    else:
-        for i in range(1, number_of_days+1):
-            day = day-number_of_days+i
-            if day < 1:
-                if month == 1:
-                    month = 12
-                    year -= 1
-                else:
-                    month -= 1
-                day = calendar.monthrange(year, month)[1] + day
-               
+    else : 
+        for i in range (number_of_days):
+            date = today - datetime.timedelta(days=number_of_days - 1 - i)
+            day = date.day
+            month = date.month
             labels.append(
-                f"{'0' if (day - number_of_days + i) < 10 else ''}{day - number_of_days + i}"
+                f"{'0' if (day) < 10 else ''}{day}"
                 f"/{'0' if int(month) < 10 else ''}{month}"
-            )
+            )     
 
     # Création de la figure et de l'axe
     fig, ax1 = plt.subplots(figsize=(11.5, 5.75))
