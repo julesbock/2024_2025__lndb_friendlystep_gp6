@@ -26,4 +26,4 @@ def sign_up():
 
         return redirect(url_for('root'))
     
-    return render_template("sign_up.html")
+    return render_template("users/sign_up.html")
