@@ -34,7 +34,9 @@
     // Script pour définir la date d'aujourd'hui comme valeur par défaut
     document.addEventListener('DOMContentLoaded', (event) => {
         const today = new Date().toISOString().split('T')[0];
-        document.getElementById('date').value = today;
+        const dateInput = document.getElementById('date');
+        dateInput.value = today;
+        dateInput.min = today;
     });
 </script>
 {% endblock %}
