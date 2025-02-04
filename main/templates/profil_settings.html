@@ -47,6 +47,7 @@
  value="{{ user['mdp'] }}"
  oninput="afficherModification()"
  >
+ <input type="checkbox" id="showPassword"> Afficher le mot de passe
 </p>
 
 <p> <!-- mail -->
@@ -361,6 +362,18 @@ function afficherModification() {
 }
 </script>
 
+<script>
+  // Afficher le mot de passe
+  const showPassword = document.getElementById("showPassword");
+  const mdp = document.getElementById("mdp");
+  showPassword.addEventListener("click", function() {
+      if (mdp.type === "password") {
+          mdp.type = "text";
+      } else {
+          mdp.type = "password";
+      }
+  });
+</script>
 
 </body>
 {% endblock %}
