@@ -22,5 +22,5 @@ def login():
         print(session)
         if "name_user" in session:
             return redirect(url_for('root.root'))
-        return render_template("login.html")
+        return render_template("users/login.html")
     
