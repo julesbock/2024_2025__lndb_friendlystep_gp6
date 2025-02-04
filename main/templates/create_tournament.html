@@ -22,7 +22,7 @@
     </p>
     <p>
         <label for="duration">Durée de la compétition :</label>
-        <input type="number" name="duration" id="duration" required>
+        <input type="number" name="duration" id="duration" required min = "1" max = "365">
         <span>jours</span>
     </p>
     <p>
@@ -30,4 +30,11 @@
     </p>
 </form>
 
+<script>
+    // Script pour définir la date d'aujourd'hui comme valeur par défaut
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').value = today;
+    });
+</script>
 {% endblock %}
