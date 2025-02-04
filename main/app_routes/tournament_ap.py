@@ -34,10 +34,11 @@ def join_tournament():
     if request.method == 'POST':
         tournament_id = request.form.get('tournament_id')
         tournament_data = search_tournament(tournament_id)
-        if tournament_data:
-            return redirect(url_for('tournaments.view_tournament', tournament_id=tournament_id))
+        if check_if_tournament_id_exists(tournament_id) == True:
+            pass
         else:
-            render_template('errors/tournament_nf.html')
+            error_type = "tournament_nf"
+            return redirect(url_for('errors.error', error_type=error_type))
         return redirect(url_for('tournaments.tournaments'))
     return render_template('tournaments/join_tournament.html')
 
