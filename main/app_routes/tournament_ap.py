@@ -35,7 +35,7 @@ def join_tournament():
         tournament_id = request.form.get('tournament_id')
         tournament_data = search_tournament(tournament_id)
         if tournament_data:
-            return render_template('view_tournament.html', tournament_data=tournament_data)
+            return redirect(url_for('tournaments.view_tournament', tournament_id=tournament_id))
         else:
             flash(f"Le tournoi {tournament_id} n'existe pas", "error")
         return redirect(url_for('tournaments.tournaments'))
@@ -43,5 +43,9 @@ def join_tournament():
 
 @tournaments_blueprint.route('/view')
 def view_tournament(tournament_id):
-    return render_template('view_tournament.html', tournament_id=tournament_id)
+    tournament_data = search_tournament(tournament_id)
+    if not tournament_data:
+        flash(f"Le tournoi {tournament_id} n'existe pas", "error")
+        return redirect(url_for('tournaments.join_tournament'))
+    return render_template('view_tournament.html', tournament_data=tournament_data)
 
