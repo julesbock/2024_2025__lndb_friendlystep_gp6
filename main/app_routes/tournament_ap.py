@@ -41,7 +41,7 @@ def join_tournament():
         return redirect(url_for('tournaments.tournaments'))
     return render_template('tournaments/join_tournament.html')
 
-@tournaments_blueprint.route('/view/<tournament_id>')
+@tournaments_blueprint.route('/view')
 def view_tournament(tournament_id):
     tournament_data = search_tournament(tournament_id)
     if not tournament_data:
