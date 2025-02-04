@@ -32,10 +32,16 @@ def create_tournament():
 @tournaments_blueprint.route('/join', methods = ["POST", "GET"])
 def join_tournament():
     if request.method == 'POST':
+        tournament_id = request.form.get('tournament_id')
+        tournament_data = search_tournament(tournament_id)
+        if tournament_data:
+            return render_template('view_tournament.html', tournament_data=tournament_data)
+        else:
+            flash(f"Le tournoi {tournament_id} n'existe pas", "error")
         return redirect(url_for('tournaments.tournaments'))
     return render_template('join_tournament.html')
 
-@tournaments_blueprint.route('/<int:tournament_id>')
+@tournaments_blueprint.route('/view')
 def view_tournament(tournament_id):
-    return f"Voir les détails du tournoi {tournament_id}"
+    return render_template('view_tournament.html', tournament_id=tournament_id)
 

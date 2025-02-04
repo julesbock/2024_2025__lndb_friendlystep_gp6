@@ -285,6 +285,7 @@ def save_tournament_data(tournament_id, tournament_data, folder = "tournaments")
     try:
         with open(file_path, "w") as tournament_file:
             json.dump(tournament_data, tournament_file, indent=4)
+        return None
     except Exception as e:
         error_message = f"Une erreur s'est produite lors de l'enregistrement du tournoi {tournament_id}: {e}"
         print(error_message)
@@ -294,3 +295,12 @@ def save_tournament_data(tournament_id, tournament_data, folder = "tournaments")
 def delete_tournament(tournament_id):
     file_path = os.path.join("tournaments", f"{tournament_id}.json")
     os.remove(file_path)
+
+def search_tournament(tournament_id):
+    file_path = os.path.join("tournaments", f"{tournament_id}.json")
+    if os.path.exists(file_path):
+        with open(file_path, "r") as tournament_file:
+            tournament_data = json.load(tournament_file)
+        return tournament_data
+    else:
+        return None
