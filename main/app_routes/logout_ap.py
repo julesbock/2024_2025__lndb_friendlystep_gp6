@@ -11,4 +11,4 @@ def logout():
 
 @logout_blueprint.route('/logout_confirmation')
 def logout_confirmation():
-    return render_template("logout_confirmation.html")
+    return render_template("users/logout_confirmation.html")

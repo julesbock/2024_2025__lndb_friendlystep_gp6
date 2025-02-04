@@ -34,4 +34,4 @@ def data_input ():
         put_data_in_user_data( personnal_data)
         return redirect(url_for('root.root'))
     else : 
-        return render_template("data_input.html", today_date = today_date, data = existing_data)
+        return render_template("user_data/data_input.html", today_date = today_date, data = existing_data)
