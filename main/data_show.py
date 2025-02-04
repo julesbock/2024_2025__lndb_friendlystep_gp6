@@ -9,13 +9,31 @@ def create_x_days_graph(the_data_label, list_of_the_data_to_graph, number_of_day
     today = datetime.datetime.now()
     day = today.day
     month = today.month
+    year = today.year
     month_name = calendar.month_name[today.month]
     if number_of_days < 10:
         for i in range(1, number_of_days+1):
-            labels.append(f"{day-number_of_days+i} {month_name}")
+            day = day-number_of_days+i
+            if day < 1:
+                if month == 1:
+                    month = 12
+                    year -= 1
+                else:
+                    month -= 1
+                day = calendar.monthrange(year, month)[1] + day
+            labels.append(f"{day} {month_name}")
             
     else:
         for i in range(1, number_of_days+1):
+            day = day-number_of_days+i
+            if day < 1:
+                if month == 1:
+                    month = 12
+                    year -= 1
+                else:
+                    month -= 1
+                day = calendar.monthrange(year, month)[1] + day
+               
             labels.append(
                 f"{'0' if (day - number_of_days + i) < 10 else ''}{day - number_of_days + i}"
                 f"/{'0' if int(month) < 10 else ''}{month}"
