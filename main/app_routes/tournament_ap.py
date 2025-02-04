@@ -37,7 +37,7 @@ def join_tournament():
         if tournament_data:
             return redirect(url_for('tournaments.view_tournament', tournament_id=tournament_id))
         else:
-            flash(f"Le tournoi {tournament_id} n'existe pas", "error")
+            render_template('errors/tournament_nf.html')
         return redirect(url_for('tournaments.tournaments'))
     return render_template('tournaments/join_tournament.html')
 

@@ -1,0 +1,34 @@
+{% extends "base.html"%}
+{% block content%}
+
+<h1>Erreur : Compétition non trouvée</h1>
+<h2>La compétition que vous cherchez n'existe pas.</h2>
+<p>
+    Merci de vérifier l'identifiant du tournoi, 
+    <a href = "{{url_for('tournaments.join_tournament') }}">
+        cliquez ici 
+    </a> 
+    pour réessayer
+</p>
+
+<h2>Vous pouvez aussi :</h2>
+<ul>
+    <li>
+        <a href="{{ url_for('tournaments.create_tournament') }}">
+            Créer vous même une compétition
+        </a>
+    </li>
+    <li>
+        <a href = "{{url_for('faq.faq')}}">
+            Consulter notre centre d'aide
+        </a>
+    </li>
+    <li>
+        <a href = "{{url_for('root.root')}}">
+            Retourner à l'accueil
+        </a>
+    </li>
+</ul>
+
+
+{% endblock %}
