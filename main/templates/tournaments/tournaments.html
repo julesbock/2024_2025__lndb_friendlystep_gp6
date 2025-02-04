@@ -9,10 +9,25 @@
     <a href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
 </p>
 <h2>Compétitions en cours :</h2>
-il va falloir implémenter une fct qui nous affiche " y'a pas de compétitions en cours " si y'en a pas
-et qui les montre si y'en a, suremement a partir d'un nv json dédié aux compéitions.
-il faudrait que chaque compétition ait une url et donc redirige vers une autre page automatiquement
+<ul>
+    {% for tournament in ongoing_tournaments %}
+        <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+    {% endfor %}
+</ul>
+<h2> Compétitions à venir :</h2>
+<ul>
+    {% for tournament in upcoming_tournaments %}
+        <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+    {% endfor %}
+</ul>
+
 <h2>Compétitions terminées :</h2>
-meme chose ici
+<ul>
+    {% for tournament in past_tournaments %}
+        <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+    {% endfor %}
+</ul>
+
+
 
 {% endblock %}

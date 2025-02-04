@@ -25,12 +25,14 @@ def tournaments():
     past_tournaments = []
 
     for tournament in tournaments:
-        start_date = datetime.strptime(tournament['date'], '%Y-%m-%d').date()
-        end_date = start_date + timedelta(days=int(tournament['duration']))
-        if end_date < current_date:
-            past_tournaments.append(tournament)
-        elif start_date <= current_date <= end_date:
-            ongoing_tournaments.append(tournament)
+        if 'date' in tournament and 'duration' in tournament:
+            start_date = datetime.strptime(tournament['date'], '%Y-%m-%d').date()
+            end_date = start_date + timedelta(days=int(tournament['duration']))
+            tournament['end_date'] = end_date.strftime('%Y-%m-%d')
+            if end_date < current_date:
+                 past_tournaments.append(tournament)
+            elif start_date <= current_date <= end_date:
+                 ongoing_tournaments.append(tournament)
         else:
             upcoming_tournaments.append(tournament)
 
