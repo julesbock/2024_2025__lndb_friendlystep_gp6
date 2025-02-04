@@ -1,11 +1,40 @@
 from flask import render_template, request, redirect, url_for, Blueprint, session, flash
 from main_tools import *
+from datetime import datetime, timedelta
 
 tournaments_blueprint = Blueprint('tournaments', __name__, url_prefix='/tournaments')
 
 @tournaments_blueprint.route('/')
 def tournaments():
-    return render_template('tournaments/tournaments.html')
+# Lire les données des tournois à partir des fichiers JSON
+    tournaments_dir = os.path.join(os.path.dirname(__file__), '..', 'tournaments')
+    tournaments = []
+
+    if os.path.exists(tournaments_dir):
+        for filename in os.listdir(tournaments_dir):
+            if filename.endswith('.json'):
+                file_path = os.path.join(tournaments_dir, filename)
+                with open(file_path, 'r') as file:
+                    tournament = json.load(file)
+                    tournaments.append(tournament)
+
+    # Classer les tournois en fonction de leur date et durée
+    current_date = datetime.now().date()
+    ongoing_tournaments = []
+    upcoming_tournaments = []
+    past_tournaments = []
+
+    for tournament in tournaments:
+        start_date = datetime.strptime(tournament['date'], '%Y-%m-%d').date()
+        end_date = start_date + timedelta(days=int(tournament['duration']))
+        if end_date < current_date:
+            past_tournaments.append(tournament)
+        elif start_date <= current_date <= end_date:
+            ongoing_tournaments.append(tournament)
+        else:
+            upcoming_tournaments.append(tournament)
+
+    return render_template('tournaments/tournaments.html', ongoing_tournaments=ongoing_tournaments, upcoming_tournaments=upcoming_tournaments, past_tournaments=past_tournaments)
 
 @tournaments_blueprint.route('/create', methods = ["POST", "GET"])
 def create_tournament():
