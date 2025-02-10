@@ -10,6 +10,7 @@ from app_routes.tournament_ap import *
 from app_routes.faq_ap import *
 from app_routes.user_data_graphics_ap import *
 from app_routes.errors_ap import *
+from app_routes.messages_ap import *
 
 app = Flask(__name__)
 
@@ -28,6 +29,7 @@ app.register_blueprint(tournaments_blueprint)
 app.register_blueprint(faq_blueprint)
 app.register_blueprint(user_data_graphics_blueprint)
 app.register_blueprint(errors_blueprint)
+app.register_blueprint(messages_blueprint)
 
 
 # Présentation des routes enregistrées dans le terminal
