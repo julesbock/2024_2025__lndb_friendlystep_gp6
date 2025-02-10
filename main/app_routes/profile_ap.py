@@ -24,4 +24,4 @@ def profile():
         return redirect(url_for('profile'))
     else:
         user_personnal_data = get_data("personnal_data.json")
-        return render_template("profil_settings.html", user=user_personnal_data)
+        return render_template("user_data/profil_settings.html", user=user_personnal_data)

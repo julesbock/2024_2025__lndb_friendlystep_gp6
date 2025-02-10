@@ -174,6 +174,7 @@ dossier users
     Bonus : 
         Envoi de mail de rappel
         Mail recap
+        L'utilisateur peux choisir la semaine, mois ou annee qu il veut regarder
         Adaptation de la page
         Regarder par rapport à la sécurité
         Meilleur CSS

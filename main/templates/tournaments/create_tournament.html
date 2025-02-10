@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Créer une compétition</h1>
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<form method="POST" action="{{ url_for('tournaments.create_tournament') }}">
+    <p>
+        <label for="name">Nom de la compétition :</label>
+        <input type="text" name="name" id="name" required>
+    </p>
+    <p>
+        <label for="date">Date de début de la compétition:</label>
+        <input type="date" name="date" id="date" required>
+    </p>
+    <p>
+        <label for="duration">Durée de la compétition :</label>
+        <input type="number" name="duration" id="duration" required min = "1" max = "365">
+        <span>jours</span>
+    </p>
+    <p>
+        <input type="submit" value="Créer">
+    </p>
+</form>
+
+<script>
+    // Script pour définir la date d'aujourd'hui comme valeur par défaut
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const today = new Date().toISOString().split('T')[0];
+        const dateInput = document.getElementById('date');
+        dateInput.value = today;
+        dateInput.min = today;
+    });
+</script>
+{% endblock %}

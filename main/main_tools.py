@@ -1,10 +1,7 @@
 from flask import redirect, url_for, session
 from data_show import *
-import json, os, datetime, calendar
-
-# Fonctions root
-
-
+from data import BASE32_ALPHABET
+import json, os, datetime, calendar, random, string
 
 # Fonctions de gestion de données des utilisateurs
 def do_all_graphics(data_type, label):
@@ -266,3 +263,46 @@ def register_user(username, mdp, chemin_projet):
     all_data ["users_list"].append(user_and_mdp)
     with open(chemin_users_list, "w") as json_file:
         json.dump(all_data, json_file, indent=4)
+
+# Fonctions de gestion des tournois
+def generate_tournament_id():
+    tournament_id = "".join(random.choices(BASE32_ALPHABET, k=11))
+    return tournament_id
+
+def check_if_tournament_id_exists(tournament_id, folder = "tournaments"):
+    file_path = os.path.join(folder, f"{tournament_id}.json")
+    return os.path.exists(file_path)
+    
+def get_unique_tournament_id():
+    while True:
+        tournament_id = generate_tournament_id()
+        if not check_if_tournament_id_exists(tournament_id):
+            return tournament_id
+
+def save_tournament_data(tournament_id, tournament_data, folder = "tournaments"):
+    path = os.path.dirname(__file__)
+    true_path = os.path.join(path, folder)
+    os.makedirs(true_path, exist_ok=True)
+    file_path = os.path.join(true_path, f"{tournament_id}.json")
+    try:
+        with open(file_path, "w") as tournament_file:
+            json.dump(tournament_data, tournament_file, indent=4)
+        
+    except Exception as e:
+        error_message = f"Une erreur s'est produite lors de l'enregistrement du tournoi {tournament_id}: {e}"
+        print(error_message)
+        delete_tournament(tournament_id)
+        return error_message
+
+def delete_tournament(tournament_id):
+    file_path = os.path.join("tournaments", f"{tournament_id}.json")
+    os.remove(file_path)
+
+def search_tournament(tournament_id):
+    file_path = os.path.join("tournaments", f"{tournament_id}.json")
+    if os.path.exists(file_path):
+        with open(file_path, "r") as tournament_file:
+            tournament_data = json.load(tournament_file)
+        return tournament_data
+    else:
+        return None

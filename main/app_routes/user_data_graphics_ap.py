@@ -8,6 +8,6 @@ def user_data_graphics(data_type, label_name):
 
     if request.method == "GET":
         do_all_graphics(data_type, label_name)
-        return render_template("user_data_graphics.html", label=label_name)
+        return render_template("user_data/user_data_graphics.html", label=label_name)
     else:
-        return render_template("user_data_graphics.html", label=label_name)
+        return render_template("user_data/user_data_graphics.html", label=label_name)

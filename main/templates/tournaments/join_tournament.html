@@ -1,0 +1,15 @@
+{% extends "base.html"%}
+{% block content%}
+
+<h1> Rejoindre une compétition</h1>
+<form method="POST" action="{{ url_for('tournaments.join_tournament') }}">
+    <p>
+        <label for="tournament_id">Veuillez entrer l'identifiant à 11 caractères de votre tournois : </label>
+        <input type="text" name="tournament_id" id="tournament_id" placeholder="ABCDEFGH123" required>
+    </p>
+    <p>
+        <input type="submit" value="Rejoindre">
+    </p>
+</form>
+
+{% endblock %}

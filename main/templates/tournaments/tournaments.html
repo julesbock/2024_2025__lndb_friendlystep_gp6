@@ -1,0 +1,33 @@
+{% extends "base.html"%}
+
+{% block content%}
+
+<h1>Mes compétitions</h1>
+<p>
+    <a href="{{ url_for('tournaments.create_tournament') }}">Créer une compétition</a>
+    ou bien
+    <a href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
+</p>
+<h2>Compétitions en cours :</h2>
+<ul>
+    {% for tournament in ongoing_tournaments %}
+        <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+    {% endfor %}
+</ul>
+<h2> Compétitions à venir :</h2>
+<ul>
+    {% for tournament in upcoming_tournaments %}
+        <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Compétitions terminées :</h2>
+<ul>
+    {% for tournament in past_tournaments %}
+        <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+    {% endfor %}
+</ul>
+
+
+
+{% endblock %}
