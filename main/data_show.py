@@ -34,6 +34,8 @@ def create_x_days_graph(the_data_label, list_of_the_data_to_graph, number_of_day
                 f"/{'0' if int(month) < 10 else ''}{month}"
             )     
 
+    print(labels)
+
     # Création de la figure et de l'axe
     fig, ax1 = plt.subplots(figsize=(11.5, 5.75))
 
