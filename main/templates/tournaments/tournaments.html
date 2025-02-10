@@ -2,32 +2,99 @@
 
 {% block content%}
 
-<h1>Mes compétitions</h1>
-<p>
-    <a href="{{ url_for('tournaments.create_tournament') }}">Créer une compétition</a>
-    ou bien
-    <a href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
-</p>
-<h2>Compétitions en cours :</h2>
-<ul>
-    {% for tournament in ongoing_tournaments %}
-        <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
-    {% endfor %}
-</ul>
-<h2> Compétitions à venir :</h2>
-<ul>
-    {% for tournament in upcoming_tournaments %}
-        <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
-    {% endfor %}
-</ul>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes compétitions</title>
+    <style>
+        /* Style de base pour le corps de la page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
 
-<h2>Compétitions terminées :</h2>
-<ul>
-    {% for tournament in past_tournaments %}
-        <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
-    {% endfor %}
-</ul>
+        /* Style pour le conteneur principal */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
+        /* Style pour les titres */
+        h1, h2 {
+            color: #0056b3;
+        }
 
+        /* Style pour les paragraphes */
+        p {
+            font-size: 1.1em;
+            line-height: 1.6em;
+        }
+
+        /* Style pour les liens */
+        a {
+            color: #0056b3;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style pour les listes */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #e9ecef;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Style pour les blocs de contenu */
+        h2 {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mes compétitions</h1>
+        <p>
+            <a href="{{ url_for('tournaments.create_tournament') }}">Créer une compétition</a>
+            ou bien
+            <a href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
+        </p>
+        <h2>Compétitions en cours :</h2>
+        <ul>
+            {% for tournament in ongoing_tournaments %}
+                <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Compétitions à venir :</h2>
+        <ul>
+            {% for tournament in upcoming_tournaments %}
+                <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Compétitions terminées :</h2>
+        <ul>
+            {% for tournament in past_tournaments %}
+                <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
 
 {% endblock %}
