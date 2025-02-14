@@ -33,8 +33,8 @@ def tournaments():
                  past_tournaments.append(tournament)
             elif start_date <= current_date <= end_date:
                  ongoing_tournaments.append(tournament)
-        else:
-            upcoming_tournaments.append(tournament)
+            else:
+                upcoming_tournaments.append(tournament)
 
     return render_template('tournaments/tournaments.html', ongoing_tournaments=ongoing_tournaments, upcoming_tournaments=upcoming_tournaments, past_tournaments=past_tournaments)
 
@@ -66,7 +66,7 @@ def join_tournament():
         tournament_id = request.form.get('tournament_id')
         tournament_data = search_tournament(tournament_id)
         if check_if_tournament_id_exists(tournament_id) == True:
-            pass
+            return redirect(url_for('tournaments.view_tournament', tournament_id=tournament_id))
         else:
             error_type = "tournament_nf"
             return redirect(url_for('errors.error', error_type=error_type))

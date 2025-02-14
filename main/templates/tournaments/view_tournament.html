@@ -1,4 +1,13 @@
 {% extends "base.html"%}
 
 {% block content%}
+<div> class = "container"
+    <h1> Détails du Tournoi</h1>
+    <p> <strong> Nom du tournoi: </strong> {{tournament.name}}</p>
+    <p><strong>Date de début :</strong> {{ tournament.date }}</p>
+    <p><strong>Durée :</strong> {{ tournament.duration }} jours</p>
+    <p><strong>Créé par :</strong> {{ tournament.created_by }}</p>
+    <p><strong>Date de fin :</strong> {{ tournament.end_date }}</p>
+    <a href="{{ url_for('tournaments.tournaments') }}">Retour à la liste des tournois</a>
+</div>
 {% endblock %}

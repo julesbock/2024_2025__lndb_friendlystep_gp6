@@ -18,7 +18,7 @@
 
 <h1 id="Accueil">Tableau de bord</h1>
 
-<p>Bonjour{{ session[' name_user']|title if session[" name_user"] else 'none'}}, bienvenue sur votre tableau de bord de suivi !</p>
+<p>Bonjour{{ session['name_user']|title if session[" name_user"] else 'none'}}, bienvenue sur votre tableau de bord de suivi !</p>
 
 <div class="dashboard">
     <div class="container" onclick="navigateToGraphPage('step_data', 'Pas')">

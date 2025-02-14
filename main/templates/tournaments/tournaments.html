@@ -84,11 +84,16 @@
             {% endfor %}
         </ul>
         <h2>Compétitions à venir :</h2>
-        <ul>
-            {% for tournament in upcoming_tournaments %}
-                <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
-            {% endfor %}
-        </ul>
+        {% if upcoming_tournaments %}
+            <ul>
+                {% for tournament in upcoming_tournaments %}
+                    <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucune compétition à venir.</p>
+        {% endif %}
+
         <h2>Compétitions terminées :</h2>
         <ul>
             {% for tournament in past_tournaments %}
