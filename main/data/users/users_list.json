@@ -15,6 +15,10 @@
         {
             "username": "maxou",
             "mdp": "pas25!"
+        },
+        {
+            "username": "test",
+            "mdp": "t"
         }
     ]
 }
