@@ -12,8 +12,8 @@ def data_input ():
     current_year = str(date_time.year)
     current_month = str(date_time.month)
     current_day = str(date_time.day)
-    if platform.system() == "window":
-        locale.setlocale(locale.LC_TIME, "French_France")
+    if platform.system() == "Windows":
+        locale.setlocale(locale.LC_TIME, "French_France.1252")
     else:
         locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
     today_date = date.today().strftime("%d %B %Y")
@@ -21,7 +21,6 @@ def data_input ():
     all_user_data = get_data("user_data.json")
 
     existing_data = check_if_data_exists (all_user_data)
-    
     if request.method == "POST" :
         personnal_data = {
             "step_data" : request.form['step_data'],
