@@ -306,3 +306,6 @@ def search_tournament(tournament_id):
         return tournament_data
     else:
         return None
+    
+# Messagerie et notifications
+

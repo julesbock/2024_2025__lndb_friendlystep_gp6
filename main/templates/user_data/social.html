@@ -1,0 +1,27 @@
+{% extends "base.html"%}
+
+{% block content%}
+
+<div class="container">
+     <div class="col-md-12">
+        <h1>Notifications</h1>
+        <a href = "{{ url_for('social.notifications') }}">Consultez ici vos demandes d'amis et de compétitions</a>
+    </div>
+</div>
+        
+<div class = "container">
+    <div class="col-md-12">
+        <h1>Messages</h1>
+        <p>Consultez ici vos messages</p>
+        <ul>
+            {% for conv in conversations %}
+            <li>
+                <a href = "{{ url_for('social', conversation_id = conversation_id) }}">Messages</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %}
