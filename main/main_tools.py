@@ -281,7 +281,7 @@ def get_unique_tournament_id():
 
 def save_tournament_data(tournament_id, tournament_data, folder = "tournaments"):
     path = os.path.dirname(__file__)
-    true_path = os.path.join(path, folder)
+    true_path = os.path.join(path, "data", folder)
     os.makedirs(true_path, exist_ok=True)
     file_path = os.path.join(true_path, f"{tournament_id}.json")
     try:
