@@ -1,0 +1,14 @@
+{
+    "first_name": "testes",
+    "last_name": "test",
+    "username": "test",
+    "mdp": "t",
+    "email": "test@test.test",
+    "birth_day": "1",
+    "birth_month": "1",
+    "birth_year": "2024",
+    "gender_choice": "F",
+    "nationality": "afghanistan",
+    "height": "4",
+    "weight": "1"
+}

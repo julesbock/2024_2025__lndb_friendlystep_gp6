@@ -126,7 +126,7 @@ def get_last_year_values(data_type, all_data):
 
 def get_data (file_wanted):
     dossier_projet = os.path.dirname(__file__)
-    chemin_user = os.path.join(dossier_projet, "users", session["name_user"])
+    chemin_user = os.path.join(dossier_projet, "data", "users", session["name_user"])
     chemin_file = os.path.join(chemin_user, file_wanted)
     with open(chemin_file, "r") as json_file:
         all_data = json.load(json_file)
@@ -134,7 +134,7 @@ def get_data (file_wanted):
 
 def give_data(file_wanted, data):
     dossier_projet = os.path.dirname(__file__)
-    chemin_user = os.path.join(dossier_projet, "users", session["name_user"])
+    chemin_user = os.path.join(dossier_projet, "data", "users", session["name_user"])
     chemin_file = os.path.join(chemin_user, file_wanted)
     with open(chemin_file, "w") as json_file:
         json.dump(data, json_file, indent=4)
@@ -221,7 +221,7 @@ def check_if_all_good(dic, current_year, current_month, current_day):
 
 def recherch_user(name_user, mdp):
     dossier_projet = os.path.dirname(__file__)
-    chemin_users_list = os.path.join(dossier_projet, "users", "users_list.json")
+    chemin_users_list = os.path.join(dossier_projet, "data", "users", "users_list.json")
     with open(chemin_users_list, "r") as json_file:
             all_data = json.load(json_file)
     for user in all_data["users_list"]:
@@ -232,13 +232,13 @@ def recherch_user(name_user, mdp):
 def create_and_register_user(user_personnal_data):
     name = user_personnal_data["username"] 
     dossier_projet = os.path.dirname(__file__)
-    chemin_users = os.path.join(dossier_projet, "users", name)
+    chemin_users = os.path.join(dossier_projet, "data", "users", name)
     if not os.path.exists(chemin_users):
         create_user(user_personnal_data, chemin_users)
         register_user(name, user_personnal_data['mdp'], dossier_projet)
     else:
         pass
-    return redirect(url_for("root"))
+    return redirect(url_for("root.root"))
 
 def create_user(user_personnal_data, chemin_users):
     os.mkdir(chemin_users)
@@ -253,7 +253,7 @@ def create_user(user_personnal_data, chemin_users):
         json.dump(the_dic, json_file, indent=4)   
 
 def register_user(username, mdp, chemin_projet):
-    chemin_users_list = os.path.join(chemin_projet, "users", "users_list.json")
+    chemin_users_list = os.path.join(chemin_projet, "data", "users", "users_list.json")
     user_and_mdp = {
         "username" : username,
         "mdp" : mdp
@@ -295,11 +295,11 @@ def save_tournament_data(tournament_id, tournament_data, folder = "tournaments")
         return error_message
 
 def delete_tournament(tournament_id):
-    file_path = os.path.join("tournaments", f"{tournament_id}.json")
+    file_path = os.path.join("data", "tournaments", f"{tournament_id}.json")
     os.remove(file_path)
 
 def search_tournament(tournament_id):
-    file_path = os.path.join("tournaments", f"{tournament_id}.json")
+    file_path = os.path.join("data", "tournaments", f"{tournament_id}.json")
     if os.path.exists(file_path):
         with open(file_path, "r") as tournament_file:
             tournament_data = json.load(tournament_file)

@@ -24,6 +24,6 @@ def sign_up():
         create_and_register_user(user_dico)
         session["name_user"] = user_dico['username']
 
-        return redirect(url_for('root'))
+        return redirect(url_for('root.root'))
     
     return render_template("users/sign_up.html")

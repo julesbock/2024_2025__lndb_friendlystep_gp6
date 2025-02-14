@@ -21,7 +21,7 @@ def profile():
             "weight": request.form.get('weight')
         }
         give_data("personnal_data.json", user_personnal_data)
-        return redirect(url_for('profile'))
+        return redirect(url_for('profil.profile'))
     else:
         user_personnal_data = get_data("personnal_data.json")
         return render_template("user_data/profil_settings.html", user=user_personnal_data)
