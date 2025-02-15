@@ -3,9 +3,9 @@
 {% block content%}
 
 <div class="container">
-     <div class="col-md-12">
+     <div class="col-md-12" onclick="Navigate_to_social_pages('notifications')">
         <h1>Notifications</h1>
-        <a href = "{{ url_for('social.notifications') }}">Consultez ici vos demandes d'amis et de compétitions</a>
+        <a>Consultez ici vos demandes d'amis et de compétitions</a>
     </div>
 </div>
         
@@ -22,6 +22,18 @@
         </ul>
     </div>
 </div>
+
+<script>
+    function Navigate_to_social_pages(page) {
+        // Génération de l'URL dynamique dans le JavaScript en utilisant `url_for`
+        var url;
+        if (page === 'notifications') {
+            url = "{{ url_for('social.notifications') }}"; // URL pour 'notifications'
+        }
+        // Rediriger vers l'URL générée
+        window.location.href = url;
+    }
+</script>
 
 
 {% endblock %}

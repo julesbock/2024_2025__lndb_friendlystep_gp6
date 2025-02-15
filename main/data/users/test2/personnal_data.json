@@ -1,0 +1,14 @@
+{
+    "first_name": "ali",
+    "last_name": "lerat",
+    "username": "test2",
+    "mdp": "test",
+    "email": "test@gmail.com",
+    "birth_day": "4",
+    "birth_month": "4",
+    "birth_year": "1998",
+    "gender_choice": "H",
+    "nationality": "france",
+    "height": "150",
+    "weight": "42"
+}

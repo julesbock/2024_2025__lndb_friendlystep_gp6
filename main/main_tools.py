@@ -204,7 +204,7 @@ def create_all_dates_dic():
                         all_dates_dic["user_data"][year][month][day] = {}
                 else :
                     for day in range(1, number_of_days_in_specific_month + 1):
-                        all_dates_dic["user_data"][year][month][day] = []
+                        all_dates_dic["user_data"][year][month][day] = {}
         else : 
             for month in range(1, 13):
                 all_dates_dic["user_data"][year][month] = {}

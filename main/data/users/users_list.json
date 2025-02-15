@@ -19,6 +19,10 @@
         {
             "username": "test",
             "mdp": "t"
+        },
+        {
+            "username": "test2",
+            "mdp": "test"
         }
     ]
 }

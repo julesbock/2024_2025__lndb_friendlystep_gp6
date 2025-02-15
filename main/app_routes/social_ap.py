@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from main_tools import *
 
 social_blueprint = Blueprint('social', __name__, url_prefix='/social')
 

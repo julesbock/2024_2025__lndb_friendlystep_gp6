@@ -7,7 +7,7 @@ tournaments_blueprint = Blueprint('tournaments', __name__, url_prefix='/tourname
 @tournaments_blueprint.route('/')
 def tournaments():
 # Lire les données des tournois à partir des fichiers JSON
-    tournaments_dir = os.path.join(os.path.dirname(__file__), '..', 'tournaments')
+    tournaments_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'tournaments')
     tournaments = []
 
     if os.path.exists(tournaments_dir):
@@ -65,12 +65,11 @@ def join_tournament():
     if request.method == 'POST':
         tournament_id = request.form.get('tournament_id')
         tournament_data = search_tournament(tournament_id)
-        if check_if_tournament_id_exists(tournament_id) == True:
+        if check_if_tournament_id_exists(tournament_id):
             return redirect(url_for('tournaments.view_tournament', tournament_id=tournament_id))
         else:
             error_type = "tournament_nf"
             return redirect(url_for('errors.error', error_type=error_type))
-        return redirect(url_for('tournaments.tournaments'))
     return render_template('tournaments/join_tournament.html')
 
 @tournaments_blueprint.route('/view')

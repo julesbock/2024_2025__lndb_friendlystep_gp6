@@ -1,75 +1,57 @@
 {% extends "base.html"%}
 
 {% block content%}
-
-<!DOCTYPE html>
-<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes compétitions</title>
     <style>
-        /* Style de base pour le corps de la page */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+    /* Style pour les titres */
+    h1, h2 {
+        color: #0056b3;
+        text-decoration: none;
+    }
 
-        /* Style pour le conteneur principal */
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    /* Style pour les paragraphes */
+    p {
+        font-size: 1.1em;
+        line-height: 1.6em;
+    }
 
-        /* Style pour les titres */
-        h1, h2 {
-            color: #0056b3;
-            text-decoration: none;
-        }
+    /* Style pour les liens */
+    a {
+        color: #0056b3;
+        text-decoration: none;
+    }
 
-        /* Style pour les paragraphes */
-        p {
-            font-size: 1.1em;
-            line-height: 1.6em;
-        }
+    a:hover {
+        text-decoration: underline;
+    }
 
-        /* Style pour les liens */
-        a {
-            color: #0056b3;
-            text-decoration: none;
-        }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    li {
+        background-color: #dabbbb00;
+;
+    }
 
-        /* Style pour les listes */
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+    /* Style pour les blocs de contenu */
+    h2 {
+        margin-top: 20px;
+    }
 
-        li {
-            background-color: #dabbbb00;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
+    .name_of_the_tournament {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1.5em;
+    }
 
-        /* Style pour les blocs de contenu */
-        h2 {
-            margin-top: 20px;
-        }
-        
-    </style>
+    
+</style>
 </head>
+
 <body>
+    <title>Mes compétitions</title>
     <div class="container">
         <h1>Mes compétitions</h1>
         <p>
@@ -77,17 +59,17 @@
             ou bien
             <a href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
         </p>
-        <h2>Compétitions en cours :</h2>
-        <ul>
+        <h2 >Compétitions en cours :</h2>
+        <ul class="list_of_the_competitions">
             {% for tournament in ongoing_tournaments %}
-                <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+                <li class="competition"><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</li>
             {% endfor %}
         </ul>
         <h2>Compétitions à venir :</h2>
         {% if upcoming_tournaments %}
             <ul>
                 {% for tournament in upcoming_tournaments %}
-                    <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+                    <li><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -97,7 +79,7 @@
         <h2>Compétitions terminées :</h2>
         <ul>
             {% for tournament in past_tournaments %}
-                <li>{{ tournament.name }} - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+                <li><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</li>
             {% endfor %}
         </ul>
     </div>
