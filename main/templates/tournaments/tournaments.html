@@ -4,7 +4,7 @@
 <head>
     <style>
     /* Style pour les titres */
-    h1, h2 {
+    h2 {
         color: #0056b3;
         text-decoration: none;
     }
@@ -30,10 +30,24 @@
         padding: 0;
     }
 
-    li {
-        background-color: #dabbbb00;
-;
-    }
+    .competition {
+    flex: 1 1 calc(33.333% - 20px);
+    padding: 21px;
+    background-color: #fff;
+    border-radius: 17px;
+    box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    list-style-type: none; /* Masque les puces */
+    padding-left: 2; /* Place 2 tabulations */
+    cursor: pointer;
+    margin: 10px;
+  }
+  .competition:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
 
     /* Style pour les blocs de contenu */
     h2 {
@@ -46,44 +60,80 @@
     line-height: 1.5em;
     }
 
-    
+
+    .close_flash_btn {
+    position: absolute;
+    top: 5px; /* Ajuste la position verticale */
+    right: 10px; /* Ajuste la position horizontale */
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    }
+
+    .close_flash_btn:hover {
+        color: #ccc;
+    }
+
 </style>
 </head>
 
 <body>
-    <title>Mes compétitions</title>
-    <div class="container">
-        <h1>Mes compétitions</h1>
-        <p>
-            <a href="{{ url_for('tournaments.create_tournament') }}">Créer une compétition</a>
-            ou bien
-            <a href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
-        </p>
-        <h2 >Compétitions en cours :</h2>
-        <ul class="list_of_the_competitions">
-            {% for tournament in ongoing_tournaments %}
-                <li class="competition"><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message">
+                    <span class="close_flash_btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{ message }}
+                </div>
             {% endfor %}
-        </ul>
-        <h2>Compétitions à venir :</h2>
-        {% if upcoming_tournaments %}
-            <ul>
-                {% for tournament in upcoming_tournaments %}
-                    <li><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>Aucune compétition à venir.</p>
         {% endif %}
+    {% endwith %}
 
-        <h2>Compétitions terminées :</h2>
+    <title>Mes compétitions</title>
+    <h1>Mes compétitions</h1>
+    <p>
+        <a href="{{ url_for('tournaments.create_tournament') }}">Créer une compétition</a>
+        ou bien
+        <a href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
+    </p>
+
+    <h2 >Compétitions en cours :</h2>
+    <ul class="list_of_the_competitions">
+        {% for tournament in ongoing_tournaments %}
+            <div class="competition"><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</div>
+        {% endfor %}
+    </ul>
+    <h2>Compétitions à venir :</h2>
+    {% if upcoming_tournaments %}
         <ul>
-            {% for tournament in past_tournaments %}
-                <li><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</li>
+            {% for tournament in upcoming_tournaments %}
+                <div class="competition"><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</div>
             {% endfor %}
         </ul>
-    </div>
+    {% else %}
+        <p>Aucune compétition à venir.</p>
+    {% endif %}
+
+    <h2>Compétitions terminées :</h2>
+    <ul>
+        {% for tournament in past_tournaments %}
+            <div class="competition"><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</div>
+        {% endfor %}
+    </ul>
 </body>
 </html>
-
+<script>
+        setTimeout(function() {
+        var alerts = document.querySelectorAll('.flash-message');
+        alerts.forEach(function(alert) {
+            alert.style.opacity = '0';
+            alert.style.transform = 'translateY(-20px)';
+            setTimeout(function() {
+                alert.style.display = 'none';
+            }, 500); // Le délai doit correspondre à la durée de la transition CSS
+        });
+    }, 5000); // Disparaît après 5 secondes
+</script>
 {% endblock %}

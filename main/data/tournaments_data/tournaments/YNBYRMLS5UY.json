@@ -3,5 +3,6 @@
     "name": "Tournoi de la semaine",
     "date": "2025-02-14",
     "duration": "4",
-    "created_by": null
+    "end_date": "2025-02-17",
+    "created_by": "hduu"
 }

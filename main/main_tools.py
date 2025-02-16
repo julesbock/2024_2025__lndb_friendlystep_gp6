@@ -269,8 +269,10 @@ def generate_tournament_id():
     tournament_id = "".join(random.choices(BASE32_ALPHABET, k=11))
     return tournament_id
 
-def check_if_tournament_id_exists(tournament_id, folder = "tournaments"):
-    file_path = os.path.join(folder, f"{tournament_id}.json")
+def check_if_tournament_id_exists(tournament_id):
+    path = os.path.dirname(__file__)
+    full_path = os.path.join(path, "data", "tournaments_data", "tournaments")
+    file_path = os.path.join(full_path, f"{tournament_id}.json")
     return os.path.exists(file_path)
     
 def get_unique_tournament_id():
@@ -279,11 +281,18 @@ def get_unique_tournament_id():
         if not check_if_tournament_id_exists(tournament_id):
             return tournament_id
 
-def save_tournament_data(tournament_id, tournament_data, folder = "tournaments"):
+def save_tournament_data(tournament_id, tournament_data):
     path = os.path.dirname(__file__)
-    true_path = os.path.join(path, "data", folder)
+    the_path = os.path.join(path, "data", "tournaments_data")
+    true_path = os.path.join(the_path, "tournaments")
     os.makedirs(true_path, exist_ok=True)
+    another_path = os.path.join(the_path, "tournaments_players.json")
+    with open(another_path, 'r') as file:
+        data=json.load(file)
+    data[tournament_id] = [session['name_user']]
     file_path = os.path.join(true_path, f"{tournament_id}.json")
+    with open(another_path, 'w') as file:
+        json.dump(data, file, indent=4)
     try:
         with open(file_path, "w") as tournament_file:
             json.dump(tournament_data, tournament_file, indent=4)
@@ -293,13 +302,17 @@ def save_tournament_data(tournament_id, tournament_data, folder = "tournaments")
         print(error_message)
         delete_tournament(tournament_id)
         return error_message
-
+    
 def delete_tournament(tournament_id):
-    file_path = os.path.join("data", "tournaments", f"{tournament_id}.json")
+    path = os.path.dirname(__file__)
+    full_path = os.path.join(path, "data", "tournaments_data", "tournaments")
+    file_path = os.path.join(full_path, f"{tournament_id}.json")
     os.remove(file_path)
 
 def search_tournament(tournament_id):
-    file_path = os.path.join("data", "tournaments", f"{tournament_id}.json")
+    path = os.path.dirname(__file__)
+    full_path = os.path.join(path, "data", "tournaments_data","tournaments")
+    file_path = os.path.join(full_path, f"{tournament_id}.json")
     if os.path.exists(file_path):
         with open(file_path, "r") as tournament_file:
             tournament_data = json.load(tournament_file)

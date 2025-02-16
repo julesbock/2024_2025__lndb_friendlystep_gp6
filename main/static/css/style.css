@@ -108,6 +108,7 @@ body {
     cursor: pointer;
   }
 
+
 .container:hover {
     background-color: #f0f0f0;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -122,6 +123,40 @@ body {
     min-block-size: 46px;
 }
 
+.social_container {
+    flex: 1 1 calc(33.333% - 20px);
+    padding: 21px;
+    background-color: #fff;
+    border-radius: 17px;
+    box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    list-style-type: none; /* Masque les puces */
+    padding-left: 2; /* Place 2 tabulations */
+    cursor: pointer;
+    margin:10px;
+  }
+
+.social_container:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.flash-message {
+    position: relative;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+.flash-message.fade-out {
+    opacity: 0;
+}
 /* Styles responsives */
 @media (max-width: 768px) {
     #navbar {
