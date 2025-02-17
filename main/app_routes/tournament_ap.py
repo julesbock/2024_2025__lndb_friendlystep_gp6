@@ -21,6 +21,9 @@ def tournaments():
                 with open(file_path, 'r') as file:
                     tournament = json.load(file)
                 if tournament['id'] in user_tournaments:
+                    participants = data.get(tournament['id'], [])
+                    nb_of_participants = len(participants)
+                    tournament['number_of_participants'] = nb_of_participants
                     tournaments.append(tournament)
 
     # Classer les tournois en fonction de leur date et durée
@@ -53,12 +56,14 @@ def create_tournament():
         name = request.form.get('name')
         date = request.form.get('date')
         duration = request.form.get('duration')
+        category = request.form.get('category')
         tournament_id = get_unique_tournament_id()
         start_date = datetime.strptime(date, '%Y-%m-%d').date()
         end_date = (start_date + timedelta(days=int(duration))).isoformat()
         tournament_data= {
             "id" : tournament_id,
             "name": name,
+            "category": category,
             "date": date,
             "duration": duration,
             "end_date": end_date,
@@ -78,6 +83,17 @@ def join_tournament():
     if request.method == 'POST':
         tournament_id = request.form.get('tournament_id')
         if check_if_tournament_id_exists(tournament_id):
+            path = os.path.dirname(__file__)
+            another_path = os.path.join(path, "..",  "data", "tournaments_data", "tournaments_players.json")
+            with open(another_path, 'r') as f:
+                another_data = json.load(f)
+            user = session['name_user']
+            print(user)
+            if user not in another_data[tournament_id]:
+                another_data[tournament_id].append(user)
+                print(user)
+            with open(another_path, "w") as f:
+                json.dump(another_data, f, indent=4)
             return redirect(url_for('tournaments.view_tournament', tournament_id=tournament_id))
         else:
             error_type = "tournament_nf"
@@ -91,4 +107,3 @@ def view_tournament(tournament_id):
         flash(f"Le tournoi {tournament_id} n'existe pas", "error")
         return redirect(url_for('tournaments.join_tournament'))
     return render_template('tournaments/view_tournament.html', tournament_data=tournament_data)
-

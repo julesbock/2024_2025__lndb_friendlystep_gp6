@@ -181,5 +181,7 @@ dossier users
         business (vente des données aux grosses boîtes)
         Régler le probleme de la création de 2 comptes en meme temps
         ...
+        dans les infos : date de fin (dans 2 jorus : ex)
+        groupe de tournois
 
     Pourcentage d'avancement du projet : 50,2%

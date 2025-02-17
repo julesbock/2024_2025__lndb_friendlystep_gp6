@@ -312,10 +312,14 @@ def delete_tournament(tournament_id):
 def search_tournament(tournament_id):
     path = os.path.dirname(__file__)
     full_path = os.path.join(path, "data", "tournaments_data","tournaments")
+    another_path = os.path.join(path, "data", "tournaments_data", "tournaments_players.json")
     file_path = os.path.join(full_path, f"{tournament_id}.json")
     if os.path.exists(file_path):
         with open(file_path, "r") as tournament_file:
             tournament_data = json.load(tournament_file)
+        with open(another_path, 'r') as f:
+            another_data = json.load(f)
+        tournament_data['number_of_players'] = len(another_data[tournament_id])
         return tournament_data
     else:
         return None

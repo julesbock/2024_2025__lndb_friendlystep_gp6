@@ -1,6 +1,6 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
 
-{% block content%}
+{% block content %}
 <head>
     <style>
     /* Style pour les titres */
@@ -31,52 +31,58 @@
     }
 
     .competition {
-    flex: 1 1 calc(33.333% - 20px);
-    padding: 21px;
-    background-color: #fff;
-    border-radius: 17px;
-    box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.4s ease, box-shadow 0.4s ease;
-    position: relative;
-    list-style-type: none; /* Masque les puces */
-    padding-left: 2; /* Place 2 tabulations */
-    cursor: pointer;
-    margin: 10px;
-  }
-  .competition:hover {
-    background-color: #f0f0f0;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
+        flex: 1 1 calc(33.333% - 20px);
+        padding: 21px;
+        background-color: #fff;
+        border-radius: 17px;
+        box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        position: relative;
+        list-style-type: none; /* Masque les puces */
+        padding-left: 2; /* Place 2 tabulations */
+        cursor: pointer;
+        margin: 10px;
+    }
 
-
-    /* Style pour les blocs de contenu */
-    h2 {
-        margin-top: 20px;
+    .competition:hover {
+        background-color: #f0f0f0;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
     }
 
     .name_of_the_tournament {
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 1.5em;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 1.5em;
     }
 
+    .arrow {
+        float: right;
+        cursor: pointer;
+    }
 
+    .tournament-details {
+        display: none;
+        margin-top: 10px;
+        padding-left: 20px;
+    }
+
+    /* Flash message styles */
     .close_flash_btn {
-    position: absolute;
-    top: 5px; /* Ajuste la position verticale */
-    right: 10px; /* Ajuste la position horizontale */
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
+        position: absolute;
+        top: 5px; /* Ajuste la position verticale */
+        right: 10px; /* Ajuste la position horizontale */
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
     }
 
     .close_flash_btn:hover {
         color: #ccc;
     }
 
-</style>
+    </style>
 </head>
 
 <body>
@@ -99,17 +105,43 @@
         <a href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
     </p>
 
-    <h2 >Compétitions en cours :</h2>
+    <h2>Compétitions en cours :</h2>
     <ul class="list_of_the_competitions">
         {% for tournament in ongoing_tournaments %}
-            <div class="competition"><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</div>
+            <div class="competition">
+                <span class="name_of_the_tournament">{{ tournament.name }}</span> 
+                <span class="arrow" onclick="toggleDetails('{{ tournament.id }}')">&#129095;</span>  <!-- Flèche de direction -->
+                
+                <div class="tournament-details" id="details-{{ tournament.id }}">
+                    <!-- Détails du tournoi -->
+                    <p><strong>ID:</strong> {{ tournament.id }}</p>
+                    <p><strong>Date de début:</strong> {{ tournament.date }}</p>
+                    <p><strong>Durée:</strong> {{ tournament.duration }} jours</p>
+                    <p><strong>Créé par:</strong> {{ tournament.created_by }}</p>
+                    <p><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
+                    <p><strong>Nombre de participants:</strong> {{ tournament.number_of_participants }}</p>
+                </div>
+            </div>
         {% endfor %}
     </ul>
+
     <h2>Compétitions à venir :</h2>
     {% if upcoming_tournaments %}
         <ul>
             {% for tournament in upcoming_tournaments %}
-                <div class="competition"><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</div>
+                <div class="competition">
+                    <span class="name_of_the_tournament">{{ tournament.name }}</span> 
+                    <span class="arrow" onclick="toggleDetails('{{ tournament.id }}')">&#129095;</span>  
+                    
+                    <div class="tournament-details" id="details-{{ tournament.id }}">
+                        <p><strong>ID:</strong> {{ tournament.id }}</p>
+                        <p><strong>Date de début:</strong> {{ tournament.date }}</p>
+                        <p><strong>Durée:</strong> {{ tournament.duration }} jours</p>
+                        <p><strong>Créé par:</strong> {{ tournament.created_by }}</p>
+                        <p><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
+                        <p><strong>Nombre de participants:</strong> {{ tournament.number_of_participants }}</p>
+                    </div>
+                </div>
             {% endfor %}
         </ul>
     {% else %}
@@ -119,13 +151,34 @@
     <h2>Compétitions terminées :</h2>
     <ul>
         {% for tournament in past_tournaments %}
-            <div class="competition"><span class="name_of_the_tournament">{{ tournament.name }}</span> - du {{ tournament.date }} au {{ tournament.end_date }}</div>
+            <div class="competition">
+                <span class="name_of_the_tournament">{{ tournament.name }}</span> 
+                <span class="arrow" onclick="toggleDetails('{{ tournament.id }}')">&#129095;</span>  
+                
+                <div class="tournament-details" id="details-{{ tournament.id }}">
+                    <p><strong>ID:</strong> {{ tournament.id }}</p>
+                    <p><strong>Date de début:</strong> {{ tournament.date }}</p>
+                    <p><strong>Durée:</strong> {{ tournament.duration }} jours</p>
+                    <p><strong>Créé par:</strong> {{ tournament.created_by }}</p>
+                    <p><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
+                    <p><strong>Nombre de participants:</strong> {{ tournament.number_of_participants }}</p>
+                </div>
+            </div>
         {% endfor %}
     </ul>
 </body>
-</html>
+
 <script>
-        setTimeout(function() {
+    function toggleDetails(tournamentId) {
+        var details = document.getElementById('details-' + tournamentId);
+        if (details.style.display === "none" || details.style.display === "") {
+            details.style.display = "block";
+        } else {
+            details.style.display = "none";
+        }
+    }
+
+    setTimeout(function() {
         var alerts = document.querySelectorAll('.flash-message');
         alerts.forEach(function(alert) {
             alert.style.opacity = '0';

@@ -8,6 +8,7 @@
     <p><strong>Durée :</strong> {{ tournament_data.duration }} jours</p>
     <p><strong>Créé par :</strong> {{ tournament_data.created_by }}</p>
     <p><strong>Date de fin :</strong> {{ tournament_data.end_date }}</p>
+    <p><strong>Nombre de participants :</strong> {{ tournament_data.number_of_players }}</p>
     <a href="{{ url_for('tournaments.tournaments') }}">Retour à la liste des tournois</a>
 </div>
 {% endblock %}
