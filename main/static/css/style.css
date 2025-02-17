@@ -157,6 +157,10 @@ body {
 .flash-message.fade-out {
     opacity: 0;
 }
+.participant {
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
 /* Styles responsives */
 @media (max-width: 768px) {
     #navbar {

@@ -183,5 +183,6 @@ dossier users
         ...
         dans les infos : date de fin (dans 2 jorus : ex)
         groupe de tournois
+        valeur de base pour les graphics (pour les ordres de grandeurs/axes)
 
     Pourcentage d'avancement du projet : 50,2%

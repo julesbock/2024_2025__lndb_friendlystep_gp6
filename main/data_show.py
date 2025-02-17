@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
 import glob
@@ -94,7 +96,33 @@ def create_year_graph(the_data_label, list_of_the_data_to_graph):
     plt.title('Cette année')
     save_graph("year_graph.png")
 
+def category_name_convert_to_label(category):
+    category_labels = {
+        "step_data": "Pas",
+        "distance_data": "Distance (km)",
+        "calories_data": "Calories (kcal)",
+        "floors_data": "Etages montés",
+        "sleep_duration_data": "Durée de sommeil (minutes)",
+    }
+    
+    # Si la catégorie existe dans le dictionnaire, on retourne son label
+    return category_labels.get(category)
 
+def create_tournament_graphic(all_player_data, category):
+    label = category_name_convert_to_label(category)
+    players = list(all_player_data.keys())
+    players.reverse()
+    scores = list(all_player_data.values())
+    scores.reverse()
+
+    # Créer un graphique à barres horizontal
+    plt.barh(players, scores, color="skyblue", height=0.05)
+    
+    # Ajouter un titre et des labels
+    plt.xlabel(label)
+    plt.ylabel("Participants")
+    save_graph('tournament_graph')
+    
 def save_graph(filename):
 
     # Enregistrer le graphique

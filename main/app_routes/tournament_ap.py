@@ -33,13 +33,15 @@ def tournaments():
     past_tournaments = []
 
     for tournament in tournaments:
-        if 'date' in tournament and 'duration' in tournament:
-            start_date = datetime.strptime(tournament['date'], '%Y-%m-%d').date()
+        
+        if 'start_date' in tournament and 'duration' in tournament:
+            start_date = datetime.strptime(tournament['start_date'], '%Y-%m-%d').date()
             end_date = datetime.strptime(tournament['end_date'], '%Y-%m-%d').date()
+
             if end_date < current_date:
-                 past_tournaments.append(tournament)
+                past_tournaments.append(tournament)
             elif start_date <= current_date <= end_date:
-                 ongoing_tournaments.append(tournament)
+                ongoing_tournaments.append(tournament)
             else:
                 upcoming_tournaments.append(tournament)
 
@@ -64,7 +66,7 @@ def create_tournament():
             "id" : tournament_id,
             "name": name,
             "category": category,
-            "date": date,
+            "start_date": date,
             "duration": duration,
             "end_date": end_date,
             "created_by": session.get('name_user'),
@@ -107,3 +109,12 @@ def view_tournament(tournament_id):
         flash(f"Le tournoi {tournament_id} n'existe pas", "error")
         return redirect(url_for('tournaments.join_tournament'))
     return render_template('tournaments/view_tournament.html', tournament_data=tournament_data)
+
+@tournaments_blueprint.route('/tournament/<tournament_id>')
+def tournament_page(tournament_id):
+    tournament_data = search_tournament(tournament_id)
+    category = tournament_data['category']
+    start_date = tournament_data['start_date']
+    list_of_the_participants = tournament_data['list_of_players']
+    do_tournament_graphic(category, list_of_the_participants, start_date)
+    return render_template("tournaments/tournament_page.html", tournament_data=tournament_data)

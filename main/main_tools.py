@@ -1,17 +1,30 @@
 from flask import redirect, url_for, session
 from data_show import *
 from data import BASE32_ALPHABET
-import json, os, datetime, calendar, random, string
+import json, os, calendar, random, string
+from datetime import datetime, timedelta
 
+
+def convert_to_decimal_hours(value):
+    """
+    Convertit une durée au format hh:mm en nombre d'heures décimales.
+    """
+    try:
+        hours, minutes = map(int, value.split(":"))
+        return hours + minutes / 60
+    except ValueError:
+        print(f"Erreur de conversion pour la valeur : {value}")
+        return 0
+    
 # Fonctions de gestion de données des utilisateurs
 def do_all_graphics(data_type, label):
     all_user_data = get_data("user_data.json")
     needed_data = {}
     # Récupérer les données pour les années 2024 et 2025
-    if "2024" in all_user_data["user_data"]:
-        needed_data["2024"] = all_user_data["user_data"]["2024"]
-    if "2025" in all_user_data["user_data"]:
-        needed_data["2025"] = all_user_data["user_data"]["2025"]
+    if "2024" in all_user_data:
+        needed_data["2024"] = all_user_data["2024"]
+    if "2025" in all_user_data:
+        needed_data["2025"] = all_user_data["2025"]
     data_of_the_seven_days_to_graph = get_last_seven_days_value(data_type, needed_data)
     data_of_the_month_to_graph = get_month_values(data_type, needed_data)
     data_of_the_year_to_graph= get_last_year_values(data_type, needed_data)
@@ -37,20 +50,26 @@ def get_precise_day_value(data_type, all_data, year_month_day):
         int: La valeur associée au type de données spécifié pour la date précise.
     """
     year, month, day = year_month_day
-    year = str(year)
-    month = str(month)
-    day = str(day)
+    
+    year_data = all_data.get(str(year), {})
+    month_data = year_data.get(str(month), {})
+    day_data = month_data.get(str(day), {})
 
-    if year in all_data and month in all_data[year] and day in all_data[year][month]:
-        return float(str(all_data[year][month][day].get(data_type, 0)).lstrip("0") or "0")
-    return 0
+    value = day_data.get(data_type, 0)
+        # Si la valeur est au format hh:mm
+    if isinstance(value, str) and ":" in value:
+        # Conversion d'une valeur formatée en hh:mm (heures + minutes) en heures décimales
+        return convert_to_decimal_hours(value)
+    # Sinon, essayer de convertir en float normalement
+    return float(str(value).lstrip("0") or "0")
+    
 
 def get_last_seven_days_value(data_type, all_data):
-    today = datetime.datetime.now()
+    today = datetime.now()
     lasts_days_values = []
     
     for i in range(6, -1, -1):
-        day = today - datetime.timedelta(days=i)
+        day = today - timedelta(days=i)
         current_day = day.day
         year = day.year
         month = day.month
@@ -73,14 +92,14 @@ def get_month_values(data_type, all_data, last_x_month=0):
     Returns:
         list: Une liste contenant les valeurs pour le mois en cours jusqu'à la date actuelle et les mois précédents spécifiés.
     """
-    today = datetime.datetime.now()
+    today = datetime.now()
     current_year = today.year
     current_month = today.month
     current_day = today.day
     month_values = []
-    the_month = current_month-last_x_month
-    if the_month == 0:
-        the_month = 12
+    the_month = current_month - last_x_month
+    if the_month <= 0:
+        the_month += 12
         current_year -= 1
 
 
@@ -113,7 +132,7 @@ def calculate_mean(list_values):
     
         
 def get_last_year_values(data_type, all_data):
-    today = datetime.datetime.now()
+    today = datetime.now()
     current_month = int(today.month)
     month_values = []
     for month in range(1, current_month +1 ):
@@ -140,15 +159,15 @@ def give_data(file_wanted, data):
         json.dump(data, json_file, indent=4)
 
 def check_if_data_exists(existing_data):
-    date_time = datetime.datetime.now()
+    date_time = datetime.now()
     current_year = str(date_time.year)
     current_month = str(date_time.month)
     current_day = str(date_time.day)
-    if current_year in existing_data["user_data"]:
-        if current_month in existing_data["user_data"][current_year]:
-            if current_day in existing_data["user_data"][current_year][current_month]:
+    if current_year in existing_data:
+        if current_month in existing_data[current_year]:
+            if current_day in existing_data[current_year][current_month]:
                 # Si des données existent, récupérer celles-ci
-                existing_data_for_today = existing_data["user_data"][current_year][current_month][current_day]
+                existing_data_for_today = existing_data[current_year][current_month][current_day]
             else:
                 existing_data_for_today = {}
         else:
@@ -159,12 +178,12 @@ def check_if_data_exists(existing_data):
 
 def put_data_in_user_data(personnal_user_data): 
     all_data = get_data("user_data.json")
-    date_heure = datetime.datetime.now()
+    date_heure = datetime.now()
     current_year = str(date_heure.year)
     current_month = str(date_heure.month)
     current_day = str(date_heure.day)
     all_data = check_if_all_good(all_data, current_year, current_month, current_day)
-    all_data ["user_data"][current_year][current_month][current_day] = (personnal_user_data)
+    all_data[current_year][current_month][current_day] = (personnal_user_data)
     give_data("user_data.json", all_data)
 
 def create_all_dates_dic():
@@ -187,36 +206,35 @@ def create_all_dates_dic():
     Returns:
         dict: Le dictionnaire contenant toutes les dates.
     """
-    date_heure = datetime.datetime.now()
+    date_heure = datetime.now()
     current_year = date_heure.year
     current_month = date_heure.month
     current_day = date_heure.day
     all_dates_dic = {}
-    all_dates_dic["user_data"] = {}
     for year in range (2000, current_year + 1):
-        all_dates_dic["user_data"][year] = {}
+        all_dates_dic[year] = {}
         if year == current_year:
             for month in range(1, current_month + 1):
-                all_dates_dic["user_data"][year][month] = {}
+                all_dates_dic[year][month] = {}
                 number_of_days_in_specific_month = calendar.monthrange(year, month)[1]
                 if month == current_month : 
                     for day in range (1, current_day + 1):
-                        all_dates_dic["user_data"][year][month][day] = {}
+                        all_dates_dic[year][month][day] = {}
                 else :
                     for day in range(1, number_of_days_in_specific_month + 1):
-                        all_dates_dic["user_data"][year][month][day] = {}
+                        all_dates_dic[year][month][day] = {}
         else : 
             for month in range(1, 13):
-                all_dates_dic["user_data"][year][month] = {}
+                all_dates_dic[year][month] = {}
                 number_of_days_in_specific_month = calendar.monthrange(year, month)[1]
                 for day in range(1, number_of_days_in_specific_month + 1):
-                    all_dates_dic["user_data"][year][month][day] = {}
+                    all_dates_dic[year][month][day] = {}
     return all_dates_dic
 
 # Fonctions de gestion des utilisateurs
 
 def check_if_all_good(dic, current_year, current_month, current_day):
-    dic.setdefault('user_data', {}).setdefault(current_year, {}).setdefault(current_month, {}).setdefault(current_day, {})
+    dic.setdefault(str(current_year), {}).setdefault(str(current_month), {}).setdefault(str(current_day), {})
     return dic
 
 def recherch_user(name_user, mdp):
@@ -319,10 +337,56 @@ def search_tournament(tournament_id):
             tournament_data = json.load(tournament_file)
         with open(another_path, 'r') as f:
             another_data = json.load(f)
-        tournament_data['number_of_players'] = len(another_data[tournament_id])
+        tournament_data['list_of_players'] = another_data[tournament_id]
+        tournament_data['number_of_players'] = len(tournament_data['list_of_players'])
+        
         return tournament_data
     else:
         return None
+def get_player_category_data(category, player, start_date):
+    dossier_projet = os.path.dirname(__file__)
+    chemin_user = os.path.join(dossier_projet, "data", "users", player, "user_data.json")
+    print(chemin_user)
     
+    with open(chemin_user, "r") as f:
+        all_data = json.load(f)
+    
+    start_date = datetime.strptime(start_date, "%Y-%m-%d")
+    category_values = []
+    
+    # Parcours de l'ensemble des données
+    for year, months in all_data.items():
+        for month, days in months.items():
+            for day, data in days.items():
+                # Créer une date complète à partir de l'année, mois et jour
+                month = int(month)  # Assure-toi que c'est un entier
+                day = int(day)  # Assure-toi que c'est un entier
+                day_date_str = f"{year}-{month:02d}-{day:02d}"  # Formater la date sous forme 'YYYY-MM-DD'
+                day_date = datetime.strptime(day_date_str, "%Y-%m-%d")
+                
+                # Vérifier si la date est postérieure ou égale à la start_date
+                if day_date >= start_date:
+                    category_value = data.get(category, 0)
+                    
+                    # Si la valeur est au format hh:mm (par exemple pour "sleep_duration_data")
+                    if isinstance(category_value, str) and ":" in category_value:
+                        category_values.append(convert_to_decimal_hours(category_value))
+                    else:
+                        category_values.append(float(str(category_value).lstrip("0") or "0"))
+
+    # Calculer la moyenne des valeurs
+    return calculate_mean(category_values)
+
+def sort_dic_by_value(dico):
+    return dict(sorted(dico.items(), key=lambda x: x[1], reverse=True))
+    
+    
+def do_tournament_graphic(category, list_of_players, start_date):
+    player_data = {}
+    for player in list_of_players:
+        player_data[player] = get_player_category_data(category, player, start_date)
+    player_data = sort_dic_by_value(player_data)
+    print(player_data)
+    create_tournament_graphic(player_data, category)
 # Messagerie et notifications
 

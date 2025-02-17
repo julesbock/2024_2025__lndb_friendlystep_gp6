@@ -55,9 +55,24 @@
         line-height: 1.5em;
     }
 
+    .arrow-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: 5px;
+    float: right;
+    transform: translate(10px, -5px);
+    }
+
+    .arrow-container:hover {
+        background-color: #f0f0f0;
+    }
+
     .arrow {
-        float: right;
-        cursor: pointer;
+        pointer-events: none;
     }
 
     .tournament-details {
@@ -108,14 +123,15 @@
     <h2>Compétitions en cours :</h2>
     <ul class="list_of_the_competitions">
         {% for tournament in ongoing_tournaments %}
-            <div class="competition">
+            <div class="competition" id="competition_{{ tournament.id }}" onclick="Navigate_to_specific_tournamment_page('{{tournament.id}}')">
                 <span class="name_of_the_tournament">{{ tournament.name }}</span> 
-                <span class="arrow" onclick="toggleDetails('{{ tournament.id }}')">&#129095;</span>  <!-- Flèche de direction -->
-                
+                <div class="arrow-container" onclick="toggleDetails('{{ tournament.id }}')">
+                    <span class="arrow">&#129095;</span>
+                </div>                
                 <div class="tournament-details" id="details-{{ tournament.id }}">
                     <!-- Détails du tournoi -->
                     <p><strong>ID:</strong> {{ tournament.id }}</p>
-                    <p><strong>Date de début:</strong> {{ tournament.date }}</p>
+                    <p><strong>Date de début:</strong> {{ tournament.start_date }}</p>
                     <p><strong>Durée:</strong> {{ tournament.duration }} jours</p>
                     <p><strong>Créé par:</strong> {{ tournament.created_by }}</p>
                     <p><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
@@ -129,13 +145,15 @@
     {% if upcoming_tournaments %}
         <ul>
             {% for tournament in upcoming_tournaments %}
-                <div class="competition">
+                <div class="competition" id="competition_{{ tournament.id }}" onclick="Navigate_to_specific_tournamment_page('{{tournament.id}}')">
                     <span class="name_of_the_tournament">{{ tournament.name }}</span> 
-                    <span class="arrow" onclick="toggleDetails('{{ tournament.id }}')">&#129095;</span>  
-                    
+                    <div class="arrow-container" onclick="toggleDetails('{{ tournament.id }}')">
+                        <span class="arrow">&#129095;</span>
+                    </div>                
                     <div class="tournament-details" id="details-{{ tournament.id }}">
+                        <!-- Détails du tournoi -->
                         <p><strong>ID:</strong> {{ tournament.id }}</p>
-                        <p><strong>Date de début:</strong> {{ tournament.date }}</p>
+                        <p><strong>Date de début:</strong> {{ tournament.start_date }}</p>
                         <p><strong>Durée:</strong> {{ tournament.duration }} jours</p>
                         <p><strong>Créé par:</strong> {{ tournament.created_by }}</p>
                         <p><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
@@ -151,13 +169,15 @@
     <h2>Compétitions terminées :</h2>
     <ul>
         {% for tournament in past_tournaments %}
-            <div class="competition">
+            <div class="competition" id="competition_{{ tournament.id }}" onclick="Navigate_to_specific_tournamment_page('{{tournament.id}}')">
                 <span class="name_of_the_tournament">{{ tournament.name }}</span> 
-                <span class="arrow" onclick="toggleDetails('{{ tournament.id }}')">&#129095;</span>  
-                
+                <div class="arrow-container" onclick="toggleDetails('{{ tournament.id }}')">
+                    <span class="arrow">&#129095;</span>
+                </div>                
                 <div class="tournament-details" id="details-{{ tournament.id }}">
+                    <!-- Détails du tournoi -->
                     <p><strong>ID:</strong> {{ tournament.id }}</p>
-                    <p><strong>Date de début:</strong> {{ tournament.date }}</p>
+                    <p><strong>Date de début:</strong> {{ tournament.start_date }}</p>
                     <p><strong>Durée:</strong> {{ tournament.duration }} jours</p>
                     <p><strong>Créé par:</strong> {{ tournament.created_by }}</p>
                     <p><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
@@ -170,6 +190,8 @@
 
 <script>
     function toggleDetails(tournamentId) {
+
+        event.stopPropagation();
         var details = document.getElementById('details-' + tournamentId);
         if (details.style.display === "none" || details.style.display === "") {
             details.style.display = "block";
@@ -188,5 +210,10 @@
             }, 500); // Le délai doit correspondre à la durée de la transition CSS
         });
     }, 5000); // Disparaît après 5 secondes
+    function Navigate_to_specific_tournamment_page(tournamentId) {
+        var url = "{{ url_for('tournaments.tournament_page', tournament_id='__tournament_id__') }}";
+        url = url.replace('__tournament_id__', tournamentId);
+        window.location.href = url;
+    }
 </script>
 {% endblock %}

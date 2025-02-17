@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Page du tournoi</h1>
+    <p><strong>ID du tournoi :</strong>  {{ tournament_data.id }}</p>
+    <p><strong>Liste des participants :</strong></p>
+    <ul>
+        {% for participant in tournament_data['list_of_players'] %}
+
+        <p class="participant">{{ participant }}</p>
+    
+        {% endfor %}
+    </ul>
+
+    <div class="graph">
+        <img src="{{ url_for('static', filename='images/tournament_graph.png') }}" alt="Graphique_du_tournoi">
+    </div>
+
+{% endblock %}
