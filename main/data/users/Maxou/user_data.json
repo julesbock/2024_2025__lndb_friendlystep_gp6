@@ -456,6 +456,14 @@
                 "floors_data": "4",
                 "sleep_duration_data": "07:02",
                 "sleep_score_data": "6"
+            },
+            "18": {
+                "step_data": "193",
+                "distance_data": "0.2",
+                "calories_data": "30",
+                "floors_data": "1",
+                "sleep_duration_data": "07:04",
+                "sleep_score_data": "6"
             }
         }
     }
