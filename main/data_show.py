@@ -37,6 +37,7 @@ def create_x_days_graph(the_data_label, list_of_the_data_to_graph, number_of_day
             )     
 
     print(labels)
+    plt.clf()
 
     # Création de la figure et de l'axe
     fig, ax1 = plt.subplots(figsize=(11.5, 5.75))
@@ -86,6 +87,7 @@ def create_year_graph(the_data_label, list_of_the_data_to_graph):
     print(labels)
     print(list_of_the_data_to_graph)
     # Création de la figure et de l'axe
+    plt.clf()
     fig, ax1 = plt.subplots()
 
     # Tracer les barres pour les pas sur l'axe principal (ax1)
@@ -111,11 +113,17 @@ def category_name_convert_to_label(category):
 def create_tournament_graphic(all_player_data, category):
     label = category_name_convert_to_label(category)
     players = list(all_player_data.keys())
+    print(players)
     players.reverse()
     scores = list(all_player_data.values())
-    scores.reverse()
+    print(scores)
 
+    scores.reverse()
+    print(scores)
+    print(players)
     # Créer un graphique à barres horizontal
+    plt.clf()
+
     plt.barh(players, scores, color="skyblue", height=0.05)
     
     # Ajouter un titre et des labels
@@ -124,7 +132,7 @@ def create_tournament_graphic(all_player_data, category):
     save_graph('tournament_graph')
     
 def save_graph(filename):
-
+    print(filename)
     # Enregistrer le graphique
     plt.tight_layout()
 
@@ -132,9 +140,10 @@ def save_graph(filename):
     images_dir = os.path.join(os.path.dirname(__file__), 'static', 'images')
     if not os.path.exists(images_dir):
         os.makedirs(images_dir)
-
+    path=os.path.join(images_dir, filename)
     # Vider le dossier 'images'
-
+    if os.path.exists(path):
+        os.remove(path)
 
     # Enregistrer le graphique dans le dossier 'images'
     plt.savefig(os.path.join(images_dir, filename))

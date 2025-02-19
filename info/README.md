@@ -186,3 +186,13 @@ dossier users
         valeur de base pour les graphics (pour les ordres de grandeurs/axes)
 
     Pourcentage d'avancement du projet : 50,2%
+
+notification : demande pour rejoindre un tournoi, (demande d'ami), rappel de debut de tournoi
+
+expeditaire, object, la date, le destinataire, subject
+
+Amis quand creation de tournoi comme whatsapp pour creation de groupe ?
+
+You are invited to a tournament!
+Tournament entry request
+New friend request

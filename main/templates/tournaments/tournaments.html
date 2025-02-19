@@ -55,25 +55,7 @@
         line-height: 1.5em;
     }
 
-    .arrow-container {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    border-radius: 5px;
-    float: right;
-    transform: translate(10px, -5px);
-    }
 
-    .arrow-container:hover {
-        background-color: #f0f0f0;
-    }
-
-    .arrow {
-        pointer-events: none;
-    }
 
     .tournament-details {
         display: none;
@@ -189,10 +171,10 @@
 </body>
 
 <script>
-    function toggleDetails(tournamentId) {
+    function toggleDetails(Id) {
 
         event.stopPropagation();
-        var details = document.getElementById('details-' + tournamentId);
+        var details = document.getElementById('details-' + Id);
         if (details.style.display === "none" || details.style.display === "") {
             details.style.display = "block";
         } else {

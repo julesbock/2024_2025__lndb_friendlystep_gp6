@@ -6,14 +6,22 @@
     <p><strong>Liste des participants :</strong></p>
     <ul>
         {% for participant in tournament_data['list_of_players'] %}
-
         <p class="participant">{{ participant }}</p>
-    
         {% endfor %}
     </ul>
+    
+    {% if is_not_finished and session['name_user'] == tournament_data['created_by'] %}
+    <!-- Formulaire pour ajouter un participant -->
+    <form action="{{ url_for('tournaments.tournament_page', tournament_id=tournament_data.id) }}" method="POST">
+        <label for="participant_name">Nom du participant :</label>
+        <input type="text" id="participant_name" name="participant_name" placeholder="Nom du participant" required>
+        <button type="submit">Ajouter Participant</button>
+    </form>        
+    <p style="color: red; font-weight: bold; margin-top: 10px;">{{ error }}</p>
 
+    {% endif %}
+    
     <div class="graph">
-        <img src="{{ url_for('static', filename='images/tournament_graph.png') }}" alt="Graphique_du_tournoi">
+        <img src="{{ url_for('static', filename='images/tournament_graph.png') }}" alt="Graphique du tournoi">
     </div>
-
 {% endblock %}

@@ -1,4 +1,145 @@
 {% extends "base.html" %}
 {% block content %}
+<head>
+    <style>
+/* Style général des notifications */
+        .notification {
+            flex: 1 1 calc(33.333% - 20px);
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 17px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            cursor: pointer;
+            margin: 10px;
+        }
 
+        .notification:hover {
+            background-color: #f0f0f0;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Style du texte de la notification */
+        #notification_object {
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 1.5em;
+        }
+
+        /* Conteneur de la flèche (ne bouge pas au clic) */
+        #notification_arrow_container {
+            transform: translate(8px, -34px);
+        }
+
+        /* Détails de la notification (cachés par défaut) */
+        .notification-details {
+            display: none;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Boutons d'action */
+        .action-buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .action-buttons button:first-child {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .action-buttons button:first-child:hover {
+            background-color: #45a049;
+        }
+
+        .action-buttons button:last-child {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .action-buttons button:last-child:hover {
+            background-color: #d32f2f;
+        }
+
+
+    </style>
+</head>
+    {% for notification in notifications %}
+        {% with object = notification['object'] %}
+        <div class="notification">
+            <p class="notification_objects" id="notification_object">{{ object }}</p>
+            <div class="arrow-container" onclick="toggleDetails('{{ loop.index }}')" id="notification_arrow_container">
+                <span class="arrow">&#129095;</span>
+            </div>                
+            <div class="notification-details" id="details-{{ loop.index }}">
+                <!-- Détails du tournoi -->
+                <p><strong>De :</strong> {{ notification.get('sender', 'Inconnu') }}</p>
+                <p><strong>Envoyé le :</strong> {{ notification.get('sent_at_date', 'Inconnue') }} à {{ notification.get('sent_at_hour', 'Inconnue') }}</p>
+                <p>{{ notification.get('content', 'Inconnue') }}</p>
+                
+                {% if notification['object'] in invitations_and_requests %}
+                    <div class="action-buttons">
+                        <button onclick="Accept('{{ object }}','{{ loop.index - 1 }}')">Accepter</button>
+                        <button onclick="Decline('{{ object }}','{{ loop.index - 1 }}')">Refuser</button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endwith %}
+    {% endfor %}
+    {% if not notifications %}
+    <div >
+        <p>Vous n'avez pas de nouvelles notifications</p>
+    </div>
+    {% endif %}
+
+    <script>
+        function toggleDetails(id) {
+            event.stopPropagation();
+            var details = document.getElementById("details-" + id);
+            if (details.style.display === "none" || details.style.display === "") {
+                details.style.display = "block";
+            } else {
+                details.style.display = "none";
+            }
+        }
+        function Accept(object, index) {
+            if (object === 'Tournament entry request' || object === "You are invited to a tournament!") {
+                var url = "{{ url_for('social.notifications', index='__notification_id__', response='Yes') }}";
+                url = url.replace('__notification_id__', index);
+            }
+            else if (object === "New friend request") {
+                var url = "{{ url_for('social.notifications', index='__notification_id__', response='Yes') }}";
+                url = url.replace('__notification_id__', index);
+            }
+            window.location.href = url;
+        }
+        function Decline(object, index) {
+            if (object === 'Tournament entry request' || object === "You are invited to a tournament!") {
+                var url = "{{ url_for('social.notifications', index='__notification_id__', response='No') }}";
+                url = url.replace('__notification_id__', index);
+            }
+            else if (object === "New friend request") {
+                var url = "{{ url_for('social.notifications', index='__notification_id__', response='No') }}";
+                url = url.replace('__notification_id__', index);
+            }
+            window.location.href = url;
+        }
+    </script>
 {% endblock %}

@@ -1,14 +1,11 @@
 from flask import redirect, url_for, session
 from data_show import *
-from data import BASE32_ALPHABET
+from data import *
 import json, os, calendar, random, string
 from datetime import datetime, timedelta
 
 
 def convert_to_decimal_hours(value):
-    """
-    Convertit une durée au format hh:mm en nombre d'heures décimales.
-    """
     try:
         hours, minutes = map(int, value.split(":"))
         return hours + minutes / 60
@@ -16,15 +13,16 @@ def convert_to_decimal_hours(value):
         print(f"Erreur de conversion pour la valeur : {value}")
         return 0
     
-# Fonctions de gestion de données des utilisateurs
 def do_all_graphics(data_type, label):
     all_user_data = get_data("user_data.json")
     needed_data = {}
-    # Récupérer les données pour les années 2024 et 2025
-    if "2024" in all_user_data:
-        needed_data["2024"] = all_user_data["2024"]
-    if "2025" in all_user_data:
-        needed_data["2025"] = all_user_data["2025"]
+    today = datetime.datetime.now()
+    current_year = today.year
+    previous_year = current_year - 1
+    if str(current_year) in all_user_data:
+        needed_data[str(current_year)] = all_user_data[str(current_year)]
+    if str(previous_year) in all_user_data:
+        needed_data[str(previous_year)] = all_user_data[str(previous_year)]
     data_of_the_seven_days_to_graph = get_last_seven_days_value(data_type, needed_data)
     data_of_the_month_to_graph = get_month_values(data_type, needed_data)
     data_of_the_year_to_graph= get_last_year_values(data_type, needed_data)
@@ -36,25 +34,11 @@ def create_graphics(label, data_of_the_seven_days_to_graph, data_of_the_month_to
     create_month_graph(label, data_of_the_month_to_graph)
     create_year_graph(label, data_of_the_year_to_graph)
     
-
 def get_precise_day_value(data_type, all_data, year_month_day):
-    """
-    Récupère la valeur associée à un type de données spécifique pour une date précise.
-
-    Args:
-        data_type (str): Le type de données à récupérer (par exemple, "step_data").
-        all_data (dict): Le dictionnaire contenant toutes les dates et leurs valeurs associées.
-        year_month_day (tuple): Un tuple contenant l'année, le mois et le jour pour la date précise.
-
-    Returns:
-        int: La valeur associée au type de données spécifié pour la date précise.
-    """
     year, month, day = year_month_day
-    
     year_data = all_data.get(str(year), {})
     month_data = year_data.get(str(month), {})
     day_data = month_data.get(str(day), {})
-
     value = day_data.get(data_type, 0)
         # Si la valeur est au format hh:mm
     if isinstance(value, str) and ":" in value:
@@ -63,35 +47,19 @@ def get_precise_day_value(data_type, all_data, year_month_day):
     # Sinon, essayer de convertir en float normalement
     return float(str(value).lstrip("0") or "0")
     
-
 def get_last_seven_days_value(data_type, all_data):
     today = datetime.now()
     lasts_days_values = []
-    
     for i in range(6, -1, -1):
         day = today - timedelta(days=i)
         current_day = day.day
         year = day.year
         month = day.month
-       
         value = get_precise_day_value(data_type, all_data, (year, month, current_day))
-        lasts_days_values.append(value)
-            
+        lasts_days_values.append(value)   
     return lasts_days_values
 
 def get_month_values(data_type, all_data, last_x_month=0):
-    """
-    Récupère les valeurs associées à un type de données spécifique pour le mois en cours jusqu'à la date actuelle,
-    et pour les mois précédents spécifiés par last_x_month.
-
-    Args:
-        data_type (str): Le type de données à récupérer (par exemple, "step_data").
-        all_data (dict): Le dictionnaire contenant toutes les dates et leurs valeurs associées.
-        last_x_month (int): Le nombre de mois précédents à inclure dans les valeurs récupérées.
-
-    Returns:
-        list: Une liste contenant les valeurs pour le mois en cours jusqu'à la date actuelle et les mois précédents spécifiés.
-    """
     today = datetime.now()
     current_year = today.year
     current_month = today.month
@@ -101,8 +69,6 @@ def get_month_values(data_type, all_data, last_x_month=0):
     if the_month <= 0:
         the_month += 12
         current_year -= 1
-
-
     if last_x_month == 0:
         number_of_days_in_the_month = calendar.monthrange(current_year, current_month)[1]
         for day in range(1, current_day + 1):
@@ -113,24 +79,13 @@ def get_month_values(data_type, all_data, last_x_month=0):
         for day in range(1, number_of_days_in_the_month + 1):
             value=get_precise_day_value(data_type, all_data, (current_year, the_month, day))
             month_values.append(float(value))
-
     return month_values
 
 def calculate_mean(list_values):
-    """
-    Calcule la moyenne des valeurs dans une liste.
-
-    Args:
-        list_values (list): Une liste de valeurs numériques.
-
-    Returns:
-        float: La moyenne des valeurs dans la liste.
-    """
     if len(list_values) == 0:
         return 0
     return sum(list_values) / len(list_values)
     
-        
 def get_last_year_values(data_type, all_data):
     today = datetime.now()
     current_month = int(today.month)
@@ -139,8 +94,6 @@ def get_last_year_values(data_type, all_data):
         values_list = get_month_values(data_type, all_data, month)
         mean_value = calculate_mean(values_list)
         month_values.append(mean_value)
-
-        
     return month_values
 
 def get_data (file_wanted):
@@ -187,31 +140,12 @@ def put_data_in_user_data(personnal_user_data):
     give_data("user_data.json", all_data)
 
 def create_all_dates_dic():
-    """
-    Crée un dictionnaire contenant toutes les dates depuis l'année 2000 jusqu'à aujourd'hui.
-    
-    Structure :
-    {
-        année: {
-            mois: {
-                jour: {}
-            }
-        }
-    }
-
-    - Chaque jour est une clé avec un dictionnaire vide comme valeur.
-    - Les années passées incluent tous les mois et jours.
-    - L'année en cours inclut uniquement les mois jusqu'au mois actuel et les jours jusqu'au jour actuel.
-    
-    Returns:
-        dict: Le dictionnaire contenant toutes les dates.
-    """
     date_heure = datetime.now()
     current_year = date_heure.year
     current_month = date_heure.month
     current_day = date_heure.day
     all_dates_dic = {}
-    for year in range (2000, current_year + 1):
+    for year in range (2024, current_year + 1):
         all_dates_dic[year] = {}
         if year == current_year:
             for month in range(1, current_month + 1):
@@ -230,8 +164,6 @@ def create_all_dates_dic():
                 for day in range(1, number_of_days_in_specific_month + 1):
                     all_dates_dic[year][month][day] = {}
     return all_dates_dic
-
-# Fonctions de gestion des utilisateurs
 
 def check_if_all_good(dic, current_year, current_month, current_day):
     dic.setdefault(str(current_year), {}).setdefault(str(current_month), {}).setdefault(str(current_day), {})
@@ -262,13 +194,18 @@ def create_user(user_personnal_data, chemin_users):
     os.mkdir(chemin_users)
     first_file_name = "personnal_data"
     second_file_name = "user_data"
+    third_file_name = "user_notifications"
     chemin_first_file = os.path.join(chemin_users, first_file_name + ".json")
     chemin_second_file = os.path.join(chemin_users, second_file_name + ".json")
+    chemin_third_file = os.path.join(chemin_users, third_file_name + ".json")
     with open(chemin_first_file, "w") as json_file:
         json.dump(user_personnal_data, json_file, indent=4)
     the_dic = create_all_dates_dic()
     with open(chemin_second_file, "w") as json_file:
-        json.dump(the_dic, json_file, indent=4)   
+        json.dump(the_dic, json_file, indent=4)
+    notifications = []
+    with open(chemin_third_file, "w") as json_file:
+        json.dump(notifications, json_file, indent=4)   
 
 def register_user(username, mdp, chemin_projet):
     chemin_users_list = os.path.join(chemin_projet, "data", "users", "users_list.json")
@@ -282,7 +219,6 @@ def register_user(username, mdp, chemin_projet):
     with open(chemin_users_list, "w") as json_file:
         json.dump(all_data, json_file, indent=4)
 
-# Fonctions de gestion des tournois
 def generate_tournament_id():
     tournament_id = "".join(random.choices(BASE32_ALPHABET, k=11))
     return tournament_id
@@ -313,8 +249,7 @@ def save_tournament_data(tournament_id, tournament_data):
         json.dump(data, file, indent=4)
     try:
         with open(file_path, "w") as tournament_file:
-            json.dump(tournament_data, tournament_file, indent=4)
-        
+            json.dump(tournament_data, tournament_file, indent=4)  
     except Exception as e:
         error_message = f"Une erreur s'est produite lors de l'enregistrement du tournoi {tournament_id}: {e}"
         print(error_message)
@@ -343,6 +278,7 @@ def search_tournament(tournament_id):
         return tournament_data
     else:
         return None
+    
 def get_player_category_data(category, player, start_date):
     dossier_projet = os.path.dirname(__file__)
     chemin_user = os.path.join(dossier_projet, "data", "users", player, "user_data.json")
@@ -350,25 +286,17 @@ def get_player_category_data(category, player, start_date):
     
     with open(chemin_user, "r") as f:
         all_data = json.load(f)
-    
     start_date = datetime.strptime(start_date, "%Y-%m-%d")
     category_values = []
-    
-    # Parcours de l'ensemble des données
     for year, months in all_data.items():
         for month, days in months.items():
             for day, data in days.items():
-                # Créer une date complète à partir de l'année, mois et jour
-                month = int(month)  # Assure-toi que c'est un entier
-                day = int(day)  # Assure-toi que c'est un entier
-                day_date_str = f"{year}-{month:02d}-{day:02d}"  # Formater la date sous forme 'YYYY-MM-DD'
+                month = int(month)
+                day = int(day)
+                day_date_str = f"{year}-{month:02d}-{day:02d}"
                 day_date = datetime.strptime(day_date_str, "%Y-%m-%d")
-                
-                # Vérifier si la date est postérieure ou égale à la start_date
                 if day_date >= start_date:
                     category_value = data.get(category, 0)
-                    
-                    # Si la valeur est au format hh:mm (par exemple pour "sleep_duration_data")
                     if isinstance(category_value, str) and ":" in category_value:
                         category_values.append(convert_to_decimal_hours(category_value))
                     else:
@@ -380,7 +308,6 @@ def get_player_category_data(category, player, start_date):
 def sort_dic_by_value(dico):
     return dict(sorted(dico.items(), key=lambda x: x[1], reverse=True))
     
-    
 def do_tournament_graphic(category, list_of_players, start_date):
     player_data = {}
     for player in list_of_players:
@@ -388,5 +315,36 @@ def do_tournament_graphic(category, list_of_players, start_date):
     player_data = sort_dic_by_value(player_data)
     print(player_data)
     create_tournament_graphic(player_data, category)
-# Messagerie et notifications
 
+def create_notif(object, sender, receiver, tournament_id):
+    notif = make_notif(object, sender, receiver, tournament_id)
+    save_notif(notif, receiver)
+    
+def make_notif(object, sender, receiver, tournament_id):
+    current_datetime = datetime.now()
+    date = current_datetime.date().isoformat() 
+    sent_at_hour = current_datetime.strftime("%H:%M") 
+    notif = {
+        "sender": sender,
+        "receiver": receiver,
+        "object": message_object.get(object, ""),
+        "sent_at_date": date,
+        "sent_at_hour": sent_at_hour,
+        "content": f"{sender.title()}, {message_content.get(object, '')}"
+    }
+    if object == "invitation_to_a_tournament" or object == "tournament_entry_request":
+        notif["tournament_id"] = tournament_id
+    return notif
+
+def save_notif(notif, user):
+    chemin = os.path.dirname(__file__)
+    true_path = os.path.join(chemin, "data", "users", user, "user_notifications.json")
+    with open(true_path, "r") as f:
+        all_data = json.load(f)
+    all_data.append(notif)
+    with open(true_path, "w") as f:
+        json.dump(all_data, f, indent=4)
+        
+        
+# ajouter le noùm du tournoi de l invit + min caractere pour mdp, changer la couleur pour dire que l invitation a ete envoyée, 
+# apparition comme une notif si envoyé recemement + icone 3 nouvelles notifs ...

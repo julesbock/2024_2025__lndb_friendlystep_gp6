@@ -89,13 +89,13 @@ def join_tournament():
             another_path = os.path.join(path, "..",  "data", "tournaments_data", "tournaments_players.json")
             with open(another_path, 'r') as f:
                 another_data = json.load(f)
+            tournament_data = search_tournament(tournament_id)
             user = session['name_user']
             print(user)
-            if user not in another_data[tournament_id]:
+            if user not in tournament_data['list_of_players']:
                 another_data[tournament_id].append(user)
                 print(user)
-            with open(another_path, "w") as f:
-                json.dump(another_data, f, indent=4)
+                create_notif("tournament_entry_request", user, tournament_data['created_by'], tournament_id)
             return redirect(url_for('tournaments.view_tournament', tournament_id=tournament_id))
         else:
             error_type = "tournament_nf"
@@ -110,11 +110,33 @@ def view_tournament(tournament_id):
         return redirect(url_for('tournaments.join_tournament'))
     return render_template('tournaments/view_tournament.html', tournament_data=tournament_data)
 
-@tournaments_blueprint.route('/tournament/<tournament_id>')
+@tournaments_blueprint.route('/tournament/<tournament_id>', methods=["POST", "GET"])
 def tournament_page(tournament_id):
     tournament_data = search_tournament(tournament_id)
     category = tournament_data['category']
     start_date = tournament_data['start_date']
     list_of_the_participants = tournament_data['list_of_players']
+    end_date = datetime.strptime(tournament_data['end_date'], '%Y-%m-%d').date()
+    current_date = datetime.now().date()
+    user = session['name_user']
+    if end_date < current_date:
+        is_not_finished = False
+    else:
+        is_not_finished=True
     do_tournament_graphic(category, list_of_the_participants, start_date)
-    return render_template("tournaments/tournament_page.html", tournament_data=tournament_data)
+    error=""
+    if request.method == "POST" :
+        invited = request.form['participant_name']
+        if invited not in list_of_the_participants:
+            path3= os.path.join(os.path.dirname(__file__), "..", "data", "users", "users_list.json")
+            with open(path3, 'r') as f:
+                data=json.load(f)
+            if any(user['username'] == invited for user in data["users_list"]):
+                create_notif("invitation_to_a_tournament", user, invited, tournament_id)
+                error = f"Une invitation a été envoyée à {invited.title()}"
+
+            else:
+                error = f"{invited.title()} n'existe pas"
+        else : 
+            error = f'{invited.title()} participe déjà au tournoi'
+    return render_template("tournaments/tournament_page.html", tournament_data=tournament_data, is_not_finished=is_not_finished, error=error)
