@@ -6,7 +6,7 @@ root_blueprint = Blueprint("root", __name__, url_prefix="/")
 @root_blueprint.route("/")
 def root():
     if "name_user" in session:
-        all_user_data = get_data("user_data.json")
+        all_user_data = load_data_from_user_file("user_data.json")
         existing_data = check_if_data_exists (all_user_data)
         return render_template("root.html", data=existing_data, is_logged = True)
     else:

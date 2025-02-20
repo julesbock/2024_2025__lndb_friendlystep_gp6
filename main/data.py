@@ -14,3 +14,6 @@ message_content = {
     "friend_request": "has sent you a friend request."
 }
 
+first_file_name = "personnal_data"
+second_file_name = "user_data"
+third_file_name = "user_notifications"

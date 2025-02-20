@@ -103,6 +103,7 @@
     </p>
 
     <h2>Compétitions en cours :</h2>
+    {% if ongoing_tournaments %}
     <ul class="list_of_the_competitions">
         {% for tournament in ongoing_tournaments %}
             <div class="competition" id="competition_{{ tournament.id }}" onclick="Navigate_to_specific_tournamment_page('{{tournament.id}}')">
@@ -122,6 +123,9 @@
             </div>
         {% endfor %}
     </ul>
+    {% else %}
+        <p>Aucune compétition en cours.</p>
+    {% endif %}
 
     <h2>Compétitions à venir :</h2>
     {% if upcoming_tournaments %}
@@ -149,6 +153,7 @@
     {% endif %}
 
     <h2>Compétitions terminées :</h2>
+    {% if past_tournaments %}
     <ul>
         {% for tournament in past_tournaments %}
             <div class="competition" id="competition_{{ tournament.id }}" onclick="Navigate_to_specific_tournamment_page('{{tournament.id}}')">
@@ -168,6 +173,9 @@
             </div>
         {% endfor %}
     </ul>
+    {% else %}
+    <p>Aucune compétition terminées.</p>
+    {% endif %}
 </body>
 
 <script>

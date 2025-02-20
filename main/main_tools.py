@@ -4,6 +4,82 @@ from data import *
 import json, os, calendar, random, string
 from datetime import datetime, timedelta
 
+def pj(*args):
+    return os.path.join(*args)
+
+def get_pfp():
+    return os.path.dirname(__file__)
+
+def get_user_folder_path():
+    user = session['name_user']
+    users_folder_path = get_users_folder_path()
+    user_folder_path = pj(users_folder_path, user)
+    return user_folder_path
+
+def get_users_folder_path():
+    project_folder_path = get_pfp()
+    users_folder_path = pj(project_folder_path, "data", "users")
+    return users_folder_path  
+
+def get_user_file_path(file_name):
+    user_folder_path = get_user_folder_path()
+    user_file_path = pj(user_folder_path, file_name)
+    return user_file_path
+    
+def get_users_list_path():
+    users_list_path = pj(get_users_folder_path(), "users_list.json")
+    return users_list_path
+
+
+def get_tournament_data_folder_path():
+    project_folder_path = get_pfp()
+    user_folder_path = pj(project_folder_path, "data", "tournaments_data")
+    return user_folder_path
+
+def get_tournaments_folder_path():
+    tournament_data_folder_path = get_tournament_data_folder_path()
+    tournaments_folder_path =  pj(tournament_data_folder_path, "tournaments")
+    return tournaments_folder_path
+
+def get_tournament_file_path(file_name):
+    tournament_folder_path = get_tournaments_folder_path()
+    tournament_file_path = pj(tournament_folder_path, file_name)
+    return tournament_file_path
+
+
+    
+
+
+def load_data_from_file(file_path):
+    if not os.path.exists(file_path):
+        return {}
+    with open(file_path, 'r') as f:
+        return json.load(f)
+
+def load_data_from_user_file(file_name):
+    file_path = get_user_file_path(file_name)
+    data = load_data_from_file(file_path)
+    return data
+
+def load_data_from_tournament_file(file_name):
+    file_path = get_tournament_file_path(file_name)
+    data = load_data_from_file(file_path)
+    return data
+
+
+
+def dump_data_in_file(file_path, data):
+    with open(file_path, 'w') as f:
+        json.dump(data, f, indent=4)
+        
+def dump_data_in_tournament_file(file_name, data):
+    file_path = get_tournament_file_path(file_name)
+    dump_data_in_file(file_path, data)
+        
+def dump_data_in_user_file(file_name, data):
+    file_path = get_user_file_path(file_name)
+    dump_data_in_file(file_path, data)
+
 
 def convert_to_decimal_hours(value):
     try:
@@ -14,9 +90,9 @@ def convert_to_decimal_hours(value):
         return 0
     
 def do_all_graphics(data_type, label):
-    all_user_data = get_data("user_data.json")
+    all_user_data = load_data_from_user_file("user_data.json")
     needed_data = {}
-    today = datetime.datetime.now()
+    today = datetime.now()
     current_year = today.year
     previous_year = current_year - 1
     if str(current_year) in all_user_data:
@@ -96,21 +172,6 @@ def get_last_year_values(data_type, all_data):
         month_values.append(mean_value)
     return month_values
 
-def get_data (file_wanted):
-    dossier_projet = os.path.dirname(__file__)
-    chemin_user = os.path.join(dossier_projet, "data", "users", session["name_user"])
-    chemin_file = os.path.join(chemin_user, file_wanted)
-    with open(chemin_file, "r") as json_file:
-        all_data = json.load(json_file)
-    return all_data
-
-def give_data(file_wanted, data):
-    dossier_projet = os.path.dirname(__file__)
-    chemin_user = os.path.join(dossier_projet, "data", "users", session["name_user"])
-    chemin_file = os.path.join(chemin_user, file_wanted)
-    with open(chemin_file, "w") as json_file:
-        json.dump(data, json_file, indent=4)
-
 def check_if_data_exists(existing_data):
     date_time = datetime.now()
     current_year = str(date_time.year)
@@ -130,14 +191,14 @@ def check_if_data_exists(existing_data):
     return existing_data_for_today
 
 def put_data_in_user_data(personnal_user_data): 
-    all_data = get_data("user_data.json")
+    all_data = load_data_from_user_file("user_data.json")
     date_heure = datetime.now()
     current_year = str(date_heure.year)
     current_month = str(date_heure.month)
     current_day = str(date_heure.day)
     all_data = check_if_all_good(all_data, current_year, current_month, current_day)
     all_data[current_year][current_month][current_day] = (personnal_user_data)
-    give_data("user_data.json", all_data)
+    dump_data_in_user_file("user_data.json", all_data)
 
 def create_all_dates_dic():
     date_heure = datetime.now()
@@ -170,10 +231,8 @@ def check_if_all_good(dic, current_year, current_month, current_day):
     return dic
 
 def recherch_user(name_user, mdp):
-    dossier_projet = os.path.dirname(__file__)
-    chemin_users_list = os.path.join(dossier_projet, "data", "users", "users_list.json")
-    with open(chemin_users_list, "r") as json_file:
-            all_data = json.load(json_file)
+    users_list_path = get_users_list_path()
+    all_data = load_data_from_file(users_list_path)
     for user in all_data["users_list"]:
         if user["username"] == name_user and user["mdp"] == mdp:
             return user
@@ -181,52 +240,41 @@ def recherch_user(name_user, mdp):
 
 def create_and_register_user(user_personnal_data):
     name = user_personnal_data["username"] 
-    dossier_projet = os.path.dirname(__file__)
-    chemin_users = os.path.join(dossier_projet, "data", "users", name)
-    if not os.path.exists(chemin_users):
-        create_user(user_personnal_data, chemin_users)
-        register_user(name, user_personnal_data['mdp'], dossier_projet)
+    user_path = pj(get_users_folder_path(), name)
+    if not os.path.exists(user_path):
+        register_user(name, user_personnal_data['mdp'])
+        create_user(user_personnal_data, user_path)
     else:
         pass
     return redirect(url_for("root.root"))
 
-def create_user(user_personnal_data, chemin_users):
-    os.mkdir(chemin_users)
-    first_file_name = "personnal_data"
-    second_file_name = "user_data"
-    third_file_name = "user_notifications"
-    chemin_first_file = os.path.join(chemin_users, first_file_name + ".json")
-    chemin_second_file = os.path.join(chemin_users, second_file_name + ".json")
-    chemin_third_file = os.path.join(chemin_users, third_file_name + ".json")
-    with open(chemin_first_file, "w") as json_file:
-        json.dump(user_personnal_data, json_file, indent=4)
-    the_dic = create_all_dates_dic()
-    with open(chemin_second_file, "w") as json_file:
-        json.dump(the_dic, json_file, indent=4)
+def create_user(user_personnal_data, user_path):
+    os.mkdir(user_path)
+    first_file_path = pj(user_path, first_file_name + ".json")
+    second_file_path = pj(user_path, second_file_name + ".json")
+    third_file_path = pj(user_path, third_file_name + ".json")
     notifications = []
-    with open(chemin_third_file, "w") as json_file:
-        json.dump(notifications, json_file, indent=4)   
+    the_dic = create_all_dates_dic()
+    dump_data_in_file(first_file_path, user_personnal_data)
+    dump_data_in_file(second_file_path, the_dic)
+    dump_data_in_file(third_file_path, notifications)
 
-def register_user(username, mdp, chemin_projet):
-    chemin_users_list = os.path.join(chemin_projet, "data", "users", "users_list.json")
+def register_user(username, mdp):
+    users_list_path = get_users_list_path()
     user_and_mdp = {
         "username" : username,
         "mdp" : mdp
     }
-    with open(chemin_users_list, "r") as json_file:
-        all_data = json.load(json_file)
+    all_data = load_data_from_file(users_list_path)
     all_data ["users_list"].append(user_and_mdp)
-    with open(chemin_users_list, "w") as json_file:
-        json.dump(all_data, json_file, indent=4)
+    dump_data_in_file(users_list_path, all_data)
 
 def generate_tournament_id():
     tournament_id = "".join(random.choices(BASE32_ALPHABET, k=11))
     return tournament_id
 
 def check_if_tournament_id_exists(tournament_id):
-    path = os.path.dirname(__file__)
-    full_path = os.path.join(path, "data", "tournaments_data", "tournaments")
-    file_path = os.path.join(full_path, f"{tournament_id}.json")
+    file_path = get_tournament_file_path(f"{tournament_id}.json")
     return os.path.exists(file_path)
     
 def get_unique_tournament_id():
@@ -236,20 +284,15 @@ def get_unique_tournament_id():
             return tournament_id
 
 def save_tournament_data(tournament_id, tournament_data):
-    path = os.path.dirname(__file__)
-    the_path = os.path.join(path, "data", "tournaments_data")
-    true_path = os.path.join(the_path, "tournaments")
-    os.makedirs(true_path, exist_ok=True)
-    another_path = os.path.join(the_path, "tournaments_players.json")
-    with open(another_path, 'r') as file:
-        data=json.load(file)
+    tournaments_path = get_tournaments_folder_path()
+    os.makedirs(tournaments_path, exist_ok=True)
+    tournaments_participants__file_path = pj(get_tournament_data_folder_path(), "tournaments_players.json")
+    data = load_data_from_file(tournaments_participants__file_path)
     data[tournament_id] = [session['name_user']]
-    file_path = os.path.join(true_path, f"{tournament_id}.json")
-    with open(another_path, 'w') as file:
-        json.dump(data, file, indent=4)
+    file_path = get_tournament_file_path(f"{tournament_id}.json")
+    dump_data_in_file(tournaments_participants__file_path, data)
     try:
-        with open(file_path, "w") as tournament_file:
-            json.dump(tournament_data, tournament_file, indent=4)  
+        dump_data_in_file(file_path, tournament_data)
     except Exception as e:
         error_message = f"Une erreur s'est produite lors de l'enregistrement du tournoi {tournament_id}: {e}"
         print(error_message)
@@ -257,35 +300,24 @@ def save_tournament_data(tournament_id, tournament_data):
         return error_message
     
 def delete_tournament(tournament_id):
-    path = os.path.dirname(__file__)
-    full_path = os.path.join(path, "data", "tournaments_data", "tournaments")
-    file_path = os.path.join(full_path, f"{tournament_id}.json")
+    file_path = pj(get_tournaments_folder_path(), f"{tournament_id}.json")
     os.remove(file_path)
 
 def search_tournament(tournament_id):
-    path = os.path.dirname(__file__)
-    full_path = os.path.join(path, "data", "tournaments_data","tournaments")
-    another_path = os.path.join(path, "data", "tournaments_data", "tournaments_players.json")
-    file_path = os.path.join(full_path, f"{tournament_id}.json")
+    tournaments_participants__file_path = pj(get_tournament_data_folder_path(), "tournaments_players.json")
+    file_path = get_tournament_file_path(f"{tournament_id}.json")
     if os.path.exists(file_path):
-        with open(file_path, "r") as tournament_file:
-            tournament_data = json.load(tournament_file)
-        with open(another_path, 'r') as f:
-            another_data = json.load(f)
-        tournament_data['list_of_players'] = another_data[tournament_id]
+        tournament_data = load_data_from_file(file_path)
+        data = load_data_from_file(tournaments_participants__file_path)
+        tournament_data['list_of_players'] = data[tournament_id]
         tournament_data['number_of_players'] = len(tournament_data['list_of_players'])
-        
         return tournament_data
     else:
         return None
     
 def get_player_category_data(category, player, start_date):
-    dossier_projet = os.path.dirname(__file__)
-    chemin_user = os.path.join(dossier_projet, "data", "users", player, "user_data.json")
-    print(chemin_user)
-    
-    with open(chemin_user, "r") as f:
-        all_data = json.load(f)
+    user_path = pj(get_users_folder_path(), player, "user_data.json")
+    all_data = load_data_from_file(user_path)
     start_date = datetime.strptime(start_date, "%Y-%m-%d")
     category_values = []
     for year, months in all_data.items():
@@ -337,13 +369,10 @@ def make_notif(object, sender, receiver, tournament_id):
     return notif
 
 def save_notif(notif, user):
-    chemin = os.path.dirname(__file__)
-    true_path = os.path.join(chemin, "data", "users", user, "user_notifications.json")
-    with open(true_path, "r") as f:
-        all_data = json.load(f)
+    user_notification_path = pj(get_users_folder_path(), user, "user_notifications.json")
+    all_data = load_data_from_file(user_notification_path)
     all_data.append(notif)
-    with open(true_path, "w") as f:
-        json.dump(all_data, f, indent=4)
+    dump_data_in_file(user_notification_path, all_data)
         
         
 # ajouter le noùm du tournoi de l invit + min caractere pour mdp, changer la couleur pour dire que l invitation a ete envoyée, 

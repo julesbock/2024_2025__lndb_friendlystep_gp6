@@ -18,7 +18,7 @@ def data_input ():
         locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
     today_date = date.today().strftime("%d %B %Y")
 
-    all_user_data = get_data("user_data.json")
+    all_user_data = load_data_from_user_file("user_data.json")
 
     existing_data = check_if_data_exists (all_user_data)
     if request.method == "POST" :
