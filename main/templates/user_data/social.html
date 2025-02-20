@@ -10,16 +10,9 @@
 </div>
         
 <div class = "social_container">
-    <div class="col-md-12">
+    <div class="col-md-12" onclick="Navigate_to_social_pages('messaging')">
         <h1>Messages</h1>
         <p>Consultez ici vos messages</p>
-        <ul class="list_of_the_conversations">
-            {% for conv in conversations %}
-            <li class="conversation" onclick="Navigate_to_social_pages('conversation')">
-                <a>Messages</a>
-            </li>
-            {% endfor %}
-        </ul>
     </div>
 </div>
 
@@ -30,8 +23,8 @@
         if (page === 'notifications') {
             url = "{{ url_for('social.notifications') }}"; // URL pour 'notifications'
         }
-        else if (page === 'conversation') {
-            url = "{{ url_for('social.social', conversation_id = conversation_id) }}"; // URL pour 'messages'
+        else if (page === 'messaging') {
+            url = "{{ url_for('social.messaging') }}"; // URL pour 'messages'
         }
 
         

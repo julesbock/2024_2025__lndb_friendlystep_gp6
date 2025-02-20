@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <style>
+/* Réinitialisation des marges et paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Mise en page du body */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+/* Conteneur principal de la messagerie */
+#messaging-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Conteneur des conversations (à gauche) */
+#conversations-list {
+    width: 30%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.conversation-item {
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.conversation-item:hover {
+    background-color: #f0f0f0;
+}
+
+.conversation-item.active {
+    background-color: #d0e4ff;
+}
+
+/* Conteneur des détails de la conversation (à droite) */
+#conversation-details {
+    width: 65%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.message {
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.message p {
+    margin: 5px 0;
+}
+
+.message strong {
+    color: #007BFF;
+}
+
+.message p:last-child {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Formulaire pour démarrer une nouvelle conversation */
+#new-conversation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#new-conversation-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#new-conversation-form button {
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#new-conversation-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Styles pour afficher les erreurs */
+p.error {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Mise en page responsive */
+@media (max-width: 768px) {
+    #messaging-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #conversations-list {
+        width: 100%;
+        max-height: 60vh;
+    }
+
+    #conversation-details {
+        width: 100%;
+    }
+}
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Liste des conversations -->
+        <div class="conversations-list">
+            <h2>Conversations</h2>
+            {% for filename, conversation in conversations.items() %}
+            <div class="conversation-item" onclick="loadConversation('{{ filename }}')">
+                <h4>{{ filename[:-5] }}</h4>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Détail de la conversation -->
+        <div class="conversation-detail" id="conversation-detail">
+            <h2>Veuillez sélectionner une conversation</h2>
+        </div>
+
+        <!-- Formulaire pour envoyer un message -->
+        <div class="send-message-form" id="send-message-form" style="display:none;">
+            <h3>Envoyer un message</h3>
+            <form method="POST" id="message-form">
+                <textarea id="message-text" name="message" rows="4" placeholder="Écrivez votre message..." required></textarea>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Script JavaScript pour gérer la sélection de conversation -->
+    <script>
+        // Fonction pour charger les messages de la conversation
+        function sendMessage(convoName) {
+    const messageText = document.getElementById('message-text').value;
+    if (!messageText.trim()) {
+        alert('Le message ne peut pas être vide.');
+        return;
+    }
+
+    const messageData = {
+        sender: '{{ user }}',  // Utilise le nom de l'utilisateur actuel
+        message: messageText,
+        hour: new Date().toISOString()
+    };
+
+    fetch(`/social/messaging/${convoName}/send`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(messageData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            loadConversation(convoName);  // Recharge les messages après envoi
+            document.getElementById('message-text').value = '';  // Vide le champ
+        } else {
+            alert('Erreur lors de l\'envoi du message.');
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+    });
+}
+
+    // Modifier la fonction de chargement de la conversation pour afficher le formulaire
+    function loadConversation(convoName) {
+        fetch(`/social/messaging/${convoName}`)
+            .then(response => response.json())
+            .then(data => {
+                const convoDetail = document.getElementById('conversation-detail');
+                const sendMessageForm = document.getElementById('send-message-form');
+                convoDetail.innerHTML = '';  // Réinitialise le contenu de la conversation
+                if (data.conversation && data.conversation.length > 0) {
+                    data.conversation.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.classList.add('message');
+                        messageDiv.innerHTML = `
+                            <p><strong>${message.sender}</strong></p>
+                            <p><strong>Envoyé le :</strong> ${message.hour}</p>
+                            <p>${message.message}</p>
+                        `;
+                        convoDetail.appendChild(messageDiv);
+                    });
+                } else {
+                    convoDetail.innerHTML = '<h2>Aucun message dans cette conversation</h2>';
+                }
+                convoDetail.style.display = 'block';  // Affiche le détail
+                sendMessageForm.style.display = 'block';  // Affiche le formulaire de message
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+    }
+    </script>
+</body>
+{% endblock %}

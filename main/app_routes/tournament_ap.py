@@ -7,19 +7,16 @@ tournaments_blueprint = Blueprint('tournaments', __name__, url_prefix='/tourname
 @tournaments_blueprint.route('/')
 def tournaments():
 # Lire les données des tournois à partir des fichiers JSON
-    tournaments_folder_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'tournaments_data')
-    tournaments_dir = os.path.join(tournaments_folder_dir, "tournaments")
-    another_dir = os.path.join(tournaments_folder_dir, "tournaments_players.json")
+    tournaments_participants__file_path = get_tournaments_players_file_path()
+    tournaments_path = get_tournaments_folder_path()
     tournaments = []
-    with open(another_dir, 'r') as f:
-        data = json.load(f)
+    data = load_data_from_file(tournaments_participants__file_path)
     user_tournaments = [key for key, players in data.items() if session['name_user'] in players]
-    if os.path.exists(tournaments_dir):
-        for filename in os.listdir(tournaments_dir):
+    if os.path.exists(tournaments_path):
+        for filename in os.listdir(tournaments_path):
             if filename.endswith('.json'):
-                file_path = os.path.join(tournaments_dir, filename)
-                with open(file_path, 'r') as file:
-                    tournament = json.load(file)
+                file_path = pj(tournaments_path, filename)
+                tournament = load_data_from_file(file_path)
                 if tournament['id'] in user_tournaments:
                     participants = data.get(tournament['id'], [])
                     nb_of_participants = len(participants)
@@ -85,15 +82,13 @@ def join_tournament():
     if request.method == 'POST':
         tournament_id = request.form.get('tournament_id')
         if check_if_tournament_id_exists(tournament_id):
-            path = os.path.dirname(__file__)
-            another_path = os.path.join(path, "..",  "data", "tournaments_data", "tournaments_players.json")
-            with open(another_path, 'r') as f:
-                another_data = json.load(f)
+            tournaments_participants__file_path = get_tournaments_players_file_path()
+            data = load_data_from_file(tournaments_participants__file_path)
             tournament_data = search_tournament(tournament_id)
             user = session['name_user']
             print(user)
             if user not in tournament_data['list_of_players']:
-                another_data[tournament_id].append(user)
+                data[tournament_id].append(user)
                 print(user)
                 create_notif("tournament_entry_request", user, tournament_data['created_by'], tournament_id)
             return redirect(url_for('tournaments.view_tournament', tournament_id=tournament_id))
@@ -128,9 +123,8 @@ def tournament_page(tournament_id):
     if request.method == "POST" :
         invited = request.form['participant_name']
         if invited not in list_of_the_participants:
-            path3= os.path.join(os.path.dirname(__file__), "..", "data", "users", "users_list.json")
-            with open(path3, 'r') as f:
-                data=json.load(f)
+            users_list_file_path = get_users_list_path()
+            data = load_data_from_file(users_list_file_path)
             if any(user['username'] == invited for user in data["users_list"]):
                 create_notif("invitation_to_a_tournament", user, invited, tournament_id)
                 error = f"Une invitation a été envoyée à {invited.title()}"

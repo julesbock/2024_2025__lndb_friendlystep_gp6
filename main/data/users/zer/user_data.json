@@ -445,14 +445,7 @@
             "17": {},
             "18": {},
             "19": {},
-            "20": {
-                "step_data": "10",
-                "distance_data": "10",
-                "calories_data": "101",
-                "floors_data": "10",
-                "sleep_duration_data": "10:10",
-                "sleep_score_data": "10"
-            }
+            "20": {}
         }
     }
 }

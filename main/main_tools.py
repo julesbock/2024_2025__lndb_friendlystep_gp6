@@ -4,11 +4,35 @@ from data import *
 import json, os, calendar, random, string
 from datetime import datetime, timedelta
 
+def get_date(type):
+    today = datetime.now()
+    if type == "int":
+        return {
+            "current_year": today.year,
+            "current_month": today.month,
+            "current_day": today.day
+        }
+    elif type == "str":
+        return {
+            "current_year": str(today.year),
+            "current_month": str(today.month),
+            "current_day": str(today.day)
+        }
+        
 def pj(*args):
     return os.path.join(*args)
 
 def get_pfp():
     return os.path.dirname(__file__)
+
+def get_conversations_folder_path():
+    user_folder_path = get_user_folder_path()  
+    conversations_folder_path = pj(user_folder_path, first_folder_name)
+    return conversations_folder_path
+
+def get_tournaments_players_file_path():
+    tournaments_players_file_path = pj(get_tournament_data_folder_path(), "tournaments_players.json")
+    return tournaments_players_file_path
 
 def get_user_folder_path():
     user = session['name_user']
@@ -30,7 +54,6 @@ def get_users_list_path():
     users_list_path = pj(get_users_folder_path(), "users_list.json")
     return users_list_path
 
-
 def get_tournament_data_folder_path():
     project_folder_path = get_pfp()
     user_folder_path = pj(project_folder_path, "data", "tournaments_data")
@@ -46,40 +69,30 @@ def get_tournament_file_path(file_name):
     tournament_file_path = pj(tournament_folder_path, file_name)
     return tournament_file_path
 
-
-    
-
-
 def load_data_from_file(file_path):
-    if not os.path.exists(file_path):
+    if not os.path.exists(file_path) or os.stat(file_path).st_size == 0:
         return {}
     with open(file_path, 'r') as f:
-        return json.load(f)
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
 
 def load_data_from_user_file(file_name):
     file_path = get_user_file_path(file_name)
     data = load_data_from_file(file_path)
     return data
 
-def load_data_from_tournament_file(file_name):
-    file_path = get_tournament_file_path(file_name)
-    data = load_data_from_file(file_path)
-    return data
-
-
-
 def dump_data_in_file(file_path, data):
+    directory = os.path.dirname(file_path)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
     with open(file_path, 'w') as f:
         json.dump(data, f, indent=4)
-        
-def dump_data_in_tournament_file(file_name, data):
-    file_path = get_tournament_file_path(file_name)
-    dump_data_in_file(file_path, data)
         
 def dump_data_in_user_file(file_name, data):
     file_path = get_user_file_path(file_name)
     dump_data_in_file(file_path, data)
-
 
 def convert_to_decimal_hours(value):
     try:
@@ -92,8 +105,7 @@ def convert_to_decimal_hours(value):
 def do_all_graphics(data_type, label):
     all_user_data = load_data_from_user_file("user_data.json")
     needed_data = {}
-    today = datetime.now()
-    current_year = today.year
+    current_year = get_date("int")["current_year"]
     previous_year = current_year - 1
     if str(current_year) in all_user_data:
         needed_data[str(current_year)] = all_user_data[str(current_year)]
@@ -136,10 +148,7 @@ def get_last_seven_days_value(data_type, all_data):
     return lasts_days_values
 
 def get_month_values(data_type, all_data, last_x_month=0):
-    today = datetime.now()
-    current_year = today.year
-    current_month = today.month
-    current_day = today.day
+    current_year, current_month, current_day = get_date("int").values()
     month_values = []
     the_month = current_month - last_x_month
     if the_month <= 0:
@@ -163,8 +172,7 @@ def calculate_mean(list_values):
     return sum(list_values) / len(list_values)
     
 def get_last_year_values(data_type, all_data):
-    today = datetime.now()
-    current_month = int(today.month)
+    current_month = get_date("int")["current_month"]
     month_values = []
     for month in range(1, current_month +1 ):
         values_list = get_month_values(data_type, all_data, month)
@@ -173,10 +181,7 @@ def get_last_year_values(data_type, all_data):
     return month_values
 
 def check_if_data_exists(existing_data):
-    date_time = datetime.now()
-    current_year = str(date_time.year)
-    current_month = str(date_time.month)
-    current_day = str(date_time.day)
+    current_year, current_month, current_day = get_date("str").values()
     if current_year in existing_data:
         if current_month in existing_data[current_year]:
             if current_day in existing_data[current_year][current_month]:
@@ -192,19 +197,13 @@ def check_if_data_exists(existing_data):
 
 def put_data_in_user_data(personnal_user_data): 
     all_data = load_data_from_user_file("user_data.json")
-    date_heure = datetime.now()
-    current_year = str(date_heure.year)
-    current_month = str(date_heure.month)
-    current_day = str(date_heure.day)
+    current_year, current_month, current_day = get_date("str").values()
     all_data = check_if_all_good(all_data, current_year, current_month, current_day)
     all_data[current_year][current_month][current_day] = (personnal_user_data)
     dump_data_in_user_file("user_data.json", all_data)
 
 def create_all_dates_dic():
-    date_heure = datetime.now()
-    current_year = date_heure.year
-    current_month = date_heure.month
-    current_day = date_heure.day
+    current_year, current_month, current_day = get_date("int").values()
     all_dates_dic = {}
     for year in range (2024, current_year + 1):
         all_dates_dic[year] = {}
@@ -253,6 +252,8 @@ def create_user(user_personnal_data, user_path):
     first_file_path = pj(user_path, first_file_name + ".json")
     second_file_path = pj(user_path, second_file_name + ".json")
     third_file_path = pj(user_path, third_file_name + ".json")
+    first_folder_path = pj(user_path, first_folder_name)
+    os.mkdir(first_folder_path)
     notifications = []
     the_dic = create_all_dates_dic()
     dump_data_in_file(first_file_path, user_personnal_data)
@@ -286,7 +287,7 @@ def get_unique_tournament_id():
 def save_tournament_data(tournament_id, tournament_data):
     tournaments_path = get_tournaments_folder_path()
     os.makedirs(tournaments_path, exist_ok=True)
-    tournaments_participants__file_path = pj(get_tournament_data_folder_path(), "tournaments_players.json")
+    tournaments_participants__file_path = get_tournaments_players_file_path()
     data = load_data_from_file(tournaments_participants__file_path)
     data[tournament_id] = [session['name_user']]
     file_path = get_tournament_file_path(f"{tournament_id}.json")
@@ -304,7 +305,7 @@ def delete_tournament(tournament_id):
     os.remove(file_path)
 
 def search_tournament(tournament_id):
-    tournaments_participants__file_path = pj(get_tournament_data_folder_path(), "tournaments_players.json")
+    tournaments_participants__file_path = get_tournaments_players_file_path()
     file_path = get_tournament_file_path(f"{tournament_id}.json")
     if os.path.exists(file_path):
         tournament_data = load_data_from_file(file_path)

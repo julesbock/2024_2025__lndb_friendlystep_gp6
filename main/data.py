@@ -17,3 +17,4 @@ message_content = {
 first_file_name = "personnal_data"
 second_file_name = "user_data"
 third_file_name = "user_notifications"
+first_folder_name = "conversations"
