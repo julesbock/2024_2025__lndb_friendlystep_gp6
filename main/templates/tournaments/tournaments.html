@@ -1,88 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<head>
-    <style>
-    /* Style pour les titres */
-    h2 {
-        color: #0056b3;
-        text-decoration: none;
-    }
-
-    /* Style pour les paragraphes */
-    p {
-        font-size: 1.1em;
-        line-height: 1.6em;
-    }
-
-    /* Style pour les liens */
-    a {
-        color: #0056b3;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .competition {
-        flex: 1 1 calc(33.333% - 20px);
-        padding: 21px;
-        background-color: #fff;
-        border-radius: 17px;
-        box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.1);
-        transition: background-color 0.4s ease, box-shadow 0.4s ease;
-        position: relative;
-        list-style-type: none; /* Masque les puces */
-        padding-left: 2; /* Place 2 tabulations */
-        cursor: pointer;
-        margin: 10px;
-    }
-
-    .competition:hover {
-        background-color: #f0f0f0;
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .name_of_the_tournament {
-        font-weight: bold;
-        font-size: 18px;
-        line-height: 1.5em;
-    }
-
-
-
-    .tournament-details {
-        display: none;
-        margin-top: 10px;
-        padding-left: 20px;
-    }
-
-    /* Flash message styles */
-    .close_flash_btn {
-        position: absolute;
-        top: 5px; /* Ajuste la position verticale */
-        right: 10px; /* Ajuste la position horizontale */
-        color: #fff;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
-    .close_flash_btn:hover {
-        color: #ccc;
-    }
-
-    </style>
-</head>
-
-<body>
     {% with messages = get_flashed_messages(with_categories=True) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -94,15 +12,14 @@
         {% endif %}
     {% endwith %}
 
-    <title>Mes compétitions</title>
     <h1>Mes compétitions</h1>
-    <p>
-        <a href="{{ url_for('tournaments.create_tournament') }}">Créer une compétition</a>
+    <p class="p_tournaments">
+        <a class="a_tournaments" href="{{ url_for('tournaments.create_tournament') }}">Créer une compétition</a>
         ou bien
-        <a href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
+        <a class="a_tournaments" href="{{ url_for('tournaments.join_tournament') }}">rejoindre une compétition déjà en cours</a>
     </p>
 
-    <h2>Compétitions en cours :</h2>
+    <h2 class="h2_tournaments">Compétitions en cours :</h2>
     {% if ongoing_tournaments %}
     <ul class="list_of_the_competitions">
         {% for tournament in ongoing_tournaments %}
@@ -113,23 +30,23 @@
                 </div>                
                 <div class="tournament-details" id="details-{{ tournament.id }}">
                     <!-- Détails du tournoi -->
-                    <p><strong>ID:</strong> {{ tournament.id }}</p>
-                    <p><strong>Date de début:</strong> {{ tournament.start_date }}</p>
-                    <p><strong>Durée:</strong> {{ tournament.duration }} jours</p>
-                    <p><strong>Créé par:</strong> {{ tournament.created_by }}</p>
-                    <p><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
-                    <p><strong>Nombre de participants:</strong> {{ tournament.number_of_participants }}</p>
+                    <p class="p_tournaments"><strong>ID:</strong> {{ tournament.id }}</p>
+                    <p class="p_tournaments"><strong>Date de début:</strong> {{ tournament.start_date }}</p>
+                    <p class="p_tournaments"><strong>Durée:</strong> {{ tournament.duration }} jours</p>
+                    <p class="p_tournaments"><strong>Créé par:</strong> {{ tournament.created_by }}</p>
+                    <p class="p_tournaments"><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
+                    <p class="p_tournaments"><strong>Nombre de participants:</strong> {{ tournament.number_of_participants }}</p>
                 </div>
             </div>
         {% endfor %}
     </ul>
     {% else %}
-        <p>Aucune compétition en cours.</p>
+        <p class="p_tournaments">Aucune compétition en cours.</p>
     {% endif %}
 
-    <h2>Compétitions à venir :</h2>
+    <h2 class="h2_tournaments">Compétitions à venir :</h2>
     {% if upcoming_tournaments %}
-        <ul>
+        <ul class="ul_tournaments">
             {% for tournament in upcoming_tournaments %}
                 <div class="competition" id="competition_{{ tournament.id }}" onclick="Navigate_to_specific_tournamment_page('{{tournament.id}}')">
                     <span class="name_of_the_tournament">{{ tournament.name }}</span> 
@@ -138,23 +55,23 @@
                     </div>                
                     <div class="tournament-details" id="details-{{ tournament.id }}">
                         <!-- Détails du tournoi -->
-                        <p><strong>ID:</strong> {{ tournament.id }}</p>
-                        <p><strong>Date de début:</strong> {{ tournament.start_date }}</p>
-                        <p><strong>Durée:</strong> {{ tournament.duration }} jours</p>
-                        <p><strong>Créé par:</strong> {{ tournament.created_by }}</p>
-                        <p><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
-                        <p><strong>Nombre de participants:</strong> {{ tournament.number_of_participants }}</p>
+                        <p class="p_tournaments"><strong>ID:</strong> {{ tournament.id }}</p>
+                        <p class="p_tournaments"><strong>Date de début:</strong> {{ tournament.start_date }}</p>
+                        <p class="p_tournaments"><strong>Durée:</strong> {{ tournament.duration }} jours</p>
+                        <p class="p_tournaments"><strong>Créé par:</strong> {{ tournament.created_by }}</p>
+                        <p class="p_tournaments"><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
+                        <p class="p_tournaments"><strong>Nombre de participants:</strong> {{ tournament.number_of_participants }}</p>
                     </div>
                 </div>
             {% endfor %}
         </ul>
     {% else %}
-        <p>Aucune compétition à venir.</p>
+        <p class="p_tournaments">Aucune compétition à venir.</p>
     {% endif %}
 
-    <h2>Compétitions terminées :</h2>
+    <h2 class="h2_tournaments">Compétitions terminées :</h2>
     {% if past_tournaments %}
-    <ul>
+    <ul class="ul_tournaments">
         {% for tournament in past_tournaments %}
             <div class="competition" id="competition_{{ tournament.id }}" onclick="Navigate_to_specific_tournamment_page('{{tournament.id}}')">
                 <span class="name_of_the_tournament">{{ tournament.name }}</span> 
@@ -163,21 +80,19 @@
                 </div>                
                 <div class="tournament-details" id="details-{{ tournament.id }}">
                     <!-- Détails du tournoi -->
-                    <p><strong>ID:</strong> {{ tournament.id }}</p>
-                    <p><strong>Date de début:</strong> {{ tournament.start_date }}</p>
-                    <p><strong>Durée:</strong> {{ tournament.duration }} jours</p>
-                    <p><strong>Créé par:</strong> {{ tournament.created_by }}</p>
-                    <p><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
-                    <p><strong>Nombre de participants:</strong> {{ tournament.number_of_participants }}</p>
+                    <p class="p_tournaments"><strong>ID:</strong> {{ tournament.id }}</p>
+                    <p class="p_tournaments"><strong>Date de début:</strong> {{ tournament.start_date }}</p>
+                    <p class="p_tournaments"><strong>Durée:</strong> {{ tournament.duration }} jours</p>
+                    <p class="p_tournaments"><strong>Créé par:</strong> {{ tournament.created_by }}</p>
+                    <p class="p_tournaments"><strong>Date de fin:</strong> {{ tournament.end_date }}</p>
+                    <p class="p_tournaments"><strong>Nombre de participants:</strong> {{ tournament.number_of_participants }}</p>
                 </div>
             </div>
         {% endfor %}
     </ul>
     {% else %}
-    <p>Aucune compétition terminées.</p>
+    <p class="p_tournaments">Aucune compétition terminées.</p>
     {% endif %}
-</body>
-
 <script>
     function toggleDetails(Id) {
 

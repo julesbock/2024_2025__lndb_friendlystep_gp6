@@ -57,6 +57,271 @@ body {
 #navbar ul li a:hover {
     background-color: #575757;
 }
+.notification {
+    flex: 1 1 calc(33.333% - 20px);
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 17px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.notification:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Style du texte de la notification */
+#notification_object {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1.5em;
+}
+
+/* Conteneur de la flèche (ne bouge pas au clic) */
+#notification_arrow_container {
+    transform: translate(8px, -34px);
+}
+
+/* Détails de la notification (cachés par défaut) */
+.notification-details {
+    display: none;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 0 0 8px 8px;
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Boutons d'action */
+.action-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.action-buttons button:first-child {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.action-buttons button:first-child:hover {
+    background-color: #45a049;
+}
+
+.action-buttons button:last-child {
+    background-color: #f44336;
+    color: white;
+}
+
+.action-buttons button:last-child:hover {
+    background-color: #d32f2f;
+}
+#messaging-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Conteneur des conversations (à gauche) */
+#conversations-list {
+    width: 30%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.conversation-item {
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.conversation-item:hover {
+    background-color: #f0f0f0;
+}
+
+.conversation-item.active {
+    background-color: #d0e4ff;
+}
+
+/* Conteneur des détails de la conversation (à droite) */
+#conversation-details {
+    width: 65%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.message {
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.message p {
+    margin: 5px 0;
+}
+
+.message strong {
+    color: #007BFF;
+}
+
+.message p:last-child {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Formulaire pour démarrer une nouvelle conversation */
+#new-conversation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#new-conversation-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#new-conversation-form button {
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#new-conversation-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Styles pour afficher les erreurs */
+p.error {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.competition {
+    flex: 1 1 calc(33.333% - 20px);
+    padding: 21px;
+    background-color: #fff;
+    border-radius: 17px;
+    box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    list-style-type: none; /* Masque les puces */
+    padding-left: 2em; /* Place 2 tabulations */
+    cursor: pointer;
+    margin: 10px;
+}
+
+.competition:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.name_of_the_tournament {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1.5em;
+}
+
+
+
+.tournament-details {
+    display: none;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+/* Flash message styles */
+.close_flash_btn {
+    position: absolute;
+    top: 5px; /* Ajuste la position verticale */
+    right: 10px; /* Ajuste la position horizontale */
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close_flash_btn:hover {
+    color: #ccc;
+}
+.h2_tournaments {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+/* Style pour les paragraphes */
+.p_tournaments {
+    font-size: 1.1em;
+    line-height: 1.6em;
+}
+
+/* Style pour les liens */
+.a_tournaments {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+.a_tournaments:hover {
+    text-decoration: underline;
+}
+
+.ul_tournaments {
+    list-style-type: none;
+    padding: 0;
+}
+/* Mise en page responsive */
+@media (max-width: 768px) {
+    #messaging-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #conversations-list {
+        width: 100%;
+        max-height: 60vh;
+    }
+
+    #conversation-details {
+        width: 100%;
+    }
+}
 
 /* Conteneur principal */
 #container {
@@ -88,6 +353,74 @@ body {
     left: 34%;
     margin-left: 3%;
 }
+
+#notif-container {
+    display: block; /* Cacher le container mais le garder pour la praticité */
+}
+
+.speed_notif {
+    position: fixed;
+    top: 74px;
+    right: 20px;
+    width: 300px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+.speed_notif:hover {
+    background-color: #f1f1f1;
+}
+
+.speed_notif .close_speed_notif {
+    font-size: 18px;
+    color: #bbb;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.speed_notif .close_speed_notif:hover {
+    color: red;
+}
+
+.speed_notif.removed {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+
+.close_speed_notif {
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+}
+
+#hour_of_speed_notif {
+    position: relative;
+    left: 10px;
+}
+
+
 /* Styles du tableau de bord */
 .dashboard {
     display: flex;

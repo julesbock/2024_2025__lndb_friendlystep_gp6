@@ -11,6 +11,7 @@ from app_routes.faq_ap import *
 from app_routes.user_data_graphics_ap import *
 from app_routes.errors_ap import *
 from app_routes.social_ap import *
+from app_routes.notifications_ap import *
 
 app = Flask(__name__)
 
@@ -30,6 +31,7 @@ app.register_blueprint(faq_blueprint)
 app.register_blueprint(user_data_graphics_blueprint)
 app.register_blueprint(errors_blueprint)
 app.register_blueprint(social_blueprint)
+app.register_blueprint(notifications_blueprint)
 
 
 # Présentation des routes enregistrées dans le terminal

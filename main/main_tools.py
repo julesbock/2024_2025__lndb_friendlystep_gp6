@@ -69,6 +69,11 @@ def get_tournament_file_path(file_name):
     tournament_file_path = pj(tournament_folder_path, file_name)
     return tournament_file_path
 
+def get_user_notifications_path():
+    user = session['name_user']
+    user_notifications_path = pj(get_users_folder_path(), user, "user_notifications.json")
+    return user_notifications_path
+
 def load_data_from_file(file_path):
     if not os.path.exists(file_path) or os.stat(file_path).st_size == 0:
         return {}
@@ -375,6 +380,35 @@ def save_notif(notif, user):
     all_data.append(notif)
     dump_data_in_file(user_notification_path, all_data)
         
-        
+def get_user_notifications_under_thirty_min_and_nb_of_notif():
+    user_notification_path = get_user_notifications_path()
+    all_data = load_data_from_file(user_notification_path)
+    
+    # Nombre total de notifications
+    nb_of_notif = len(all_data)
+
+    # Date et heure actuelles
+    current_datetime = datetime.now()
+    thirty_minutes_ago = current_datetime - timedelta(minutes=30)
+
+    notifications = []
+
+    for notif in all_data:
+        # Ajouter les secondes manuellement si elles ne sont pas présentes
+        sent_at_hour = notif["sent_at_hour"]
+        if len(sent_at_hour.split(":")) == 2:  # Si l'heure ne contient pas de secondes
+            sent_at_hour += ":00"  # Ajouter ":00" pour les secondes
+
+        # Récupérer la date et l'heure de l'envoi de la notification
+        notif_datetime = datetime.combine(datetime.strptime(notif["sent_at_date"], "%Y-%m-%d").date(),
+                                          datetime.strptime(sent_at_hour, "%H:%M:%S").time())
+
+        # Comparer si la notification a été envoyée dans les 30 dernières minutes
+        if notif_datetime >= thirty_minutes_ago:
+            notifications.append(notif)
+
+    return notifications, nb_of_notif
+
+
 # ajouter le noùm du tournoi de l invit + min caractere pour mdp, changer la couleur pour dire que l invitation a ete envoyée, 
 # apparition comme une notif si envoyé recemement + icone 3 nouvelles notifs ...

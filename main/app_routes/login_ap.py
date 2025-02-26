@@ -17,7 +17,7 @@ def login():
             return redirect(url_for('root.root'))
         else:
             print('utilisateur inconnu')
-            return render_template("login.html", error = "Utilisateur ou mot de passe inconnu. Veuillez réessayer.")
+            return render_template("users/login.html", error = "Utilisateur ou mot de passe inconnu. Veuillez réessayer.")
     else:
         print(session)
         if "name_user" in session:

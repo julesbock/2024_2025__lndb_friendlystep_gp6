@@ -6,6 +6,7 @@ logout_blueprint = Blueprint('logout', __name__, url_prefix='/logout')
 def logout():
     print(session)
     session.pop("name_user", None)
+    session.pop("notifications", None)
     print(session)
     return redirect(url_for('root.root'))
 

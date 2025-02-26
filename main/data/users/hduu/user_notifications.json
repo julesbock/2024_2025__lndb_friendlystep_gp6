@@ -7,5 +7,32 @@
         "sent_at_hour": "23:14",
         "content": "Jules.B_08, has invited you to join a tournament.",
         "tournament_id": "FUQBZZ35VGI"
+    },
+    {
+        "sender": "maxou",
+        "receiver": "hduu",
+        "object": "You are invited to a tournament!",
+        "sent_at_date": "2025-02-26",
+        "sent_at_hour": "22:48",
+        "content": "Maxou, has invited you to join a tournament.",
+        "tournament_id": "UVKHYJ6ZZGT"
+    },
+    {
+        "sender": "maxou",
+        "receiver": "hduu",
+        "object": "You are invited to a tournament!",
+        "sent_at_date": "2025-02-26",
+        "sent_at_hour": "23:31",
+        "content": "Maxou, has invited you to join a tournament.",
+        "tournament_id": "UVKHYJ6ZZGT"
+    },
+    {
+        "sender": "maxou",
+        "receiver": "hduu",
+        "object": "You are invited to a tournament!",
+        "sent_at_date": "2025-02-27",
+        "sent_at_hour": "00:16",
+        "content": "Maxou, has invited you to join a tournament.",
+        "tournament_id": "UVKHYJ6ZZGT"
     }
 ]

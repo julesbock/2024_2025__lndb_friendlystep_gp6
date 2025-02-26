@@ -1,1 +1,20 @@
-[]
+[
+    {
+        "sender": "hduu",
+        "receiver": "maxou",
+        "object": "You are invited to a tournament!",
+        "sent_at_date": "2025-02-26",
+        "sent_at_hour": "21:56",
+        "content": "Hduu, has invited you to join a tournament.",
+        "tournament_id": "MWQ36HJCVC4"
+    },
+    {
+        "sender": "jules.b_08",
+        "receiver": "maxou",
+        "object": "You are invited to a tournament!",
+        "sent_at_date": "2025-02-26",
+        "sent_at_hour": "22:17",
+        "content": "Jules.B_08, has invited you to join a tournament.",
+        "tournament_id": "CLGFKK3WF3C"
+    }
+]
