@@ -43,5 +43,14 @@
         "sent_at_hour": "11:38",
         "content": "Alg_, has invited you to join a tournament.",
         "tournament_id": "DNZFJL4XUZV"
+    },
+    {
+        "sender": "alg_",
+        "receiver": "hduu",
+        "object": "You are invited to a tournament!",
+        "sent_at_date": "2025-03-03",
+        "sent_at_hour": "11:56",
+        "content": "Alg_, has invited you to join a tournament.",
+        "tournament_id": "DNZFJL4XUZV"
     }
 ]

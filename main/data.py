@@ -1,5 +1,3 @@
-import os
-
 BASE32_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
 
 message_object = {
