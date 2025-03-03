@@ -14,7 +14,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333;
+    background-color: #172A38;
     padding: 10px 20px;
 }
 
@@ -26,7 +26,7 @@ body {
 }
 
 #navbar img {
-    max-width: 50px;
+    max-width: 80px;
     height: auto;
 }
 
