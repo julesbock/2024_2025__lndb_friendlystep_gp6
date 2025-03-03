@@ -1,5 +1,3 @@
-Créer une IHM   qui permet d'accéder aux données de l'utilisateur et le comparer à d'autres utilsateurs (de data sur internet) et à d'autres users plus precis (amis, a travers un echange ..)
-
 Nous voulions créer un site internet qui permet aux utilisateurs de rentrer leurs données de santé afin d'obtenir un suivi. En effet, les utilisateurs ont la possibilité de rentrer les données suivantes : Pas/distance/calories brulées/durée du sommeil/ qualité du sommeil/nombre d'étages gravis.
 Notre site intitulé Friendlysteps, se compose de différentes pages parmi lesquelles : Accueil/Ajouter des données/Compétitions/Profil/Social/Aide
 
