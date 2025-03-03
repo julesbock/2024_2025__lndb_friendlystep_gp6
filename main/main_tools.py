@@ -1,7 +1,7 @@
 from flask import redirect, url_for, session
 from data_show import *
 from data import *
-import json, os, calendar, random, string
+import json, os, calendar, random
 from datetime import datetime, timedelta
 
 def get_date(type):
