@@ -12,8 +12,11 @@ L'utilisateur peut entrer ces données lorsqu'ils le désirent et les modifier a
 La page Compétitions quant à elle, permet aux utilisateurs de visualiser les compétitions en cours, à venir ou terminées et lui donne la posibilité de rejoindre les compétitions par le biais d'un ID, de 11 caractères, généré automatiquement.
 Les données comparées dans la compétition sont choisis par le créateur.
 
-Par ailleurs, 
+Par ailleurs,la page Profil permet à l'utilisateur de modifier ces données personnelles qu'il a rentré lors de son inscription. 
 
+La page Social permet à l'utilisateur de vérifier les notifications qu'il aurait reçues. En effet, lorsque l'utilisateur se connecte les notifications qu'il reçoit. La messagerie n'est pas encore fonctionnelle à la date actuelle. (3 mars 2025)
+
+En outre, une FAQ est disponible, répondant aux principales questions que les utilisateurs peuvent se poser. 
 Réflexion sur l'avancement du 6 janvier 2025 : 
 
     On a fait:
