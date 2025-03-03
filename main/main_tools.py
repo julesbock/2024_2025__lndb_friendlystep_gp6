@@ -1,4 +1,4 @@
-from flask import redirect, url_for, session
+from flask import redirect, url_for, session, flash
 from data_show import *
 from data import *
 import json, os, calendar, random, string
@@ -237,14 +237,14 @@ def recherch_user(name_user, mdp):
     return None
 
 def create_and_register_user(user_personnal_data):
-    name = user_personnal_data["username"] 
+    name = user_personnal_data["username"]
     user_path = pj(get_users_folder_path(), name)
-    if not os.path.exists(user_path):
-        register_user(name, user_personnal_data['mdp'])
-        create_user(user_personnal_data, user_path)
-    else:
-        pass
-    return redirect(url_for("root.root"))
+    if os.path.exists(user_path):
+        flash("Ce nom d'utilisateur existe déjà. Veuillez en choisir un autre.", "error")
+        return False 
+    register_user(name, user_personnal_data['mdp'])
+    create_user(user_personnal_data, user_path)
+    return True
 
 def create_user(user_personnal_data, user_path):
     os.mkdir(user_path)

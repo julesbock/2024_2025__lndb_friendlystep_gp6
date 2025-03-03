@@ -105,5 +105,3 @@ def messaging():
             else:
                 error = "Cet utilisateur n'existe pas."
     return render_template('user_data/messaging.html', conversations=conversations_dict, error=error)
-
-

@@ -20,7 +20,7 @@ def sign_up():
             "height" : request.form['height'],
             "weight" : request.form['weight']
         }
-        create_and_register_user(user_dico)
-        session["name_user"] = user_dico['username']
-        return redirect(url_for('root.root'))
+        if create_and_register_user(user_dico):
+            session["name_user"] = user_dico['username']
+            return redirect(url_for('root.root'))
     return render_template("users/sign_up.html")
