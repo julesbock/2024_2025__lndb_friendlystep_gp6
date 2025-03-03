@@ -17,9 +17,6 @@ app = Flask(__name__)
 
 app.secret_key = "02458d8b8e67hbd5966be5f1b3e109341e2507abfd007fa2785cde99996611e5"
 
-
-# Enregistrement des routes dans l'application
-
 app.register_blueprint(root_blueprint) 
 app.register_blueprint(login_blueprint)
 app.register_blueprint(logout_blueprint)
@@ -33,13 +30,5 @@ app.register_blueprint(errors_blueprint)
 app.register_blueprint(social_blueprint)
 app.register_blueprint(notifications_blueprint)
 
-
-# Présentation des routes enregistrées dans le terminal
-
-print("Routes enregistrées :")
-for rule in app.url_map.iter_rules():
-    print(rule)
-
 if __name__ =='__main__':
     app.run(debug=True, port = 5002)
-

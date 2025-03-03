@@ -4,11 +4,10 @@ logout_blueprint = Blueprint('logout', __name__, url_prefix='/logout')
 
 @logout_blueprint.route('/')
 def logout():
-    print(session)
     session.pop("name_user", None)
     session.pop("notifications", None)
-    print(session)
     return redirect(url_for('root.root'))
+
 
 @logout_blueprint.route('/logout_confirmation')
 def logout_confirmation():
