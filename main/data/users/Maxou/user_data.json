@@ -484,11 +484,11 @@
                 "sleep_score_data": "9"
             },
             "3": {
-                "step_data": "2000",
-                "distance_data": "2",
-                "calories_data": "50",
-                "floors_data": "3",
-                "sleep_duration_data": "07:30",
+                "step_data": "8043",
+                "distance_data": "7.5",
+                "calories_data": "255",
+                "floors_data": "9",
+                "sleep_duration_data": "07:20",
                 "sleep_score_data": "8"
             }
         }
