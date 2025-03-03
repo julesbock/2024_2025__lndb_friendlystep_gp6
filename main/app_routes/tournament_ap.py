@@ -81,10 +81,8 @@ def join_tournament():
             data = load_data_from_file(tournaments_participants__file_path)
             tournament_data = search_tournament(tournament_id)
             user = session['name_user']
-            print(user)
             if user not in tournament_data['list_of_players']:
                 data[tournament_id].append(user)
-                print(user)
                 create_notif("tournament_entry_request", user, tournament_data['created_by'], tournament_id)
             return redirect(url_for('tournaments.view_tournament', tournament_id=tournament_id))
         else:

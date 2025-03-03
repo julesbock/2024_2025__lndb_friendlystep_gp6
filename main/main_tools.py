@@ -104,7 +104,6 @@ def convert_to_decimal_hours(value):
         hours, minutes = map(int, value.split(":"))
         return hours + minutes / 60
     except ValueError:
-        print(f"Erreur de conversion pour la valeur : {value}")
         return 0
     
 def do_all_graphics(data_type, label):
@@ -123,7 +122,6 @@ def do_all_graphics(data_type, label):
     
 def create_graphics(label, data_of_the_seven_days_to_graph, data_of_the_month_to_graph, data_of_the_year_to_graph):
     create_seven_days_graph(label, data_of_the_seven_days_to_graph)
-    print(data_of_the_month_to_graph)
     create_month_graph(label, data_of_the_month_to_graph)
     create_year_graph(label, data_of_the_year_to_graph)
     
@@ -133,11 +131,8 @@ def get_precise_day_value(data_type, all_data, year_month_day):
     month_data = year_data.get(str(month), {})
     day_data = month_data.get(str(day), {})
     value = day_data.get(data_type, 0)
-        # Si la valeur est au format hh:mm
     if isinstance(value, str) and ":" in value:
-        # Conversion d'une valeur formatée en hh:mm (heures + minutes) en heures décimales
         return convert_to_decimal_hours(value)
-    # Sinon, essayer de convertir en float normalement
     return float(str(value).lstrip("0") or "0")
     
 def get_last_seven_days_value(data_type, all_data):
@@ -190,7 +185,6 @@ def check_if_data_exists(existing_data):
     if current_year in existing_data:
         if current_month in existing_data[current_year]:
             if current_day in existing_data[current_year][current_month]:
-                # Si des données existent, récupérer celles-ci
                 existing_data_for_today = existing_data[current_year][current_month][current_day]
             else:
                 existing_data_for_today = {}
@@ -301,7 +295,6 @@ def save_tournament_data(tournament_id, tournament_data):
         dump_data_in_file(file_path, tournament_data)
     except Exception as e:
         error_message = f"Une erreur s'est produite lors de l'enregistrement du tournoi {tournament_id}: {e}"
-        print(error_message)
         delete_tournament(tournament_id)
         return error_message
     
@@ -339,8 +332,6 @@ def get_player_category_data(category, player, start_date):
                         category_values.append(convert_to_decimal_hours(category_value))
                     else:
                         category_values.append(float(str(category_value).lstrip("0") or "0"))
-
-    # Calculer la moyenne des valeurs
     return calculate_mean(category_values)
 
 def sort_dic_by_value(dico):
@@ -351,7 +342,6 @@ def do_tournament_graphic(category, list_of_players, start_date):
     for player in list_of_players:
         player_data[player] = get_player_category_data(category, player, start_date)
     player_data = sort_dic_by_value(player_data)
-    print(player_data)
     create_tournament_graphic(player_data, category)
 
 def create_notif(object, sender, receiver, tournament_id):
@@ -383,32 +373,16 @@ def save_notif(notif, user):
 def get_user_notifications_under_thirty_min_and_nb_of_notif():
     user_notification_path = get_user_notifications_path()
     all_data = load_data_from_file(user_notification_path)
-    
-    # Nombre total de notifications
     nb_of_notif = len(all_data)
-
-    # Date et heure actuelles
     current_datetime = datetime.now()
     thirty_minutes_ago = current_datetime - timedelta(minutes=30)
-
     notifications = []
-
     for notif in all_data:
-        # Ajouter les secondes manuellement si elles ne sont pas présentes
         sent_at_hour = notif["sent_at_hour"]
-        if len(sent_at_hour.split(":")) == 2:  # Si l'heure ne contient pas de secondes
-            sent_at_hour += ":00"  # Ajouter ":00" pour les secondes
-
-        # Récupérer la date et l'heure de l'envoi de la notification
+        if len(sent_at_hour.split(":")) == 2:
+            sent_at_hour += ":00"
         notif_datetime = datetime.combine(datetime.strptime(notif["sent_at_date"], "%Y-%m-%d").date(),
                                           datetime.strptime(sent_at_hour, "%H:%M:%S").time())
-
-        # Comparer si la notification a été envoyée dans les 30 dernières minutes
         if notif_datetime >= thirty_minutes_ago:
             notifications.append(notif)
-
     return notifications, nb_of_notif
-
-
-# ajouter le noùm du tournoi de l invit + min caractere pour mdp, changer la couleur pour dire que l invitation a ete envoyée, 
-# apparition comme une notif si envoyé recemement + icone 3 nouvelles notifs ...
