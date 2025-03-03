@@ -177,4 +177,10 @@ Amis quand creation de tournoi comme whatsapp pour creation de groupe ?
 
 You are invited to a tournament!
 Tournament entry request
-New friend request
+New friend reques
+
+
+
+
+PPT presentation link :
+https://lndb92-my.sharepoint.com/:p:/g/personal/jul_bock_lndb_eu/ETgns_8an-xAlx1nEa9DkA0BlE0EBs1jzOFmBim5nxSVWQ?e=gcX4tC
