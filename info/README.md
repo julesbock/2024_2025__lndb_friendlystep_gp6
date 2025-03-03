@@ -2,26 +2,8 @@ Créer une IHM   qui permet d'accéder aux données de l'utilisateur et le compa
 
 
 
-<!-- Notes sur le projet 2 :
-⦁	créer une application de comparaison de données de santé entre 2 utilisateurs
-⦁	Des différentes données:
-I.	Des données de la qualité du sommeil/de sa durée
-II.	du nombres de pas
-III.	kilomètres parcourus
-IV.	du nombre de kcal brulées
-V.	rythme cardiaque au repos
-Comparaison entre les différents utilisateurs de l'application    -->
-
-
-
-
-
-
-
-
-
-
-
+Nous voulions créer un site internet qui permet aux utilisateurs de rentrer leurs données de santé afin d'obtenir un suivi. En effet, les utilisateurs ont la possibilité de rentrer les données suivantes : Pas/distance/calories brulées/durée du sommeil/ qualité du sommeil/nombre d'étages gravis.
+Notre site intitulé Friendlysteps
 
 Quand on lance -> une page -> sur tout l'écran, sortir page avec echap
 Page : 
@@ -185,7 +167,7 @@ dossier users
         groupe de tournois
         valeur de base pour les graphics (pour les ordres de grandeurs/axes)
 
-    Pourcentage d'avancement du projet : 50,2%
+    Pourcentage d'avancement du projet : 100%
 
 notification : demande pour rejoindre un tournoi, (demande d'ami), rappel de debut de tournoi
 
@@ -195,4 +177,10 @@ Amis quand creation de tournoi comme whatsapp pour creation de groupe ?
 
 You are invited to a tournament!
 Tournament entry request
-New friend request
+New friend reques
+
+
+
+
+PPT presentation link :
+https://lndb92-my.sharepoint.com/:p:/g/personal/jul_bock_lndb_eu/ETgns_8an-xAlx1nEa9DkA0BlE0EBs1jzOFmBim5nxSVWQ?e=gcX4tC
