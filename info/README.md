@@ -3,126 +3,18 @@ Créer une IHM   qui permet d'accéder aux données de l'utilisateur et le compa
 
 
 Nous voulions créer un site internet qui permet aux utilisateurs de rentrer leurs données de santé afin d'obtenir un suivi. En effet, les utilisateurs ont la possibilité de rentrer les données suivantes : Pas/distance/calories brulées/durée du sommeil/ qualité du sommeil/nombre d'étages gravis.
-Notre site intitulé Friendlysteps
+Notre site intitulé Friendlysteps, se compose de différentes pages parmi lesquelles : Accueil/Ajouter des données/Compétitions/Profil/Social/Aide
 
-Quand on lance -> une page -> sur tout l'écran, sortir page avec echap
-Page : 
-    texte : Bienvenue !;
-    Utilisateur : Entrée *  -> page actualisation : Bienvenue + "user" !
-    * arrive sur une page qui lui demande taille, age, poids
-    apres redirection
-    Bouton -> page pour entrer données
-        Page -> données qui sont entrées : placer sur fichier csv(pt txt) spécifique à l'utilsateur
+En premier lieu, l'accueil est personnalisé et permet à l'utilisateur de visualiser ces données quotidiennes et d'approfondir ces données en cliquant pour obtenir les graphiques associés.
 
-        fichiers -> Users
+L'utilisateur peut entrer ces données lorsqu'ils le désirent et les modifier au cours de la journée. De plus, ces informations sont enregistrées dans un fichier JSON.
 
-        Qd on clicke sur le bouton check user :
-            si fichier pas déja existant :
-                fonction(le fichier)
-            sinon : 
-                créer le fichier à son nom
-                fonction(le fichier)
+La page Compétitions quant à elle, permet aux utilisateurs de visualiser les compétitions en cours, à venir ou terminées et lui donne la posibilité de rejoindre les compétitions par le biais d'un ID, de 11 caractères, généré automatiquement.
+Les données comparées dans la compétition sont choisis par le créateur.
 
-            sur le fichier, jour, data
-            données : jour, semaine, mois, l annee, depuis debut
+Par ailleurs, 
 
-                date->bouton/ligne qui déroule:jour en mois en années depuis début
-                Calendrier de la valeur entrée (un peux comme calendrier windows)
-
-
-            fonction(arg1):
-                check la date
-                si jour meme:
-                    data jour meme
-                sinon:
-                    créer le jour et data
-
-        GUI avec données a rentrer
-            données ->
-                nombre de pas 
-                durée de sommeil (en h et min)
-                distance parcourue (en km)
-                calorie totale
-                ...
-
-
-
-dossier users
-    dossier user
-        2 fichiers:
-            1er : données perso
-                personnal_data={    
-                    "name"
-                    "surname"
-                    "user_name"
-                    "mail"#pas obligatoire payant pour pas de pub#
-                    "mdp"
-                    "date_of_birth"
-                    "sexe"
-                    "weight"
-                    "height"
-                    "nationality"
-                    }
-
-            2eme : données rentrées
-                user_data{
-                    year{
-                        janvier {
-                            1{
-                                pas:
-                                distance:
-                                calories:
-                                durée de sommeil:
-                                qualité de sommeil:(entre 1 et 10)                             
-                            }
-                            2{}
-                            3{}
-                            4{}
-                            5{}
-                            6{}
-                            7{}
-                            8{}
-                            9{}
-                            10{}
-                            11{}
-                            12{}
-                            13{}
-                            14{}
-                            15{}
-                            16{}
-                            17{}
-                            18{}
-                            19{}
-                            20{}
-                            21{}
-                            22{}
-                            23{}
-                            24{}
-                            25{}
-                            26{}
-                            27{}
-                            28{}
-                            29{}
-                            30{}
-                            31{}
-                        }
-                        fevrier{}
-                        mars{}
-
-                        }
-                    }
-                }
-
-            
-
-
-
-            1 bouton : pour donner les données
-
-
-
-
-6 janvier 2025 : 
+Réflexion sur l'avancement du 6 janvier 2025 : 
 
     On a fait:
 
@@ -138,12 +30,10 @@ dossier users
                 }
             }
         }
-
         - Chaque jour est une clé avec un dictionnaire vide comme valeur.
         - Les années passées incluent tous les mois et jours.
         - L'année en cours inclut uniquement les mois jusqu'au mois actuel et les jours jusqu'au jour actuel.
         
-
     Il reste à faire : 
 
         Profil pour povoir modifier les donnees personnelles (sur la page mais désactivé)
@@ -151,7 +41,6 @@ dossier users
         Permettre la création de groupe entre users (que l'on choisit en mettant 1 username et enverra une demande(notif)) et la comparaison de données dans ce meme groupe (classement)
         Faire en sorte qu on ne puisse ajouter de données si pas co
         
-
 
     Bonus : 
         Envoi de mail de rappel
@@ -162,25 +51,14 @@ dossier users
         Meilleur CSS
         business (vente des données aux grosses boîtes)
         Régler le probleme de la création de 2 comptes en meme temps
-        ...
+        notification : demande pour rejoindre un tournoi, (demande d'ami), rappel de debut de tournoi
+        expeditaire, object, la date, le destinataire, subject
+        Amis quand creation de tournoi comme whatsapp pour creation de groupe ?
         dans les infos : date de fin (dans 2 jorus : ex)
         groupe de tournois
         valeur de base pour les graphics (pour les ordres de grandeurs/axes)
 
-    Pourcentage d'avancement du projet : 100%
-
-notification : demande pour rejoindre un tournoi, (demande d'ami), rappel de debut de tournoi
-
-expeditaire, object, la date, le destinataire, subject
-
-Amis quand creation de tournoi comme whatsapp pour creation de groupe ?
-
-You are invited to a tournament!
-Tournament entry request
-New friend reques
-
-
-
+    Pourcentage d'avancement du projet : 50% au 6 janvier
 
 PPT presentation link :
 https://lndb92-my.sharepoint.com/:p:/g/personal/jul_bock_lndb_eu/ETgns_8an-xAlx1nEa9DkA0BlE0EBs1jzOFmBim5nxSVWQ?e=gcX4tC
