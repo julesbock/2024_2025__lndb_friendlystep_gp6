@@ -33,68 +33,68 @@
 <script>
     // Fonction pour charger les messages de la conversation
     function sendMessage(convoName) {
-const messageText = document.getElementById('message-text').value;
-if (!messageText.trim()) {
-    alert('Le message ne peut pas être vide.');
-    return;
-}
+        const messageText = document.getElementById('message-text').value;
+        if (!messageText.trim()) {
+            alert('Le message ne peut pas être vide.');
+            return;
+        }
 
-const messageData = {
-    sender: '{{ user }}',  // Utilise le nom de l'utilisateur actuel
-    message: messageText,
-    hour: new Date().toISOString()
-};
+        const messageData = {
+            sender: '{{ user }}',  // Utilise le nom de l'utilisateur actuel
+            message: messageText,
+            hour: new Date().toISOString()
+        };
 
-fetch(`/social/messaging/${convoName}/send`, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(messageData)
-})
-.then(response => response.json())
-.then(data => {
-    if (data.success) {
-        loadConversation(convoName);  // Recharge les messages après envoi
-        document.getElementById('message-text').value = '';  // Vide le champ
-    } else {
-        alert('Erreur lors de l\'envoi du message.');
-    }
-})
-.catch(error => {
-    console.error('Erreur:', error);
-});
-}
-
-// Modifier la fonction de chargement de la conversation pour afficher le formulaire
-function loadConversation(convoName) {
-    fetch(`/social/messaging/${convoName}`)
+        fetch(`/social/messaging/${convoName}/send`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(messageData)
+        })
         .then(response => response.json())
         .then(data => {
-            const convoDetail = document.getElementById('conversation-detail');
-            const sendMessageForm = document.getElementById('send-message-form');
-            convoDetail.innerHTML = '';  // Réinitialise le contenu de la conversation
-            if (data.conversation && data.conversation.length > 0) {
-                data.conversation.forEach(message => {
-                    const messageDiv = document.createElement('div');
-                    messageDiv.classList.add('message');
-                    messageDiv.innerHTML = `
-                        <p><strong>${message.sender}</strong></p>
-                        <p><strong>Envoyé le :</strong> ${message.hour}</p>
-                        <p>${message.message}</p>
-                    `;
-                    convoDetail.appendChild(messageDiv);
-                });
+            if (data.success) {
+                loadConversation(convoName);  // Recharge les messages après envoi
+                document.getElementById('message-text').value = '';  // Vide le champ
             } else {
-                convoDetail.innerHTML = '<h2>Aucun message dans cette conversation</h2>';
+                alert('Erreur lors de l\'envoi du message.');
             }
-            convoDetail.style.display = 'block';  // Affiche le détail
-            sendMessageForm.style.display = 'block';  // Affiche le formulaire de message
         })
         .catch(error => {
             console.error('Erreur:', error);
         });
-}
+        }
+
+    // Modifier la fonction de chargement de la conversation pour afficher le formulaire
+    function loadConversation(convoName) {
+        fetch(`/social/messaging/${convoName}`)
+            .then(response => response.json())
+            .then(data => {
+                const convoDetail = document.getElementById('conversation-detail');
+                const sendMessageForm = document.getElementById('send-message-form');
+                convoDetail.innerHTML = '';  // Réinitialise le contenu de la conversation
+                if (data.conversation && data.conversation.length > 0) {
+                    data.conversation.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.classList.add('message');
+                        messageDiv.innerHTML = `
+                            <p><strong>${message.sender}</strong></p>
+                            <p><strong>Envoyé le :</strong> ${message.hour}</p>
+                            <p>${message.message}</p>
+                        `;
+                        convoDetail.appendChild(messageDiv);
+                    });
+                } else {
+                    convoDetail.innerHTML = '<h2>Aucun message dans cette conversation</h2>';
+                }
+                convoDetail.style.display = 'block';  // Affiche le détail
+                sendMessageForm.style.display = 'block';  // Affiche le formulaire de message
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+    }
 </script>
 
 {% endblock %}

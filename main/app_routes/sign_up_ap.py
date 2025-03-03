@@ -4,7 +4,6 @@ from main_tools import *
 sign_up_blueprint = Blueprint("sign_up", __name__, url_prefix="/sign_up")
 
 @sign_up_blueprint.route("/", methods=["POST", "GET"])
-
 def sign_up():
     if request.method == "POST":
         user_dico = {
@@ -23,7 +22,5 @@ def sign_up():
         }
         create_and_register_user(user_dico)
         session["name_user"] = user_dico['username']
-
         return redirect(url_for('root.root'))
-    
     return render_template("users/sign_up.html")

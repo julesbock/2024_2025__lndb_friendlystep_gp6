@@ -19,31 +19,22 @@ def before_request():
 def remove_notification():
     data = request.get_json()
     index = data.get('index')
-
     try:
         index = int(index)
     except (TypeError, ValueError):
         return jsonify({"status": "error", "message": "Invalid index"}), 400
-
     if 'notifications' in session:
         if 0 <= index < len(session['notifications']):
             session['notifications'].pop(index)
             session.modified = True
             return jsonify({"success": True}), 200
-
     return jsonify({"status": "error", "message": "Notification not found"}), 404
 
-
-
-
-# Route pour vérifier s'il y a de nouvelles notifications
 @notifications_blueprint.route('/check_for_new_notifications')
 def check_for_new_notifications():
     if 'notifications' in session:
-        # Charger les notifications actuelles depuis le JSON
         current_notifications, nb_of_notif = get_user_notifications_under_thirty_min_and_nb_of_notif()
         print(session['notifications'])
-        # Si le nombre de notifications a changé, on retourne true
         if nb_of_notif > session['notification_count']:
             return jsonify({"new_notifications": True}), 200
     return jsonify({"new_notifications": False}), 200

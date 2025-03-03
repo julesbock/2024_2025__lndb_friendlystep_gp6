@@ -7,6 +7,7 @@ social_blueprint = Blueprint('social', __name__, url_prefix='/social')
 def social():
     return render_template('user_data/social.html')
 
+
 @social_blueprint.route('/notifications')
 def notifications():
     if "&amp;" in request.url:
@@ -17,8 +18,6 @@ def notifications():
         return "Utilisateur non authentifié", 403
     chemin = os.path.dirname(__file__)
     true_path = os.path.join(chemin, "..", "data", "users", user, "user_notifications.json")
-
-    # Vérification si le fichier existe
     if not os.path.exists(true_path):
         all_data = []
     else:
@@ -27,7 +26,6 @@ def notifications():
                 all_data = json.load(f)
             except json.JSONDecodeError:
                 all_data = []
-
     invitations_and_requests = [
         "You are invited to a tournament!",
         "Tournament entry request",
@@ -35,20 +33,14 @@ def notifications():
     ]
     index = request.args.get('index', None)
     response = request.args.get('response', None)
-    print("hi")
-    print(index)
-    print(response)
-
     if index and response : 
-        print("hi")
         index = int(index)
         if response == "Yes" : 
-            print("hi")
             notification = all_data[index]
             sender = notification["sender"]
             receiver = notification["receiver"]
             tournament_id = notification['tournament_id']
-            path = os.path.join(os.path.dirname(__file__), "..", "data", "tournaments_data", "tournaments_players.json")
+            path = pj(os.path.dirname(__file__), "..", "data", "tournaments_data", "tournaments_players.json")
             with open(path, 'r') as f:
                 lists_of_players = json.load(f)
             if sender in lists_of_players[tournament_id]:
@@ -58,7 +50,6 @@ def notifications():
             with open(path, 'w') as f:
                 json.dump(lists_of_players, f, indent=4)
         elif response == "No":
-            #variable de reponse aux notif (arg no)
             pass
         del all_data[index]
         with open(true_path, 'w') as f:
@@ -69,6 +60,7 @@ def notifications():
         notifications=all_data,
         invitations_and_requests=invitations_and_requests
     )
+
 
 @social_blueprint.route('/messaging', methods=["POST", "GET"])
 def messaging():
@@ -88,9 +80,7 @@ def messaging():
                 except json.JSONDecodeError:
                     conversations_dict[filename] = []
     if request.method == "POST":
-        print('hiiiiii')
         username = request.form.get('name_of_the_user', None)
-        print(username)
         users_list_path = get_users_list_path()
         data = load_data_from_file(users_list_path)
         if username:
@@ -114,7 +104,6 @@ def messaging():
                     error = "Conversation créée avec succès!"
             else:
                 error = "Cet utilisateur n'existe pas."
-                                
     return render_template('user_data/messaging.html', conversations=conversations_dict, error=error)
 
 

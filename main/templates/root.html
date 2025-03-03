@@ -2,7 +2,6 @@
 {% block content %}
 
 <script>
-
     // Chatgpt:
     function navigateToGraphPage(data_type, label) {
         // URL dynamique générée par Jinja avec placeholders
@@ -15,11 +14,8 @@
 </script>
 
 {% if data or is_logged %}
-
 <h1 id="Accueil">Tableau de bord</h1>
-
 <p>Bonjour {{ session['name_user']|title if session["name_user"] else 'none'}}, bienvenue sur votre tableau de bord de suivi !</p>
-
 <div class="dashboard">
     <div class="container" onclick="navigateToGraphPage('step_data', 'Pas')">
         <span class="link">Nombre de pas : {{ data['step_data'] if data.get('step_data') else 0 }} pas</span>
@@ -40,10 +36,8 @@
         <span class="link">Score du sommeil : {{ data['sleep_score_data'] if data.get('sleep_score_data') else 'aucun' }}</span>
     </div>
 </div>
-
 {% else %}
 <h1 id="Accueil"></h1>
-
 <p>
     Bonjour, bienvenue sur FriendlySteps ! 
 </p>
@@ -56,4 +50,3 @@
 {% endif %}
 
 {% endblock %}
-
