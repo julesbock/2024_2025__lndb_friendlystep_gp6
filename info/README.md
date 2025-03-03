@@ -12,17 +12,6 @@ IV.	du nombre de kcal brulées
 V.	rythme cardiaque au repos
 Comparaison entre les différents utilisateurs de l'application    -->
 
-
-
-
-
-
-
-
-
-
-
-
 Quand on lance -> une page -> sur tout l'écran, sortir page avec echap
 Page : 
     texte : Bienvenue !;
