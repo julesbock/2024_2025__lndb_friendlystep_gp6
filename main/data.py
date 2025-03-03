@@ -1,5 +1,9 @@
 BASE32_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
-
+invitations_and_requests = [
+    "You are invited to a tournament!",
+    "Tournament entry request",
+    "New friend request"
+]
 message_object = {
     "invitation_to_a_tournament": "You are invited to a tournament!",
     "tournament_entry_request": "Tournament entry request",

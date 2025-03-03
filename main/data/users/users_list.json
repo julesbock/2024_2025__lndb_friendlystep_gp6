@@ -47,6 +47,14 @@
         {
             "username": "a",
             "mdp": "a"
+        },
+        {
+            "username": "haricot",
+            "mdp": "haricotrouge"
+        },
+        {
+            "username": "haricotvert",
+            "mdp": "haricotvert"
         }
     ]
 }

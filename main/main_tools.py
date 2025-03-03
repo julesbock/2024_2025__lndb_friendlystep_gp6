@@ -1,4 +1,4 @@
-from flask import redirect, url_for, session, flash
+from flask import session, flash, redirect, url_for
 from data_show import *
 from data import *
 import json, os, calendar, random
@@ -101,6 +101,8 @@ def dump_data_in_user_file(file_name, data):
 
 def convert_to_decimal_hours(value):
     try:
+        if not isinstance(value, str) or ":" not in value:
+            return 0
         hours, minutes = map(int, value.split(":"))
         return hours + minutes / 60
     except ValueError:
@@ -386,3 +388,12 @@ def get_user_notifications_under_thirty_min_and_nb_of_notif():
         if notif_datetime >= thirty_minutes_ago:
             notifications.append(notif)
     return notifications, nb_of_notif
+
+def check_if_all_data_tournaments_exist(data):
+    tournaments_path = get_tournaments_folder_path()
+    data_filtered = []
+    for notifications in data:
+        tournament_id = notifications.get("tournament_id")
+        if tournament_id and os.path.exists(pj(tournaments_path, f"{tournament_id}.json")):
+            data_filtered.append(notifications)            
+    return data_filtered
