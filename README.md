@@ -1,8 +1,5 @@
 Créer une IHM   qui permet d'accéder aux données de l'utilisateur et le comparer à d'autres utilsateurs (de data sur internet) et à d'autres users plus precis (amis, a travers un echange ..)
 
-PPT presentation link :
-https://lndb92-my.sharepoint.com/:p:/g/personal/jul_bock_lndb_eu/ETgns_8an-xAlx1nEa9DkA0BlE0EBs1jzOFmBim5nxSVWQ?e=gcX4tC
-
 Nous voulions créer un site internet qui permet aux utilisateurs de rentrer leurs données de santé afin d'obtenir un suivi. En effet, les utilisateurs ont la possibilité de rentrer les données suivantes : Pas/distance/calories brulées/durée du sommeil/ qualité du sommeil/nombre d'étages gravis.
 Notre site intitulé Friendlysteps, se compose de différentes pages parmi lesquelles : Accueil/Ajouter des données/Compétitions/Profil/Social/Aide
 
@@ -18,15 +15,6 @@ Par ailleurs,la page Profil permet à l'utilisateur de modifier ces données per
 La page Social permet à l'utilisateur de vérifier les notifications qu'il aurait reçues. En effet, lorsque l'utilisateur se connecte les notifications qu'il reçoit. La messagerie n'est pas encore fonctionnelle à la date actuelle. (3 mars 2025)
 
 En outre, une FAQ est disponible, répondant aux principales questions que les utilisateurs peuvent se poser. 
-
-
-
-
-
-
-
-
-
 
 
 
@@ -76,3 +64,8 @@ Réflexion sur l'avancement du 6 janvier 2025 :
 
     Pourcentage d'avancement du projet : 50% au 6 janvier
 
+
+
+
+PPT presentation link :
+https://lndb92-my.sharepoint.com/:p:/g/personal/jul_bock_lndb_eu/ETgns_8an-xAlx1nEa9DkA0BlE0EBs1jzOFmBim5nxSVWQ?e=gcX4tC
