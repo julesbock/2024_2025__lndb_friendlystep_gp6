@@ -2,6 +2,7 @@ from flask import Blueprint, session, request, jsonify
 from main_tools import *
 
 notifications_blueprint = Blueprint('notifications', __name__)
+
 @notifications_blueprint.before_app_request
 def before_request():
     if session.get('name_user'):
@@ -14,7 +15,8 @@ def before_request():
             new_notifications = current_notifications[session['notification_count']:]
             session['notifications'].extend(new_notifications)
             session['notification_count'] = nb_of_notif
-                            
+
+
 @notifications_blueprint.route('/remove_notification', methods=['POST'])
 def remove_notification():
     data = request.get_json()
@@ -30,11 +32,11 @@ def remove_notification():
             return jsonify({"success": True}), 200
     return jsonify({"status": "error", "message": "Notification not found"}), 404
 
+
 @notifications_blueprint.route('/check_for_new_notifications')
 def check_for_new_notifications():
     if 'notifications' in session:
         current_notifications, nb_of_notif = get_user_notifications_under_thirty_min_and_nb_of_notif()
-        print(session['notifications'])
         if nb_of_notif > session['notification_count']:
             return jsonify({"new_notifications": True}), 200
     return jsonify({"new_notifications": False}), 200
