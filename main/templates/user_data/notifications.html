@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+
 {% block content %}
+
     {% for notification in notifications %}
         {% with object = notification['object'] %}
         <div class="notification">
@@ -12,7 +14,6 @@
                 <p><strong>De :</strong> {{ notification.get('sender', 'Inconnu') }}</p>
                 <p><strong>Envoyé le :</strong> {{ notification.get('sent_at_date', 'Inconnue') }} à {{ notification.get('sent_at_hour', 'Inconnue') }}</p>
                 <p>{{ notification.get('content', 'Inconnue') }}</p>
-                
                 {% if notification['object'] in invitations_and_requests %}
                     <div class="action-buttons">
                         <button onclick="Accept('{{ object }}','{{ loop.index - 1 }}')">Accepter</button>
@@ -23,6 +24,7 @@
         </div>
         {% endwith %}
     {% endfor %}
+
     {% if not notifications %}
     <div >
         <p>Vous n'avez pas de nouvelles notifications</p>

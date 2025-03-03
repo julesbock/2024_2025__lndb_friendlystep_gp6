@@ -11,16 +11,12 @@ def login():
         mdp = donnees.get('mdp')
         user = recherch_user(nom, mdp)
         if user is not None:
-            print('utilisateur trouvé')
             session["name_user"] = user['username']
-            print(session)
             return redirect(url_for('root.root'))
         else:
             print('utilisateur inconnu')
             return render_template("users/login.html", error = "Utilisateur ou mot de passe inconnu. Veuillez réessayer.")
     else:
-        print(session)
         if "name_user" in session:
             return redirect(url_for('root.root'))
         return render_template("users/login.html")
-    

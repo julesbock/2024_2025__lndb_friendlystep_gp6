@@ -6,7 +6,6 @@ tournaments_blueprint = Blueprint('tournaments', __name__, url_prefix='/tourname
 
 @tournaments_blueprint.route('/')
 def tournaments():
-# Lire les données des tournois à partir des fichiers JSON
     tournaments_participants__file_path = get_tournaments_players_file_path()
     tournaments_path = get_tournaments_folder_path()
     tournaments = []
@@ -22,32 +21,27 @@ def tournaments():
                     nb_of_participants = len(participants)
                     tournament['number_of_participants'] = nb_of_participants
                     tournaments.append(tournament)
-
-    # Classer les tournois en fonction de leur date et durée
     current_date = datetime.now().date()
     ongoing_tournaments = []
     upcoming_tournaments = []
     past_tournaments = []
-
     for tournament in tournaments:
-        
         if 'start_date' in tournament and 'duration' in tournament:
             start_date = datetime.strptime(tournament['start_date'], '%Y-%m-%d').date()
             end_date = datetime.strptime(tournament['end_date'], '%Y-%m-%d').date()
-
             if end_date < current_date:
                 past_tournaments.append(tournament)
             elif start_date <= current_date <= end_date:
                 ongoing_tournaments.append(tournament)
             else:
                 upcoming_tournaments.append(tournament)
-
     return render_template(
         'tournaments/tournaments.html', 
         ongoing_tournaments=ongoing_tournaments, 
         upcoming_tournaments=upcoming_tournaments, 
         past_tournaments=past_tournaments
     )
+
 
 @tournaments_blueprint.route('/create', methods = ["POST", "GET"])
 def create_tournament():
@@ -77,6 +71,7 @@ def create_tournament():
         return redirect(url_for('tournaments.tournaments'))
     return render_template('tournaments/create_tournament.html')
 
+
 @tournaments_blueprint.route('/join', methods = ["POST", "GET"])
 def join_tournament():
     if request.method == 'POST':
@@ -97,6 +92,7 @@ def join_tournament():
             return redirect(url_for('errors.error', error_type=error_type))
     return render_template('tournaments/join_tournament.html')
 
+
 @tournaments_blueprint.route('/view/<tournament_id>')
 def view_tournament(tournament_id):
     tournament_data = search_tournament(tournament_id)
@@ -104,6 +100,7 @@ def view_tournament(tournament_id):
         flash(f"Le tournoi {tournament_id} n'existe pas", "error")
         return redirect(url_for('tournaments.join_tournament'))
     return render_template('tournaments/view_tournament.html', tournament_data=tournament_data)
+
 
 @tournaments_blueprint.route('/tournament/<tournament_id>', methods=["POST", "GET"])
 def tournament_page(tournament_id):
@@ -128,7 +125,6 @@ def tournament_page(tournament_id):
             if any(user['username'] == invited for user in data["users_list"]):
                 create_notif("invitation_to_a_tournament", user, invited, tournament_id)
                 error = f"Une invitation a été envoyée à {invited.title()}"
-
             else:
                 error = f"{invited.title()} n'existe pas"
         else : 
